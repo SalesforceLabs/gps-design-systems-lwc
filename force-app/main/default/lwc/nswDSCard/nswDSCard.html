@@ -1,0 +1,14 @@
+<template>
+    <template if:true={date}>
+        <c-nsw-d-s-card-base is-headline={isHeadline} title-label={_titleLabel} title-url={_titleUrl}
+                            content={content} date={date}
+                            tag={tag} image-src={imageSrc} image-alt={imageAlt}>
+        </c-nsw-d-s-card-base>
+    </template>
+    <template if:false={date}>
+        <c-nsw-d-s-card-base is-headline={isHeadline} title-label={_titleLabel} title-url={_titleUrl}
+                            content={content} date={dateIso}
+                            tag={tag} image-src={imageSrc} image-alt={imageAlt}>
+        </c-nsw-d-s-card-base>
+    </template>
+</template>

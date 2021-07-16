@@ -1,0 +1,20 @@
+<template>
+    <nav aria-label="Breadcrumb" class="nsw-breadcrumb">
+        <ol class="nsw-breadcrumb__list">
+            <template for:each={_breadcrumbs} for:item="item">
+                <li if:true={item.isButLast} key={item.index} class="nsw-breadcrumb__item">
+                    <a if:true={item.isLast} href={item.url}
+                        class="nsw-breadcrumb__link nsw-breadcrumb--current">{item.label}</a>
+                    <a if:false={item.isLast} href={item.url}
+                        class="nsw-breadcrumb__link">{item.label}</a>
+                </li>
+                <li if:false={item.isButLast} key={item.index} class="nsw-breadcrumb__item nsw-breadcrumb__not-but-last">
+                    <a if:true={item.isLast} href={item.url}
+                        class="nsw-breadcrumb__link nsw-breadcrumb--current">{item.label}</a>
+                    <a if:false={item.isLast} href={item.url}
+                        class="nsw-breadcrumb__link">{item.label}</a>
+                </li>
+            </template>
+        </ol>
+    </nav>
+</template>

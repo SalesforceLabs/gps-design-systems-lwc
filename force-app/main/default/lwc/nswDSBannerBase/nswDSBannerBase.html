@@ -1,0 +1,32 @@
+<template>
+    <div class={computedBannerClass}>
+        <div class="nsw-banner__container">
+            <div class="nsw-banner__wrapper">
+                <div class="nsw-banner__content nsw-wysiwyg-content">
+                    <h1 if:true={_title}>{_title}</h1>
+                    <p class="nsw-intro">
+                        <slot name="content">
+                        </slot>
+                    </p>
+            
+                    <div if:true={_buttonLabel} class="nsw-banner__button">
+                        <a href={_buttonUrl} class={computedButtonClass}>{_buttonLabel}</a>
+                    </div>
+                </div>
+
+                <div if:true={hasLinks} class="nsw-banner__links">
+                    <div if:true={_subtitle} class="nsw-banner__list">
+                        <div class="nsw-banner__sub-title">{_subtitle}</div>
+                    </div>    
+                    <slot name="links">
+                    </slot>
+                </div>
+            
+                <div class="nsw-banner__box" role="presentation">
+                    <img if:true={imageSrc} class="nsw-banner__image" src={imageSrc} alt={imageAlt} />
+                    <div if:false={imageSrc} class="nsw-banner__bg"></div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</template>

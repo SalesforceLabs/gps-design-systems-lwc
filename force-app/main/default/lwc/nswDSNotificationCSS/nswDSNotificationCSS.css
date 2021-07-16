@@ -1,0 +1,120 @@
+.nsw-notification {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: transparent;
+    position: relative;
+    border-left: 6px solid transparent;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap
+}
+
+.nsw-notification:first-child {
+    margin-top: 0
+}
+
+@media (min-width: 48em) {
+    .nsw-notification {
+        margin-top:2rem;
+        padding: 1.5rem 1.5rem 1.5rem 1rem
+    }
+}
+
+.nsw-notification__icon {
+    flex: 0 0 auto;
+    /*font-size: 2.375rem;*/
+    font-size: 1.5rem;
+    position: relative;
+    top: -.1875rem;
+    left: -.1875rem;
+    margin-right: .625rem
+}
+
+.nsw-notification__icon.nsw-icon {
+    margin-right: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    position: static
+}
+
+@media (min-width: 48em) {
+    .nsw-notification__icon.nsw-icon {
+        width:2rem;
+        height: 2rem
+    }
+}
+
+.nsw-notification__content {
+/*    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 400
+}
+
+.nsw-notification__content p:not([class]) {
+    margin: .75rem 0 0
+}
+
+.nsw-notification__content .nsw-text-link {
+    margin-top: .75rem
+}
+
+.nsw-notification__title {
+ /*   font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 600;
+    margin: 0
+}
+
+.nsw-notification--info {
+    background-color: #eaedf4;
+    border-color: #2e5299
+}
+
+.nsw-notification--info .nsw-notification__icon {
+    color: #2e5299
+}
+
+.nsw-notification--info .nsw-notification__icon.nsw-icon {
+    fill: #2e5299
+}
+
+.nsw-notification--success {
+    background-color: #e5f6e6;
+    border-color: #00a908
+}
+
+.nsw-notification--success .nsw-notification__icon {
+    color: #00a908
+}
+
+.nsw-notification--success .nsw-notification__icon.nsw-icon {
+    fill: #00a908
+}
+
+.nsw-notification--warning {
+    background-color: #fbeee5;
+    border-color: #dc5800
+}
+
+.nsw-notification--warning .nsw-notification__icon {
+    color: #dc5800
+}
+
+.nsw-notification--warning .nsw-notification__icon.nsw-icon {
+    fill: #dc5800
+}
+
+.nsw-notification--error {
+    background-color: #f7e7eb;
+    border-color: #b81237
+}
+
+.nsw-notification--error .nsw-notification__icon {
+    color: #b81237
+}
+
+.nsw-notification--error .nsw-notification__icon.nsw-icon {
+    fill: #b81237
+}

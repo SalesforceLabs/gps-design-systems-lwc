@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>NSW DS Input</masterLabel>
+    <description>An input field in the NSW Government Design System</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property label="Label" name="label" type="String"></property>
+            <property label="Name" name="name" type="String"></property>
+            <property label="Is Legend" name="isLegend" type="Boolean"></property>
+            <property label="Helper" name="helper" type="String"></property>
+            <property label="Placeholder" name="placeholder" type="String"></property>
+            <property label="Date Style" name="dateStyle" type="String"></property>
+            <property label="Time Style" name="timeStyle" type="String"></property>
+            <property label="Formatter" name="formatter" type="String"></property>
+            <property label="Type" name="type" type="String"></property>
+            <property label="Pattern" name="pattern" type="String"></property>
+            <property label="Max Length" name="maxLength" type="Integer"></property>
+            <property label="Min Length" name="minLength" type="Integer"></property>
+            <property label="Accept" name="accept" type="String"></property>
+            <property label="Max" name="max" type="String"></property>
+            <property label="Min" name="min" type="String"></property>
+            <property label="Step" name="step" type="String"></property>
+            <property label="Checked" name="checked" type="Boolean"></property>
+            <property label="Multiple" name="multiple" type="Boolean"></property>
+            <property label="Value" name="value" type="String"></property>
+            <property label="Required" name="required" type="Boolean"></property>
+            <property label="Read-Only" name="readOnly" type="Boolean"></property>
+            <property label="Disabled" name="disabled" type="Boolean"></property>
+            <property label="Timezone" name="timezone" type="String"></property>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

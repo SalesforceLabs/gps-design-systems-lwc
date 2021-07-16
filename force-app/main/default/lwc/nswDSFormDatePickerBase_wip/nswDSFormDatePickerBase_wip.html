@@ -1,0 +1,73 @@
+<template>
+    <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-size_1-of-1">
+        <template if:false={hasExternalLabel}>
+            <label class={computedLabelClass} for="input">
+                <template if:true={required}>
+                    <abbr class="slds-required" title={i18n.required}>*</abbr>
+                </template>
+                {label}
+            </label>
+            <lightning-helptext if:true={fieldLevelHelp} content={fieldLevelHelp}></lightning-helptext>
+        </template>
+        <template if:true={isRangeMessageVisible}>
+            <span id="range-message" data-range-message class="slds-assistive-text">{rangeMessage}</span>
+        </template>
+        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+            <input type="text" id="input" class="slds-input"
+                    name={name}
+                    value={displayValue}
+                    placeholder={placeholder}
+                    aria-label={ariaLabel}
+                    required={required}
+                    readonly={readOnly}
+                    disabled={disabled}
+                    autocomplete={autocomplete}
+                    oninput={handleInput}
+                    onchange={handleInputChange}
+                    onfocusin={onFocusIn}
+                    onfocusout={handleInputBlur}
+                    onkeydown={handleInputKeydown}
+                    onclick={handleInputClick}>
+            <lightning-button-icon icon-name="utility:event"
+                                class="slds-input__icon slds-input__icon_right"
+                                variant="bare"
+                                onclick={handleDatePickerIconClick}
+                                onkeydown={handleDatePickerIconKeyDown}
+                                onfocusin={onFocusIn}
+                                onfocusout={onFocusOut}
+                                disabled={computedIconDisabledState}
+                                title={i18n.selectDate}
+                                alternative-text={i18n.selectDate}>
+            </lightning-button-icon>
+            <template if:true={isCalendarVisible}>
+                <!--
+                <lightning-calendar
+                    value={value}
+                    min={min}
+                    max={max}
+                    onselect={handleDateSelect}
+                    onready={startPositioning}
+                    onkeydown={handleCalendarKeyDown}
+                    onfocusin={onFocusIn}
+                    onfocusout={onFocusOut}
+                ></lightning-calendar>
+                -->
+                <c-nsw-d-s-calendar-base
+                    value={value}
+                    min={min}
+                    max={max}
+                    onselect={handleDateSelect}
+                    onready={startPositioning}
+                    onkeydown={handleCalendarKeyDown}
+                    onfocusin={onFocusIn}
+                    onfocusout={onFocusOut}
+                ></c-nsw-d-s-calendar-base>
+
+            </template>
+        </div>
+    </div>
+
+    <template if:true={errorMessage}>
+        <div id="error-message" data-error-message class="slds-form-element__help" aria-live="assertive">{errorMessage}</div>
+    </template>
+</template>

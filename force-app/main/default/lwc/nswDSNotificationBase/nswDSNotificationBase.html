@@ -1,0 +1,14 @@
+<template>
+    <div class={nswClass}>
+        <div class={notificationClass}>
+            <template if:true={hasIcon}>
+                <i class="material-icons nsw-material-icons nsw-notification__icon">{iconName}</i>
+            </template>
+            <div class="nsw-notification__content">
+                <h4 class="nsw-notification__title">{title}</h4>
+                <slot>
+                </slot>
+            </div>
+        </div>
+    </div>    
+</template>

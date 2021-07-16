@@ -1,0 +1,26 @@
+@import "c/nswDSForm";
+
+.slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox--faux,
+.slds-checkbox_toggle [type=checkbox]:checked~.slds-checkbox_faux,
+.slds-checkbox_toggle [type=checkbox]:checked~.slds-checkbox--faux,
+.slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux,
+.slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--faux,
+.slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox_faux,
+.slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux,
+.slds-checkbox--toggle [type=checkbox]:checked~.slds-checkbox_faux,
+.slds-checkbox--toggle [type=checkbox]:checked~.slds-checkbox--faux,
+.slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux,
+.slds-checkbox--toggle [type=checkbox]:checked+.slds-checkbox--faux_container .slds-checkbox--faux {
+    border-color: #002664;
+    background-color: #002664;
+}
+
+.nsw-form-search__clear {
+    border-color: #4c4f55;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    cursor: pointer;
+}

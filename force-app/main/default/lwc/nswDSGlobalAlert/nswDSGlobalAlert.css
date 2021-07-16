@@ -1,0 +1,215 @@
+@import "c/nswDSBase";
+@import "c/nswDSButtonCSS";
+
+.nsw-global-alert,
+.nsw-sitewide-message {
+    padding: 1.5rem 0;
+    position: relative;
+    background-color: #2e5299;
+    color: #fff
+}
+
+.nsw-global-alert--light,
+.nsw-sitewide-message--light {
+    background-color: #eaedf4;
+    color: #333
+}
+
+.nsw-global-alert--critical,
+.nsw-sitewide-message--critical {
+    background-color: #b81237;
+    color: #fff
+}
+
+.nsw-global-alert__close,
+.nsw-sitewide-message__close {
+    position: absolute;
+    top: -.75rem;
+    right: .5rem;
+    background: none;
+    border: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0
+}
+
+.nsw-global-alert__close:hover,
+.nsw-sitewide-message__close:hover {
+    background-color: rgba(0,133,179,.2)
+}
+
+.nsw-global-alert__close:focus,
+.nsw-sitewide-message__close:focus {
+    outline: 3px solid #fff;
+    outline-offset: 0;
+    outline-offset: 3px
+}
+
+.nsw-global-alert__close .nsw-icon,
+.nsw-sitewide-message__close .nsw-icon {
+    fill: #fff;
+    width: 1.5rem;
+    height: 1.5rem
+}
+
+.nsw-global-alert__close .nsw-material-icons,.nsw-sitewide-message__close .nsw-material-icons {
+    color: #fff;
+    font-size: 40px
+}
+
+.nsw-global-alert__wrapper,.nsw-sitewide-message__wrapper {
+    max-width: 75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative
+}
+
+.nsw-global-alert__title,.nsw-sitewide-message__title {
+/*    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.33;
+    margin-top: 0
+}
+
+@media (min-width: 62em) {
+    .nsw-global-alert__title,
+    .nsw-sitewide-message__title {
+        font-size:1.25rem;
+        line-height: 1.33
+    }
+}
+
+.nsw-global-alert__link,
+.nsw-sitewide-message__link {
+/*    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 600;
+    color: #fff;
+    text-decoration: underline
+}
+
+.nsw-global-alert__link:hover,
+.nsw-sitewide-message__link:hover {
+    text-decoration: none
+}
+
+.nsw-global-alert__link:focus,
+.nsw-sitewide-message__link:focus {
+    outline: 3px solid #fff;
+    outline-offset: 0;
+    outline-offset: 3px
+}
+
+.nsw-global-alert__content,
+.nsw-sitewide-message__content {
+/*    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 400;
+    margin-right: 3rem
+}
+
+.nsw-global-alert__content p,
+.nsw-sitewide-message__content p {
+    margin: 0
+}
+
+.nsw-global-alert__content *+p,
+.nsw-sitewide-message__content *+p {
+    margin-top: 1rem
+}
+
+.nsw-global-alert .nsw-button,
+.nsw-sitewide-message .nsw-button {
+    color: #333;
+    background-color: #fff;
+    border-color: #fff;
+    display: block;
+    margin-right: 0
+}
+
+.nsw-global-alert .nsw-button:hover,
+.nsw-sitewide-message .nsw-button:hover {
+    color: #333;
+    background-color: #e4e4e6;
+    border-color: #e4e4e6
+}
+
+.nsw-global-alert .nsw-button:focus,
+.nsw-sitewide-message .nsw-button:focus {
+    outline: 3px solid #fff;
+    outline-offset: 0;
+    outline-offset: 3px
+}
+
+@media (min-width: 48em) {
+    .nsw-global-alert .nsw-button,
+    .nsw-sitewide-message .nsw-button {
+        display:inline-block
+    }
+}
+
+.nsw-global-alert--dark .nsw-button,
+.nsw-sitewide-message--dark .nsw-button {
+    color: #333;
+    background-color: #fff;
+    border-color: #fff
+}
+
+.nsw-global-alert--dark .nsw-button:hover,
+.nsw-sitewide-message--dark .nsw-button:hover {
+    color: #333;
+    background-color: #e4e4e6;
+    border-color: #e4e4e6
+}
+
+.nsw-global-alert--dark .nsw-sitewide-message__close .nsw-icon,
+.nsw-sitewide-message--dark .nsw-sitewide-message__close .nsw-icon {
+    fill: #fff
+}
+
+.nsw-global-alert--dark .nsw-sitewide-message__close .nsw-material-icons,
+.nsw-sitewide-message--dark .nsw-sitewide-message__close .nsw-material-icons {
+    color: #fff
+}
+
+.nsw-global-alert--alert .nsw-button,.nsw-global-alert--light .nsw-button,
+.nsw-sitewide-message--alert .nsw-button,.nsw-sitewide-message--light .nsw-button {
+    color: #fff;
+    background-color: #002664;
+    border-color: #002664
+}
+
+.nsw-global-alert--alert .nsw-button:hover,
+.nsw-global-alert--light .nsw-button:hover,.nsw-sitewide-message--alert .nsw-button:hover,
+.nsw-sitewide-message--light .nsw-button:hover {
+    color: #fff;
+    background-color: #003182;
+    border-color: #003182
+}
+
+.nsw-global-alert--alert .nsw-button:focus,.nsw-global-alert--alert .nsw-sitewide-message__close:focus,.nsw-global-alert--light .nsw-button:focus,.nsw-global-alert--light .nsw-sitewide-message__close:focus,.nsw-sitewide-message--alert .nsw-button:focus,.nsw-sitewide-message--alert .nsw-sitewide-message__close:focus,.nsw-sitewide-message--light .nsw-button:focus,.nsw-sitewide-message--light .nsw-sitewide-message__close:focus {
+    outline: 3px solid #0085b3;
+    outline-offset: 0;
+    outline-offset: 3px
+}
+
+.nsw-global-alert--alert .nsw-sitewide-message__close .nsw-icon,.nsw-global-alert--light .nsw-sitewide-message__close .nsw-icon,.nsw-sitewide-message--alert .nsw-sitewide-message__close .nsw-icon,.nsw-sitewide-message--light .nsw-sitewide-message__close .nsw-icon {
+    fill: #002664
+}
+
+.nsw-global-alert--alert .nsw-sitewide-message__close .nsw-material-icons,.nsw-global-alert--light .nsw-sitewide-message__close .nsw-material-icons,.nsw-global-alert--light .nsw-sitewide-message__link,.nsw-sitewide-message--alert .nsw-sitewide-message__close .nsw-material-icons,.nsw-sitewide-message--light .nsw-sitewide-message__close .nsw-material-icons,.nsw-sitewide-message--light .nsw-sitewide-message__link {
+    color: #002664
+}
+
+.nsw-global-alert--light .nsw-sitewide-message__link:focus,.nsw-sitewide-message--light .nsw-sitewide-message__link:focus {
+    outline: 3px solid #0085b3;
+    outline-offset: 0;
+    outline-offset: 3px
+}

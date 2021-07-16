@@ -1,0 +1,70 @@
+
+.nsw-direction-link {
+    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 600;
+    position: relative;
+    display: inline-flex;
+    text-decoration: none;
+    vertical-align: middle;
+    padding: .25rem .5rem;
+    color: #333
+}
+
+.nsw-direction-link:hover {
+    background-color: rgba(0,133,179,.2)
+}
+
+.nsw-direction-link:focus {
+    outline: 3px solid #0085b3;
+    outline-offset: 0
+}
+
+.nsw-direction-link .nsw-icon {
+    width: 1rem;
+    height: 1rem;
+    -ms-grid-row-align: center;
+    align-self: center
+}
+
+.nsw-direction-link .nsw-icon+.nsw-direction-link__text {
+    margin-left: .5rem
+}
+
+.nsw-direction-link .nsw-material-icons {
+    font-size: 1.25rem;
+    -ms-grid-row-align: center;
+    align-self: center
+}
+
+.nsw-direction-link .nsw-material-icons+.nsw-direction-link__text {
+    margin-left: .25rem
+}
+
+.nsw-direction-link__text {
+    -ms-grid-row-align: center;
+    align-self: center
+}
+
+.nsw-direction-link__text+.nsw-icon {
+    margin-left: .5rem
+}
+
+.nsw-direction-link__text+.nsw-material-icons {
+    margin-left: .25rem
+}
+
+.nsw-direction-link.is-disabled {
+    color: #a0a5ae;
+    cursor: not-allowed;
+    background: none
+}
+
+.nsw-direction-link.is-disabled .nsw-icon {
+    fill: #a0a5ae
+}
+
+.nsw-direction-link.is-disabled .nsw-material-icons {
+    color: #a0a5ae
+}

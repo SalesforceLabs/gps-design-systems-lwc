@@ -1,0 +1,55 @@
+<template>
+    <c-nsw-d-s-legend-base if:true={isLegend}
+        label={label}
+        required={required}
+        helper={helper}>
+    </c-nsw-d-s-legend-base>
+    <c-nsw-d-s-form-label if:false={isLegend}
+        label={label}
+        required={required}
+        helper={helper}>
+    </c-nsw-d-s-form-label>
+
+    <div class="date-triplet">
+        <div class="date-triplet__day">
+            <label for="day" class="nsw-form__label nsw-form__label--small">Day</label>
+            <input id="day" name="day" type="tel" min="1" max="31" placeholder="DD"
+                value={day} autocomplete="off" maxlength="2" class="nsw-form-input"
+                readonly={readOnly} disabled={disabled} required={required}
+                onchange={handleChange}>
+        </div>
+        <div class="date-triplet__month">
+            <label for="month" class="nsw-form__label nsw-form__label--small">Month</label>
+            <select id="month" name="month" value={value}
+                class="nsw-form-select" disabled={disabled} required={required}
+                onchange={handleChange}>
+                <option hidden selected value="undefined">MMM</option>
+                <option value="1">JAN</option>
+                <option value="2">FEB</option>
+                <option value="3">MAR</option>
+                <option value="4">APR</option>
+                <option value="5" >MAY</option>
+                <option value="6" >JUN</option>
+                <option value="7" >JUL</option>
+                <option value="8" >AUG</option>
+                <option value="9" >SEP</option>
+                <option value="10">OCT</option>
+                <option value="11">NOV</option>
+                <option value="12">DEC</option>
+            </select>
+        </div>
+        <div class="date-triplet__year">
+            <label for="year" class="nsw-form__label nsw-form__label--small">Year</label>
+            <input id="year" name="year"
+                type="tel" placeholder="YYYY" maxlength="4" autocomplete="off"
+                value={year} class="nsw-form-input"
+                readonly={readOnly} disabled={disabled} required={required}
+                onchange={handleChange}>
+        </div>
+    </div>
+
+    <span if:true={_errorText}
+        class="nsw-form-helper nsw-form-helper--error">
+        {_errorText}
+    </span>
+</template>

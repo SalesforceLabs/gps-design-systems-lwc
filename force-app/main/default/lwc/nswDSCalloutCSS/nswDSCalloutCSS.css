@@ -1,0 +1,128 @@
+.nsw-callout {
+    padding: 1rem;
+    margin-top: 1.5rem;
+    background: #f4f4f7;
+    position: relative;
+    border-left: 6px solid #002664
+}
+
+.nsw-callout:first-child {
+    margin-top: 0
+}
+
+@media (min-width: 48em) {
+    .nsw-callout {
+        margin-top:2rem;
+        padding: 1.5rem 1.5rem 1.5rem 1rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap
+    }
+}
+
+.nsw-callout__icon+.nsw-callout__content {
+    margin-top: 10px
+}
+
+@media (min-width: 48em) {
+    .nsw-callout__icon {
+        margin-right:10px;
+        flex: 0 0 auto
+    }
+
+    .nsw-callout__icon+.nsw-callout__content {
+        margin-top: 0
+    }
+
+    .nsw-callout__icon.nsw-icon {
+        width: 2rem;
+        height: 2rem
+    }
+}
+
+.nsw-callout__icon.nsw-material-icons {
+    position: relative;
+    top: -3px;
+    left: -3px
+}
+
+.nsw-callout__icon.nsw-icon {
+    width: 1.5rem;
+    height: 1.5rem
+}
+
+.nsw-callout__icon.nsw-icon+.nsw-callout__content {
+    margin-top: 1rem
+}
+
+@media (min-width: 48em) {
+    .nsw-callout__icon.nsw-icon {
+        margin-right:1rem
+    }
+
+    .nsw-callout__icon.nsw-icon+.nsw-callout__content {
+        margin-top: 0
+    }
+}
+
+.nsw-callout__content {
+/*    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 400
+}
+
+@media (min-width: 48em) {
+    .nsw-callout__content {
+        margin-top:0
+    }
+}
+
+.nsw-callout__content p:not([class]) {
+    margin: .75rem 0 0
+}
+
+.nsw-callout__content a:not([class]) {
+/*    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 600;
+    color: #002664;
+    display: inline-block
+}
+
+.nsw-callout__content a:not([class]):hover {
+    background-color: rgba(0,133,179,.2);
+    outline: 2px solid rgba(0,133,179,.2)
+}
+
+.nsw-callout__content a:not([class]):focus {
+    outline: 3px solid #0085b3;
+    outline-offset: 0
+}
+
+.nsw-callout__content a:not([class]):active {
+    background-color: #0085b3;
+    color: #fff
+}
+
+.nsw-callout__content .nsw-text-link {
+    margin-top: .75rem
+}
+
+.nsw-callout__title {
+/*    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.33;
+    margin: 0
+}
+
+@media (min-width: 62em) {
+    .nsw-callout__title {
+        font-size:1.25rem;
+        line-height: 1.33
+    }
+}

@@ -1,0 +1,20 @@
+<template>
+    <c-nsw-d-s-banner-base
+        title={title} subtitle={subtitle} content={content}
+        button-label={_buttonLabel} button-url={_buttonUrl}
+        is-dark={isDark} is-wide={isWide} has-links={hasLinks}
+        image-src={imageSrc} image-alt={imageAlt}>
+
+        <div slot="content">
+            <div class="banner-content-placeholder" lwc:dom="manual">
+            </div>
+        </div>
+
+        <div class="nsw-banner__list" slot="links">
+            <div class={computedBannerClass}>
+                <ul class="banner-links-placeholder" lwc:dom="manual">
+                </ul>  
+            </div>
+        </div>  
+    </c-nsw-d-s-banner-base>
+</template>

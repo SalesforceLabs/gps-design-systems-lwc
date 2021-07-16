@@ -1,0 +1,278 @@
+.nsw-banner {
+    background-color: #fff;
+    border-bottom: 1px solid #e4e4e6;
+    position: relative
+}
+
+.nsw-banner--dark {
+    background-color: #002664
+}
+
+.nsw-banner--dark .nsw-intro,.nsw-banner--dark h1 {
+    color: #fff
+}
+
+.nsw-banner__container {
+    max-width: 75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.nsw-banner__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -.5rem;
+    margin-right: -.5rem;
+    align-items: stretch
+}
+
+@media (min-width: 48em) {
+    .nsw-banner__wrapper {
+        margin-left:-1rem;
+        margin-right: -1rem
+    }
+}
+
+.nsw-banner__content {
+    padding: .5rem;
+    flex: 0 0 100%;
+    max-width: 100%
+}
+
+@media (min-width: 48em) {
+    .nsw-banner__content {
+        padding:1rem;
+        flex: 0 0 58.33333%;
+        max-width: 58.33333%
+    }
+}
+
+@media (min-width: 75em) {
+    .nsw-banner__content {
+        flex:0 0 50%;
+        max-width: 50%
+    }
+}
+
+@media (min-width: 0em) {
+    .nsw-banner__content {
+        padding-top:2rem;
+        padding-bottom: 2rem
+    }
+}
+
+@media (min-width: 48em) {
+    .nsw-banner__content {
+        padding-top:5.5rem;
+        padding-bottom: 5.5rem;
+        min-height: 21.875rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center
+    }
+}
+
+@media (min-width: 48em) {
+    .nsw-banner--wide .nsw-banner__content {
+        flex:0 0 66.66667%;
+        max-width: 66.66667%
+    }
+}
+
+@media (min-width: 75em) {
+    .nsw-banner--wide .nsw-banner__content {
+        flex:0 0 58.33333%;
+        max-width: 58.33333%
+    }
+}
+
+@media (min-width: 48em) {
+    .nsw-banner--featured .nsw-banner__content {
+        min-height:0;
+        display: block
+    }
+}
+
+.nsw-banner--dark .nsw-banner__content h1 {
+    color: #fff
+}
+
+.nsw-banner__content .nsw-button {
+    margin: 1.5rem 0 0
+}
+
+.nsw-banner__content .nsw-intro {
+    margin: .5rem 0 0
+}
+
+@media (min-width: 48em) {
+    .nsw-banner__content .nsw-intro {
+        margin-top:1rem
+    }
+}
+
+.nsw-banner--dark .nsw-banner__content .nsw-intro {
+    color: #fff
+}
+
+.nsw-banner__links {
+    padding: .5rem;
+    flex: 0 0 100%;
+    max-width: 100%
+}
+
+@media (min-width: 48em) {
+    .nsw-banner__links {
+        padding:1rem;
+        flex: 0 0 33.33333%;
+        max-width: 33.33333%
+    }
+}
+
+@media (min-width: 75em) {
+    .nsw-banner__links {
+        flex:0 0 33.33333%;
+        max-width: 33.33333%;
+        margin-left: 8.33333%
+    }
+}
+
+@media (min-width: 0em) {
+    .nsw-banner__links {
+        margin-top:-.5rem;
+        padding-top: 0;
+        padding-bottom: 2rem
+    }
+}
+
+@media (min-width: 48em) {
+    .nsw-banner__links {
+        margin-top:0;
+        padding-top: 5.5rem;
+        padding-bottom: 5.5rem
+    }
+}
+
+.nsw-banner__list {
+    border-left: 4px solid #d7153a;
+    padding-left: 1rem;
+    position: relative;
+    z-index: 1
+}
+
+.nsw-banner__list ul {
+    margin: 0;
+    padding: 0;
+    list-style: none
+}
+
+.nsw-banner__list li {
+    margin-top: 1rem;
+    display: block
+}
+
+.nsw-banner__list li:first-child {
+    margin-top: 0
+}
+
+.nsw-banner__list a {
+/*    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 600;
+    color: #002664;
+    display: inline-block;
+    text-decoration: underline; /* ESC */
+}
+
+.nsw-banner__list .nsw-banner--dark-font a { /* ESC */
+    color: #ffffff;
+} 
+
+.nsw-banner__list a:hover {
+    background-color: rgba(0,133,179,.2);
+    outline: 2px solid rgba(0,133,179,.2)
+}
+
+.nsw-banner__list a:focus {
+    outline: 3px solid #0085b3;
+    outline-offset: 0
+}
+
+.nsw-banner__list a:active {
+    background-color: #0085b3;
+    color: #fff
+}
+
+.nsw-banner__sub-title {
+/*    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.33;
+    /*margin: 0 0 1rem*/
+    padding: 0 0 1rem; /* ESC */
+}
+
+.nsw-banner--dark .nsw-banner__sub-title { /* ESC */
+    color: #aaa;
+}
+
+@media (min-width: 62em) {
+    .nsw-banner__sub-title {
+        font-size:1.25rem;
+        line-height: 1.33
+    }
+}
+
+.nsw-banner__box {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 41.66667%;
+    padding-left: 1rem;
+    overflow: hidden
+}
+
+@media (min-width: 48em) {
+    .nsw-banner__box {
+        display:flex
+    }
+}
+
+@media (min-width: 75em) {
+    .nsw-banner__box {
+        width:50%;
+        padding-left: 7.25rem
+    }
+}
+
+.nsw-banner__image {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center;
+    object-position: center
+}
+
+.nsw-banner__bg {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    color: #002664;
+    opacity: .2;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='206' height='221' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M206 220.396a45.584 45.584 0 01-4.636-25.038 100.058 100.058 0 014.623-32.954l.013 57.992zM120.297 134.157a189.523 189.523 0 007.691 57.023 70.608 70.608 0 0018.483 29.743H130.78c-13.328-6.166-25.144-17.853-34.403-34.076-18.306-32.186-22.228-72.574-22.767-101.82-.692-33.657 1.923-41.472 2.846-44.799.923-3.327 2.307-4.565 5.153-4.565 5.461.155 29.15 9.981 51.609 26.77a12.946 12.946 0 00-4.259 3.83 13.056 13.056 0 00-2.202 5.3 332.33 332.33 0 00-6.46 62.594z' fill='%23000'/%3E%3Cpath d='M138.218 69.785c2.461-.542 4.922 2.244 6.461 3.559 1.538 1.315 40.379 34.198 57.223 76.134a123.35 123.35 0 00-9.383 47.583 56.138 56.138 0 004.628 23.84h-36.485a58.688 58.688 0 01-5.106-3.729 59.206 59.206 0 01-19.261-28.854 192.439 192.439 0 01-7.23-54.16 276.533 276.533 0 015.23-58.416c.462-2.089 1.462-5.416 3.923-5.957zM202.671 3.322c1-1.47 1.853-2.399 3.314-2.399V137.02c-10.259-20.343-23.825-38.87-40.002-54.856a346.893 346.893 0 0136.688-78.842zM175.444 34.502c-6.307-5.261-25.535-20.504-28.304-22.515a6.376 6.376 0 00-2.556-1.56 6.347 6.347 0 00-2.982-.22c-1.923 0-3.23 2.167-4.153 4.643 0 0-4.154 13.772-8.461 33.811a367.946 367.946 0 0130.766 24.682 299.35 299.35 0 0115.69-38.841zM41 143.056a303.44 303.44 0 0127.996-12.148 278.511 278.511 0 01-3.462-39.15A376.626 376.626 0 0025.31 89.67c-3.923.464-5.461 1.315-6.692 3.095a10.5 10.5 0 00-.922 6.19c.384 4.41 4.46 19.884 23.304 44.102zM70.611 139.805a169.869 169.869 0 0018.152 51.452 91.86 91.86 0 0025.111 29.644H79.692c-19.754-3.284-36.825-8.066-50.614-14.788C3.235 193.346-.149 186.151.005 182.901c.154-3.249 1.615-5.803 6.768-9.284a318.2 318.2 0 0163.838-33.812z' fill='%23000'/%3E%3C/svg%3E");
+    background-size: 12.875rem;
+    background-position: 100% 100%;
+    background-repeat: no-repeat
+}
+
+.nsw-banner--dark .nsw-banner__bg {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='206' height='221' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M206 220.396a45.584 45.584 0 01-4.636-25.038 100.058 100.058 0 014.623-32.954l.013 57.992zM120.297 134.157a189.523 189.523 0 007.691 57.023 70.608 70.608 0 0018.483 29.743H130.78c-13.328-6.166-25.144-17.853-34.403-34.076-18.306-32.186-22.228-72.574-22.767-101.82-.692-33.657 1.923-41.472 2.846-44.799.923-3.327 2.307-4.565 5.153-4.565 5.461.155 29.15 9.981 51.609 26.77a12.946 12.946 0 00-4.259 3.83 13.056 13.056 0 00-2.202 5.3 332.33 332.33 0 00-6.46 62.594z' fill='%23fff'/%3E%3Cpath d='M138.218 69.785c2.461-.542 4.922 2.244 6.461 3.559 1.538 1.315 40.379 34.198 57.223 76.134a123.35 123.35 0 00-9.383 47.583 56.138 56.138 0 004.628 23.84h-36.485a58.688 58.688 0 01-5.106-3.729 59.206 59.206 0 01-19.261-28.854 192.439 192.439 0 01-7.23-54.16 276.533 276.533 0 015.23-58.416c.462-2.089 1.462-5.416 3.923-5.957zM202.671 3.322c1-1.47 1.853-2.399 3.314-2.399V137.02c-10.259-20.343-23.825-38.87-40.002-54.856a346.893 346.893 0 0136.688-78.842zM175.444 34.502c-6.307-5.261-25.535-20.504-28.304-22.515a6.376 6.376 0 00-2.556-1.56 6.347 6.347 0 00-2.982-.22c-1.923 0-3.23 2.167-4.153 4.643 0 0-4.154 13.772-8.461 33.811a367.946 367.946 0 0130.766 24.682 299.35 299.35 0 0115.69-38.841zM41 143.056a303.44 303.44 0 0127.996-12.148 278.511 278.511 0 01-3.462-39.15A376.626 376.626 0 0025.31 89.67c-3.923.464-5.461 1.315-6.692 3.095a10.5 10.5 0 00-.922 6.19c.384 4.41 4.46 19.884 23.304 44.102zM70.611 139.805a169.869 169.869 0 0018.152 51.452 91.86 91.86 0 0025.111 29.644H79.692c-19.754-3.284-36.825-8.066-50.614-14.788C3.235 193.346-.149 186.151.005 182.901c.154-3.249 1.615-5.803 6.768-9.284a318.2 318.2 0 0163.838-33.812z' fill='%23fff'/%3E%3C/svg%3E")
+}

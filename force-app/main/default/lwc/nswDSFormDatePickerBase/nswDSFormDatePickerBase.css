@@ -1,0 +1,21 @@
+@import "c/nswDSForm";
+
+.date-triplet {
+    display: flex;
+}
+
+.date-triplet > div:not(:last-child) {
+    margin-right: 8px;
+}
+
+.date-triplet__day {
+    width: 80px;
+}
+
+.date-triplet__month {
+    width: 120px;
+}
+
+.date-triplet__year {
+    width: 90px;
+}

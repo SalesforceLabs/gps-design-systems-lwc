@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>NSW DS Content Block</masterLabel>
+    <description>A content block in the NSW Government Design System</description>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property label="Title" name="title"
+                type="String" role="inputOnly"
+                description="Title of the content block"></property>
+            <property label="Image Src" name="imageSrc"
+                type="String" role="inputOnly"
+                description="Image Source"></property>
+            <property label="Image Alt" name="imageAlt"
+                type="String" role="inputOnly"
+                description="Image Alternative Text"></property>
+            <property label="Content" name="content"
+                type="String" default="false" role="inputOnly"
+                description="Content in Markdown format"></property>
+            <property label="Links" name="links"
+                type="String" default="false" role="inputOnly"
+                description="Links in Markdown format"></property>
+            <property label="ButtonLink" name="buttonLink"
+                type="String" default="false" role="inputOnly"
+                description="Single Link for the button in Markdown format"></property>
+            <property label="NSW Class" name="nswClass"
+                type="String" default="false" role="inputOnly"
+                description="Additional styling to apply"></property>
+        </targetConfig>
+    </targetConfigs></LightningComponentBundle>

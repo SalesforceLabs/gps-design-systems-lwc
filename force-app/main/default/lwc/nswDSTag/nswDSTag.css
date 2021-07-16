@@ -1,0 +1,73 @@
+
+.nsw-tag:not(.nsw-tag--checkbox),.nsw-tag label {
+    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: .875rem;
+    line-height: 1.35;
+    border-radius: .8125rem;
+    border: 1px solid #2e5299;
+    padding: 2px 1rem;
+    color: #2e5299;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #fff
+}
+
+@media (min-width: 62em) {
+    .nsw-tag:not(.nsw-tag--checkbox),.nsw-tag label {
+        font-size:.875rem;
+        line-height: 1.35
+    }
+}
+
+a.nsw-tag:hover,button.nsw-tag:hover {
+    background-color: rgba(0,133,179,.2)
+}
+
+a.nsw-tag:focus,button.nsw-tag:focus {
+    outline: 3px solid #0085b3;
+    outline-offset: 0;
+    outline-offset: 3px
+}
+
+.button.nsw-tag .is-selected {
+    background-color: #2e5299;
+    color: #fff
+}
+
+.nsw-tag--checkbox {
+    display: inline-block
+}
+
+.nsw-tag--checkbox input {
+    position: absolute;
+    opacity: 0
+}
+
+.nsw-tag--checkbox input:hover+label {
+    background-color: rgba(0,133,179,.2)
+}
+
+.nsw-tag--checkbox input:focus+label {
+    outline: 3px solid #0085b3;
+    outline-offset: 0;
+    outline-offset: 3px
+}
+
+.nsw-tag--checkbox input:checked+label {
+    background-color: #2e5299;
+    color: #fff
+}
+
+.nsw-tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -1rem -.5rem 0 0
+}
+
+.nsw-tags .nsw-tag {
+    margin: 1rem .5rem 0 0
+}
+

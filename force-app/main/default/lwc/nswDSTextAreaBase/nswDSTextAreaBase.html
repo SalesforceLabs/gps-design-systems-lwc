@@ -1,0 +1,46 @@
+<template>
+    <div class="nsw-body-content">
+        <div class="nsw-form">
+            <div class="nsw-form-group">
+                <c-nsw-d-s-legend-base if:true={isLegend}
+                    label={label}
+                    required={required}
+                    helper={helper}
+                >
+                </c-nsw-d-s-legend-base>
+                <c-nsw-d-s-form-label if:false={isLegend}
+                    label={label}
+                    required={required}
+                    helper={helper}
+                >
+                </c-nsw-d-s-form-label>
+
+                <div class="slds-grow textarea-container">
+                    <textarea 
+                        class="nsw-form-input"
+                        aria-invalid={hasError}
+                        name={name}
+                        maxlength={maxLength}
+                        minlength={minLength}
+                        placeholder={placeholder}
+                        required={required}
+                        readonly={readOnly}
+                        disabled={disabled}
+                        accesskey={accessKey}
+                        oninput={handleInput}
+                        onchange={handleChange}
+                        onfocus={handleFocus}
+                        onblur={handleBlur}
+                    >
+                        {_defaultValue}
+                    </textarea>   
+                </div>
+
+                <span if:true={_hasError}
+                    class="nsw-form-helper nsw-form-helper--error">
+                    {_errorText}
+                </span>
+            </div> 
+        </div>    
+    </div>
+</template>

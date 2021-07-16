@@ -1,0 +1,43 @@
+@import 'c/nswDSBase';
+
+.nsw-body-content blockquote,.nsw-wysiwyg-content blockquote {
+    font-size: 1.375rem;
+    line-height: 1.25;
+    margin-top: 1rem;
+    border-left: 6px solid #d7153a;
+    padding: 1.25rem 1.5rem
+}
+
+@media (min-width: 62em) {
+    .nsw-body-content blockquote,.nsw-wysiwyg-content blockquote {
+        font-size:1.5rem;
+        line-height: 1.25
+    }
+}
+
+@media (min-width: 48em) {
+    .nsw-body-content blockquote,.nsw-wysiwyg-content blockquote {
+        margin-left:auto;
+        margin-right: auto;
+        max-width: 75%
+    }
+}
+
+.nsw-body-content cite,.nsw-wysiwyg-content cite {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-top: 1rem;
+    display: block;
+    font-style: normal
+}
+
+@media (min-width: 62em) {
+    .nsw-body-content cite,.nsw-wysiwyg-content cite {
+        font-size:1rem;
+        line-height: 1.5
+    }
+}
+
+.nsw-body-content cite:before,.nsw-wysiwyg-content cite:before {
+    content: "— "
+}

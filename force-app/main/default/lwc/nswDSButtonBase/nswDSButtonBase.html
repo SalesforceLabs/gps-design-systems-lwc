@@ -1,0 +1,15 @@
+<template>
+    <div>
+        <template if:true={isLinkButton}>
+            <a href={buttonUrl} class={buttonClass}>{buttonLabel}</a>
+        </template>  
+
+        <template if:true={isActionButton}>
+            <button type={actionType} class={buttonClass}>{buttonLabel}</button>
+        </template>
+
+        <template if:true={isInputButton}>
+            <input type={actionType} class={buttonClass} value={buttonLabel}>      
+        </template>
+    </div>
+</template>
