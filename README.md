@@ -1,18 +1,25 @@
-# Salesforce DX Project: Next Steps
+# A collection of Lightning Web Components that align with NSW DS
+This is a collection of LWCs that aligns with the [design system of Australia's New South Wales government](https://www.digital.nsw.gov.au/digital-service-toolkit/design-system)
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Work is still in progress and the following items have been implemented:
+* Banner
+* Blockquote
+* Button
+* Callout
+* Card
+* Content block
+* Global alert
+* Hero banner
+* In-page notification
+* Breadcrumb
+* Checkbox group
+* Radio group
+* Text area
+* General Input (partially) for text, numbers, checkbox, date
+* Record Lookup
 
-## How Do You Plan to Deploy Your Changes?
+They all come as base non-exposed components, and for a vast majority have versions exposed for Flow and Experience Cloud targets.
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+## How do I learn more
 
-## Configure Your Salesforce DX Project
-
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
-
-## Read All About It
-
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+Check our [gallery](https://nsw.dsforce.dev) at [https://nsw.dsforce.dev](https://nsw.dsforce.dev) for an illustration of the components and how they can be configured.
