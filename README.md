@@ -1,7 +1,9 @@
 # A collection of Lightning Web Components that align with NSW DS
-This is a collection of LWCs that aligns with the [design system of Australia's New South Wales government](https://www.digital.nsw.gov.au/digital-service-toolkit/design-system)
+This is a collection of LWCs that aligns with the [design system of Australia's New South Wales government](https://www.digital.nsw.gov.au/digital-service-toolkit/design-system).
 
-Work is still in progress and the following items have been implemented:
+Use it to design and build consistent customer experiences across NSW government products and services with Salesforce.
+
+Work is still in progress and only the following items have been implemented so far:
 * Banner
 * Blockquote
 * Button
