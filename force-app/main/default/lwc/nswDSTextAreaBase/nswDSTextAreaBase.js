@@ -5,20 +5,30 @@ import { TouchScroller } from "c/nswTouchScrollLibrary";
 import { generateUniqueId } from "c/nswInputUtils";
 
 export default class NswDSTextAreaBase extends LightningElement {
-    @api label="Text Area";
+    @api label;
     @api name = generateUniqueId();
     @api helper;
     @api isLegend = false;
     @api placeholder;
     @api accessKey;
 
+    _validateOnBlur = true;
+    @api get validateOnBlur() {
+        return this._validateOnBlur
+    }
+
+    set validateOnBlur(value) {
+        if (value !== undefined)
+            this._validateOnBlur = value;
+    }
+
+
     @api messageWhenBadInput;
     @api messageWhenTooShort;
     @api messageWhenTooLong;
     @api messageWhenValueMissing;
 
-    @track _defaultValue = "";
-
+    
     // ---- connected
     _connected = false;
     interactingState;
@@ -26,6 +36,7 @@ export default class NswDSTextAreaBase extends LightningElement {
     connectedCallback() {
         this._connected = true;
         this.interactingState = new InteractingState();
+        this.interactingState.onleave(() => { if (this._validateOnBlur) this.showHelpMessageIfInvalid() });
     }
 
     disconnectedCallback() {
@@ -33,6 +44,7 @@ export default class NswDSTextAreaBase extends LightningElement {
     }
 
     // ---- rendered
+
     _rendered = false;
 
     renderedCallback() {
@@ -47,32 +59,45 @@ export default class NswDSTextAreaBase extends LightningElement {
 
 
     // ---- maxLength
-    @track _maxLength = 255;
+
+    @track _maxLength;
 
     @api get maxLength() {
         return this._maxLength;
     }
 
     set maxLength(value) {
+        if (value === undefined || value === null || isNaN(value) || isNaN(parseInt(value))) {
+            return;
+        }
+
         this._maxLength = value;
         this._updateProxyInputAttributes("maxlength");
     }
 
 
     // ---- minLength
+
     @track _minLength = 0;
 
     @api get minLength() {
         return this._minLength;
     }
+
     set minLength(value) {
+        if (value === undefined || value === null || isNaN(value) || isNaN(parseInt(value))) {
+            return;
+        }
+
         this._minLength = value;
         this._updateProxyInputAttributes("minlength");
     }
 
 
     // ---- value
-    // TODO _value
+
+    _value;
+    @track _defaultValue = "";
 
     @api get value() {
         return this._value;
@@ -92,11 +117,13 @@ export default class NswDSTextAreaBase extends LightningElement {
 
 
     // ---- disabled
+
     @track _disabled = false;
 
     @api get disabled() {
         return this._disabled;
     }
+
     set disabled(value) {
         this._disabled = normalizeBoolean(value);
         this._updateProxyInputAttributes("disabled");
@@ -104,6 +131,7 @@ export default class NswDSTextAreaBase extends LightningElement {
 
 
     // ---- readOnly
+
     @track _readOnly = false;
 
     @api get readOnly() {
@@ -117,6 +145,7 @@ export default class NswDSTextAreaBase extends LightningElement {
 
 
     // ---- required
+
     @track _required = false;
 
     @api get required() {
@@ -130,6 +159,32 @@ export default class NswDSTextAreaBase extends LightningElement {
 
 
     // ---- validity
+
+    get _constraint() {
+        if (!this._constraintApi) {
+            this._constraintApi = new FieldConstraintApiWithProxyInput(() => this, {
+                    valueMissing: () =>
+                        this._required && isEmptyString(this._value),
+                    tooShort: () =>
+                        this._connected && this.inputElement.validity.tooShort,
+                    tooLong: () =>
+                        this._connected && this.inputElement.validity.tooLong
+                },
+                "textarea");
+
+            this._constraintApiProxyInputUpdater = this._constraint.setInputAttributes({
+                value: () => this.value,
+                maxlength: () => this.maxLength,
+                minlength: () => this.minLength,
+                disabled: () => this.disabled,
+                readonly: () => this.readOnly,
+                required: () => this.required
+            });
+        }
+
+        return this._constraintApi;
+    }
+
     @api get validity() {
         return this._constraint.validity;
     }
@@ -138,9 +193,20 @@ export default class NswDSTextAreaBase extends LightningElement {
         return this._constraint.checkValidity();
     }
 
+    @api reportValidity() {
+        return this._constraint.reportValidity((message) => {
+            this._errorText = message;
+        });
+    }
+
     @api setCustomValidity(message) {
         this._constraint.setCustomValidity(message);
     }
+
+    @api showHelpMessageIfInvalid() {
+        this.reportValidity();
+    }
+
 
     // ---- methods
 
@@ -153,6 +219,13 @@ export default class NswDSTextAreaBase extends LightningElement {
     @api blur() {
         if (this._connected) {
             this.inputElement.blur();
+        }
+    }
+
+    @api setRangeText() {
+        if (this._connected) {
+            this.inputElement.setRangeText.apply(this.inputElement, arguments);
+            this.value = this.inputElement.value;
         }
     }
 
@@ -181,7 +254,6 @@ export default class NswDSTextAreaBase extends LightningElement {
         }
 
         this.interactingState.interacting();
-
         this._value = this.inputElement.value;
         this._updateProxyInputAttributes("value");
 
@@ -196,31 +268,6 @@ export default class NswDSTextAreaBase extends LightningElement {
         );
     }
 
-    // ---- constraint
-
-    get _constraint() {
-        if (!this._constraintApi) {
-            this._constraintApi = new FieldConstraintApiWithProxyInput(() => this, {
-                    valueMissing: () =>
-                        this._required && isEmptyString(this._value),
-                    tooShort: () =>
-                        this._connected && this.inputElement.validity.tooShort,
-                    tooLong: () =>
-                        this._connected && this.inputElement.validity.tooLong
-                },
-                "textarea");
-
-            this._constraintApiProxyInputUpdater = this._constraint.setInputAttributes({
-                value: () => this.value,
-                maxlength: () => this.maxLength,
-                minlength: () => this.minLength,
-                disabled: () => this.disabled,
-                readonly: () => this.readOnly,
-                required: () => this.required
-            });
-        }
-        return this._constraintApi;
-    }
 
     
     // ---- internal utilities
@@ -248,17 +295,45 @@ export default class NswDSTextAreaBase extends LightningElement {
 
     // ---- errorText: String
 
-    _errorText = ""; // "Please select at least one option";
+    @track _errorText = ""; // "Please select at least one option";
 
     get hasError() {
         return this._errorText ? this._errorText.length > 0 : false;
     }  
+
+
+    /**
+     * For flow
+     * @returns flow validation status
+     */
+
+    _flowErrorText = "";
+
+    reportValidityFlow() {
+        return this._constraint.reportValidity((message) => {
+            this._flowErrorText = message;
+        });
+    }
+
+    @api validate() {
+        if (this.reportValidityFlow()) {
+            return {
+                isValid: true
+            }
+        } else {
+            return {
+                isValid: false,
+                errorMessage: this._flowErrorText
+            }
+        }
+    }
+
 }
 
 NswDSTextAreaBase.interopMap = {
     exposeNativeEvent: {
         change: true,
         focus: true,
-        blue: true
+        blur: true
     }
 };

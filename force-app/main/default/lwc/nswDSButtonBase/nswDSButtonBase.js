@@ -25,5 +25,11 @@ export default class NswDSButtonBase extends LightningElement {
         return this.rendering.toUpperCase() == "INPUT";
     }
 
+    handleClick(event) {
+        this.dispatchEvent(
+            new CustomEvent("click", {
+                detail: { value: "click" },
+            }));
+    }
 
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>NSW DS Tags</masterLabel>
+    <description>A block of tags in the NSW Government Design System</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property label="Links" name="links"
+                type="String" description="Links in Markdown format"></property>
+            <property label="Labels" name="labels" default="Tag"
+                type="String" description="Labels as a semicolon-separated string as an alternative to links"></property>
+            <property label="NSW Class" name="nswClass"
+                type="String"
+                description="Additional styling to apply"></property>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property label="Links" name="links"
+                type="String" role="inputOnly"
+                description="Links in Markdown format"></property>
+            <property label="Labels" name="labels"
+                type="String" role="inputOnly"
+                description="Labels as a semicolon-separated string as an alternative to links"></property>
+            <property label="NSW Class" name="nswClass"
+                type="String" role="inputOnly"
+                description="Additional styling to apply"></property>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

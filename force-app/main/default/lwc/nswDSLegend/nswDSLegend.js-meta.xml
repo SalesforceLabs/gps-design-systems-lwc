@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>NSW DS Legend</masterLabel>
+    <description>A legend in the NSW Government Design System</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property label="Label" name="label" default="Legend"
+                type="String" description="The text to be displayed as a legend"></property>
+            <property label="Required" name="required"
+                type="Boolean" description="Renders a visual cue that the field is mandatory"></property>
+            <property label="Helper" name="helper"
+                type="String" description="Help text presented to the user"></property>
+            <property label="NSW Class" name="nswClass"
+                type="String" description="Additional styling to apply"></property>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property
+                label="Label" name="label"
+                type="String" description="The text to be displayed as a legend"
+                role="inputOnly"></property>
+            <property
+                label="Required" name="required"
+                type="Boolean" description="Renders a visual cue that the field is mandatory"
+                role="inputOnly"></property>
+            <property
+                label="Helper" name="helper"
+                type="String" description="Help text presented to the user"
+                role="inputOnly"></property>
+            <property label="NSW Class" name="nswClass"
+                type="String" role="inputOnly"
+                description="Additional styling to apply"></property>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

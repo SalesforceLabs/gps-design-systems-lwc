@@ -1,27 +1,25 @@
 <template>
-    <div class="nsw-form nsw-body-content">
+    <div class="nsw-form"> <!-- nsw-body-content"> -->
         <div class="nsw-form-group">
             <fieldset class="nsw-form-fieldset">
                 <c-nsw-d-s-legend-base if:true={isLegend} label={label} required={required} helper={helper}></c-nsw-d-s-legend-base>
                 <c-nsw-d-s-form-label if:false={isLegend} label={label} required={required} helper={helper}></c-nsw-d-s-form-label>
 
-                <div class="nsw-form-radio">
-                    <template for:each={transformedOptions} for:item="option">
+                <div class="nsw-form__radio">
+                    <template for:each={_displayOptions} for:item="option">
                         <span key={option.id}>
                             <input id={option.id} name={name} type="radio" value={option.value}
-                                    checked={option.isChecked} disabled={disabled} class="nsw-form-radio__input"
-                                    onclick={handleClick} onchange={handleChange}
-                                    onfocus={handleFocus} onblur={handleBlur}>
-                            <label for={option.id} class="nsw-form-radio__label">
-                                    {option.label}
+                                checked={option.isChecked} disabled={disabled} class="nsw-form__radio-input"
+                                onclick={handleClick} onchange={handleChange}
+                                onfocus={handleFocus} onblur={handleBlur}>
+                            <label for={option.id} class="nsw-form__radio-label">
+                                {option.label}
                             </label>     
                         </span>
                     </template>
                 </div>
 
-                <template if:true={hasError}>
-                    <span class="nsw-form-helper nsw-form-helper--error">{_errorText}</span>
-                </template>
+                <span if:true={hasError} class="nsw-form-helper nsw-form-helper--error">{_errorText}</span>
             </fieldset>
         </div>
     </div>   

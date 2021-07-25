@@ -1,19 +1,5 @@
 import localizationService from './defaultLocalizationConfig';
 
-function getConfigFromAura(A) {
-    return {
-        getLocalizationService() {
-            return A.localizationService;
-        },
-        getPathPrefix() {
-            return A.getContext().getPathPrefix();
-        },
-        getToken(name) {
-            return A.getToken(name);
-        },
-    };
-}
-
 function createStandAloneConfig() {
     return {
         getLocalizationService() {
@@ -34,10 +20,5 @@ function createStandAloneConfig() {
 }
 
 export function getDefaultConfig() {
-    /* TODO
-    return window.$A !== undefined && window.$A.localizationService
-        ? getConfigFromAura(window.$A)
-        : createStandAloneConfig();
-        */
-    return createStandAloneConfig(); // ESC
+    return createStandAloneConfig();
 }

@@ -1,5 +1,5 @@
 <template>
-    <nav aria-label="Breadcrumb" class="nsw-breadcrumb">
+    <nav aria-label="Breadcrumb" class={computedNavClass}>
         <ol class="nsw-breadcrumb__list">
             <template for:each={_breadcrumbs} for:item="item">
                 <li if:true={item.isButLast} key={item.index} class="nsw-breadcrumb__item">

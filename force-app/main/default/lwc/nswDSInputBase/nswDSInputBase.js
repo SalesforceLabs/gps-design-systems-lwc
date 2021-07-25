@@ -1,22 +1,9 @@
-/*
-import labelA11yTriggerText from '@salesforce/label/LightningColorPicker.a11yTriggerText';
-import labelInputFileBodyText from '@salesforce/label/LightningInputFile.bodyText';
-import labelInputFileButtonLabel from '@salesforce/label/LightningInputFile.buttonLabel';
-import labelMessageToggleActive from '@salesforce/label/LightningControl.activeCapitalized';
-import labelMessageToggleInactive from '@salesforce/label/LightningControl.inactiveCapitalized';
-import labelRequired from '@salesforce/label/LightningControl.required';
-import labelClearInput from '@salesforce/label/LightningControl.clear';
-import labelLoadingIndicator from '@salesforce/label/LightningControl.loading';
-import labelNumberIncrementCounter from '@salesforce/label/LightningInputNumber.incrementCounter';
-import labelNumberDecrementCounter from '@salesforce/label/LightningInputNumber.decrementCounter';
-*/
-
 import { LightningElement, api, track } from 'lwc';
 import userTimeZone from '@salesforce/i18n/timeZone';
 import formFactor from '@salesforce/client/formFactor';
-import { assert, ContentMutation, getRealDOMId, isSafari, isNotUndefinedOrNull,
-    isUndefinedOrNull, normalizeAriaAttribute, normalizeBoolean, normalizeKeyValue,
-    normalizeString, synchronizeAttrs, decorateInputForDragon, setDecoratedDragonInputValueWithoutEvent } from "c/nswUtilsPrivate"
+import { assert, getRealDOMId, isSafari, isNotUndefinedOrNull,
+    isUndefinedOrNull, normalizeBoolean, normalizeKeyValue,
+    normalizeString, decorateInputForDragon, setDecoratedDragonInputValueWithoutEvent } from "c/nswUtilsPrivate"
 import { InteractingState, FieldConstraintApiWithProxyInput, generateUniqueId } from "c/nswInputUtils"
 import { normalizeInput } from './normalize';
 import {
@@ -44,12 +31,15 @@ import {
     isAfter,
 } from 'c/nswInternationalizationLibrary';
 
-/*
-const ARIA_CONTROLS = 'aria-controls';
-const ARIA_LABEL = 'aria-label';
-const ARIA_LABELEDBY = 'aria-labelledby';
-const ARIA_DESCRIBEDBY = 'aria-describedby';
-*/
+
+const i18n = {
+    messageToggleActive: "Active",
+    messageToggleInactive: "Inactive",
+    required: "required",
+    clear: "Clear",
+    loading: "Loading",
+    search: "Search"
+};
 
 const VALID_NUMBER_FORMATTERS = [
     'decimal',
@@ -63,7 +53,7 @@ const DEFAULT_FORMATTER = VALID_NUMBER_FORMATTERS[0];
 export default class NswDSInputBase extends LightningElement {
     static delegatesFocus = true;
 
-    @api label="Input";
+    @api label;
     @api name = generateUniqueId();
     @api helper;
     @api isLegend = false;
@@ -71,32 +61,24 @@ export default class NswDSInputBase extends LightningElement {
 
     @api messageWhenBadInput; // = 'Bad input';
     @api messageWhenPatternMismatch; // = 'Value does not match expected pattern';
-    @api messageWhenRangeOverflow; // = 'Value is too low';
-    @api messageWhenRangeUnderflow; // = 'Value is too high';
+    @api messageWhenRangeOverflow; // = 'Value is too high';
+    @api messageWhenRangeUnderflow; // = 'Value is too low';
     @api messageWhenStepMismatch; // = 'Value is not in the right precision';
     @api messageWhenTooShort; // = 'Value is too short';
     @api messageWhenTooLong; // = 'Value is too long';
     @api messageWhenTypeMismatch; // = 'Value type is not as expected';
     @api messageWhenValueMissing; // = 'Value is required';
 
-    @api messageToggleActive; // TODO = i18n.messageToggleActive;
-    @api messageToggleInactive; // TODO = i18n.messageToggleInactive;
+    @api messageToggleActive = i18n.messageToggleActive;
+    @api messageToggleInactive = i18n.messageToggleInactive;
 
-    //@api ariaLabel;
+    @api checkboxLabel;
+
     @api autocomplete;
 
     @api dateStyle = "medium";
     @api timeStyle;
-    //@api dateAriaLabel;
 
-    /*
-    @track _timeAriaDescribedBy;
-    @track _timeAriaLabelledBy;
-    @track _timeAriaControls;
-    @track _dateAriaControls;
-    @track _dateAriaDescribedBy;
-    @track _dateAriaLabelledBy;
-    */
     @track _value;
     @track _type = "text";
     @track _pattern;
@@ -131,13 +113,6 @@ export default class NswDSInputBase extends LightningElement {
     constructor() {
         super();
 
-        console.log('constructor, ', this, this.template, this.template.host);
-        //this.ariaObserver = new ContentMutation(this);
-
-        // Native Shadow Root will return [native code].
-        // Our synthetic method will return the function source.
-        this.isNative = this.template.querySelector.toString().match(/\[native code\]/);
-
         // The selection cache allows us an input to remember what text was selected
         // in cases where we change the text on blur or in browsers (Safari) that
         // don't track it properly.
@@ -149,11 +124,6 @@ export default class NswDSInputBase extends LightningElement {
     isConnected = false;
 
     connectedCallback() {
-        // Manually track connected state because this.template.isConnected can be false
-        // when input is created using createElement and inserted into dom manually.
-        // i.e. create an input element and pass it to showCustomOverlay
-        // Remove this state and the one in ContentMutation once the issue is fixed.
-        // PR: https://github.com/salesforce/lwc/pull/1798
         this.isConnected = true;
 
         this._validateRequiredAttributes();
@@ -185,7 +155,7 @@ export default class NswDSInputBase extends LightningElement {
         // Attach the event listener used to cache the selected text when selection changes.
         if (isSafari) {
             this._inputElement.addEventListener(
-                'select',
+                "select",
                 this.handleSelect.bind(this)
             );
         }
@@ -204,12 +174,8 @@ export default class NswDSInputBase extends LightningElement {
             this._initialValueSet = true;
         }
 
-        console.log('*** prearia sync');
         //this.ariaObserver.sync();
-        console.log('*** presyncA11y');
         //this._synchronizeA11y();
-        console.log('< rendered');
-
     }
 
 
@@ -231,192 +197,6 @@ export default class NswDSInputBase extends LightningElement {
 
     
     /**
-     * A space-separated list of element IDs whose presence or content is controlled by the
-     * time input when type='datetime'. On mobile devices, this is merged with aria-controls
-     * and date-aria-controls to describe the native date time input.
-     * @type {string}
-     */
-
-    /*
-    @api
-    get timeAriaControls() {
-        return this._timeAriaControls;
-    }
-
-    set timeAriaControls(references) {
-        this._timeAriaControls = references;
-        this.ariaObserver.connectLiveIdRef(references, (reference) => {
-            this._timeAriaControls = reference;
-        });
-    }
-*/
-
-    /**
-     * A space-separated list of element IDs that provide labels for the date input when type='datetime'.
-     * On mobile devices, this is merged with aria-labelled-by and time-aria-labelled-by to describe
-     * the native date time input.
-     * @type {string}
-     */
-/*    
-    @api
-    get dateAriaLabelledBy() {
-        return this._dateAriaLabelledBy;
-    }
-
-    set dateAriaLabelledBy(references) {
-        this._dateAriaLabelledBy = references;
-        this.ariaObserver.connectLiveIdRef(references, (reference) => {
-            this._dateAriaLabelledBy = reference;
-        });
-    }
-*/    
-
-    /**
-     * A space-separated list of element IDs that provide labels for the time input when type='datetime'.
-     * On mobile devices, this is merged with aria-labelled-by and date-aria-labelled-by to describe
-     * the native date time input.
-     * @type {string}
-     *
-     */
-/*    
-    @api
-    get timeAriaLabelledBy() {
-        return this._timeAriaLabelledBy;
-    }
- 
-    set timeAriaLabelledBy(references) {
-        this._timeAriaLabelledBy = references;
-        this.ariaObserver.connectLiveIdRef(references, (reference) => {
-            this._timeAriaLabelledBy = reference;
-        });
-    }
-*/
-
-    /**
-     * A space-separated list of element IDs that provide descriptive labels for the time input when
-     * type='datetime'. On mobile devices, this is merged with aria-described-by and date-aria-described-by
-     * to describe the native date time input.
-     *  @type {string}
-     *
-     */
-/*    
-    @api
-    get timeAriaDescribedBy() {
-        return this._timeAriaDescribedBy;
-    }
- 
-    set timeAriaDescribedBy(references) {
-        this._timeAriaDescribedBy = references;
-        this.ariaObserver.connectLiveIdRef(references, (reference) => {
-            this._timeAriaDescribedBy = reference;
-        });
-    }
-*/
-
-    /**
-     * A space-separated list of element IDs that provide descriptive labels for the date input when
-     * type='datetime'. On mobile devices, this is merged with aria-described-by and time-aria-described-by
-     * to describe the native date time input.
-     * @type {string}
-     */
-/*    
-    @api
-    get dateAriaDescribedBy() {
-        return this._dateAriaDescribedBy;
-    }
- 
-    set dateAriaDescribedBy(references) {
-        this._dateAriaDescribedBy = references;
-        this.ariaObserver.connectLiveIdRef(references, (reference) => {
-            this._dateAriaDescribedBy = reference;
-        });
-    }
-*/
-
-    /**
-     * A space-separated list of element IDs whose presence or content is controlled by the input.
-     * @type {string}
-     */
-/*    
-    @api
-    get ariaControls() {
-        return this._ariaControls;
-    }
-
-    set ariaControls(references) {
-        this._ariaControls = references;
-        this.ariaObserver.link(
-            'input',
-            'aria-controls',
-            references,
-            '[data-aria]'
-        );
-    }
-*/ 
-
-    /**
-     * A space-separated list of element IDs that provide labels for the input.
-     * @type {string}
-     */
-/*    
-    @api
-    get ariaLabelledBy() {
-        if (this.isNative) {
-            if (!this.template.querySelector('input')) {
-                return null
-            }; // ESC
-            // native version returns the auto linked value
-            const ariaValues = this.template
-                .querySelector('input')
-                .getAttribute('aria-labelledby');
-            return filterNonAutoLink(ariaValues);
-        }
-        return this._ariaLabelledBy;
-    }
-
-    set ariaLabelledBy(references) {
-        this._ariaLabelledBy = references;
-        this.ariaObserver.link(
-            'input',
-            'aria-labelledby',
-            references,
-            '[data-aria]'
-        );
-    }
-*/
-
-    /**
-     * A space-separated list of element IDs that provide descriptive labels for the input.
-     * @type {string}
-     */
-/*    
-    @api
-    get ariaDescribedBy() {
-        if (this.isNative) {
-            if (!this.template.querySelector('input')) {
-                return null
-            }; // ESC
-            // in native case return the linked value
-            const ariaValues = this.template
-                .querySelector('input')
-                .getAttribute('aria-describedby');
-            return filterNonAutoLink(ariaValues);
-        }
-        return this._ariaDescribedBy;
-    }
-
-    set ariaDescribedBy(references) {
-        this._ariaDescribedBy = references;
-        this.ariaObserver.link(
-            'input',
-            'aria-describedby',
-            references,
-            '[data-aria]'
-        );
-    }
-*/
-
-    /**
      * String value with the formatter to be used for number input. Valid values include
      * decimal, percent, percent-fixed, and currency.
      * @type {string}
@@ -437,7 +217,7 @@ export default class NswDSInputBase extends LightningElement {
 
 
     /**
-     * The type of the input. Valid values are checkbox, checkbox-button,
+     * The type of the input. Valid values are checkbox,
      * color, date, datetime, time, email, file, password, range, search,
      * tel, url, number, and toggle. This value defaults to text.
      * @type {string}
@@ -450,17 +230,9 @@ export default class NswDSInputBase extends LightningElement {
     }
 
     set type(value) {
-        console.log('> set type');
-
         const normalizedValue = normalizeString(value);
         this._type = (normalizedValue === 'datetime') ? 'datetime-local' : normalizedValue;
-
-        console.log('*** prevalidate');
-
         this._validateType(normalizedValue);
-
-        console.log('*** postvalidate');
-
         this._inputElementRefreshNeeded = true;
 
         if (this._rendered) {
@@ -474,8 +246,6 @@ export default class NswDSInputBase extends LightningElement {
             }
         }
 
-        console.log('*** preproxy');
-
         this._updateProxyInputAttributes([
             'type',
             'value',
@@ -484,8 +254,6 @@ export default class NswDSInputBase extends LightningElement {
             'required',
             'pattern',
         ]);
-
-        console.log('< set type');
     }
 
 
@@ -640,8 +408,6 @@ export default class NswDSInputBase extends LightningElement {
     }
 
     set step(value) {
-        console.log('> set step');
-
         if (typeof value === 'string' && value.toLowerCase() === 'any') {
             this._step = 'any';
         } else {
@@ -653,8 +419,6 @@ export default class NswDSInputBase extends LightningElement {
 
         this._updateProxyInputAttributes('step');
         this._updateInputDisplayValueIfTypeNumber();
-
-        console.log('< set step');
     }
 
 
@@ -720,7 +484,6 @@ export default class NswDSInputBase extends LightningElement {
     }
 
     set value(value) {
-        console.log('> set value');
         const previousValue = this._value;
 
         this._value = normalizeInput(value);
@@ -751,9 +514,6 @@ export default class NswDSInputBase extends LightningElement {
                 this._setInputValue(this._displayedValue);
             }
         }
-
-        console.log('> set value');
-
     }
 
     /**
@@ -837,6 +597,7 @@ export default class NswDSInputBase extends LightningElement {
 
     
     // ---- all
+
     /**
      * Specifies a shortcut key to activate or focus an element.
      * @type {string}
@@ -855,6 +616,7 @@ export default class NswDSInputBase extends LightningElement {
 
 
     // ---- file
+
     /**
      * A FileList that contains selected files. Use this attribute with the file input type only.
      * @type {object}
@@ -870,7 +632,10 @@ export default class NswDSInputBase extends LightningElement {
     }
 
 
-    // ---- all
+    // ---- validity
+
+    __errorMessage;
+
     /**
      * Represents the validity states that an element can be in, with respect to constraint validation.
      * @type {object}
@@ -911,14 +676,14 @@ export default class NswDSInputBase extends LightningElement {
     
     @api
     reportValidity() {
-        return this._constraint.reportValidity((message) => {
+        let r=  this._constraint.reportValidity((message) => {
             if (this._rendered && !this.isNativeInput) {
-                console.log('TODO reportValidation showHelpMessage');
-                // TODO this._inputElement.showHelpMessage(message);
+                this._inputElement.showHelpMessage(message);
             } else {
                 this._helpMessage = message;
             }
         });
+        console.log("reporting validity", r);
     }
 
 
@@ -930,6 +695,32 @@ export default class NswDSInputBase extends LightningElement {
     @api
     showHelpMessageIfInvalid() {
         this.reportValidity();
+    }
+
+    /**
+     * For flow
+     * @returns flow validation status
+     */
+
+     _flowErrorText = "";
+
+     @api reportValidityFlow() {
+         return this._constraint.reportValidity((message) => {
+             this._flowErrorText = message;
+         });
+     }
+ 
+     @api validate() {
+        if (this.reportValidity()) {
+            return {
+                isValid: true
+            }
+        } else {
+            return {
+                isValid: false,
+                errorMessage: this._flowErrorText
+            }
+        }
     }
  
 
@@ -980,7 +771,6 @@ export default class NswDSInputBase extends LightningElement {
     // ---- event management
 
     @api focus() {
-        console.log('> focus');
         if (this._rendered) {
             this._inputElement.focus();
         }
@@ -993,82 +783,17 @@ export default class NswDSInputBase extends LightningElement {
     }
 
 
-    // ---- aria
-/*
-    get computedAriaControls() {
-        const ariaValues = [];
-
-        // merge all date & time arias on mobile since it's displayed as a single field
-        if (this.isTypeMobileDateTime) {
-            ariaValues.push(this.dateAriaControls);
-            ariaValues.push(this.timeAriaControls);
-        }
-        if (this.ariaControls) {
-            ariaValues.push(this.ariaControls);
-        }
-
-        return normalizeAriaAttribute(ariaValues);
-    }
-
-    get computedAriaLabel() {
-        const ariaValues = [];
-
-        // merge all date & time arias on mobile since it's displayed as a single field
-        if (this.isTypeMobileDateTime) {
-            ariaValues.push(this.dateAriaLabel);
-            ariaValues.push(this.timeAriaLabel);
-        }
-        if (this.ariaLabel) {
-            ariaValues.push(this.ariaLabel);
-        }
-
-        return normalizeAriaAttribute(ariaValues);
-    }
-
-    get computedAriaLabelledBy() {
-        const ariaValues = [];
-
-        if (this.isTypeFile) {
-            ariaValues.push(this.computedUniqueFileElementLabelledById);
-        }
-        // merge all date & time arias on mobile since it's displayed as a single field
-        if (this.isTypeMobileDateTime) {
-            ariaValues.push(this.dateAriaLabelledBy);
-            ariaValues.push(this.timeAriaLabelledBy);
-        }
-        if (this.ariaLabelledBy) {
-            ariaValues.push(this.ariaLabelledBy);
-        }
-
-        return normalizeAriaAttribute(ariaValues);
-    }
-
-    get computedAriaDescribedBy() {
-        const ariaValues = [];
-
-        if (this._helpMessage) {
-            ariaValues.push(this.computedUniqueHelpElementId);
-        }
-        // The toggle type is described by a secondary element
-        if (this.isTypeToggle) {
-            ariaValues.push(this.computedUniqueToggleElementDescribedById);
-        }
-        // merge all date & time arias on mobile since it's displayed as a single field
-        if (this.isTypeMobileDateTime) {
-            ariaValues.push(this.dateAriaDescribedBy);
-            ariaValues.push(this.timeAriaDescribedBy);
-        }
-        if (this.ariaDescribedBy) {
-            ariaValues.push(this.ariaDescribedBy);
-        }
-
-        return normalizeAriaAttribute(ariaValues);
-    }
-*/
     get computedAriaInvalid() {
         // W-8796658: aria-invalid should always follow the visual indication of errors
 
         return !!this._helpMessage;
+    }
+
+    
+    // ---- i18n
+
+    get i18n() {
+        return i18n;
     }
 
 
@@ -1170,7 +895,6 @@ export default class NswDSInputBase extends LightningElement {
     get isTypeCheckable() {
         return (
             this.isTypeCheckbox ||
-            this.isTypeCheckboxButton ||
             this.isTypeRadio ||
             this.isTypeToggle
         );
@@ -1194,10 +918,6 @@ export default class NswDSInputBase extends LightningElement {
 
     get isTypeRadio() {
         return this.type === 'radio';
-    }
-
-    get isTypeCheckboxButton() {
-        return this.type === 'checkbox-button';
     }
 
     get isTypeFile() {
@@ -1247,7 +967,6 @@ export default class NswDSInputBase extends LightningElement {
     get isTypeSimple() {
         return (
             !this.isTypeCheckbox &&
-            !this.isTypeCheckboxButton &&
             !this.isTypeToggle &&
             !this.isTypeRadio &&
             !this.isTypeFile &&
@@ -1321,15 +1040,14 @@ export default class NswDSInputBase extends LightningElement {
             this._inputDragonDecorated = false;
             let inputElement;
             if (this.isTypeDesktopDate) {
-                //inputElement = this.template.querySelector('input');
-                inputElement = this.template.querySelector('c-nsw-d-s-form-date-picker-base');
+                inputElement = this.template.querySelector('c-nsw-d-s-date-picker-base');
             }             /* TODO
             else if (this.isTypeDesktopDateTime) {
                 inputElement = this.template.querySelector(
                     'lightning-datetimepicker'
                 );
             } */ else if (this.isTypeDesktopTime) {
-                inputElement = this.template.querySelector('c-nsw-d-s-form-time-picker-base');
+                inputElement = this.template.querySelector('c-nsw-d-s-time-picker-base');
             } else {
                 inputElement = this.template.querySelector('input');
                 this._inputDragonDecorated = true;
@@ -1399,8 +1117,6 @@ export default class NswDSInputBase extends LightningElement {
     _constraintApiProxyInputUpdater;
 
     get _constraint() {
-        console.log('> get _constraint');
-
         if (!this._constraintApi) {
             const overrides = {
                 badInput: () => {
@@ -1592,8 +1308,6 @@ export default class NswDSInputBase extends LightningElement {
 
     handleChange(event) {
         event.stopPropagation();
-        console.log('handleChange');
-
         this._dispatchCommitEvent();
 
         if (this.isTypeSimple && this.value === event.target.value) {
@@ -1704,7 +1418,6 @@ export default class NswDSInputBase extends LightningElement {
     }
 
     _dispatchChangeEvent() {
-        console.log('_dispatchChangeEvent');
         this.interactingState.enter();
 
         const detail = {};
@@ -1738,11 +1451,9 @@ export default class NswDSInputBase extends LightningElement {
                 detail.value = normalizeTime(detail.value);
             }
 
-            console.log('prior _updateValueAndValidityAttribute');
             this._updateValueAndValidityAttribute(detail.value);
         }
 
-        console.log('prior _dispatchChangeEventWithDetail');
         this._dispatchChangeEventWithDetail(detail);
     }
 
@@ -1786,7 +1497,6 @@ export default class NswDSInputBase extends LightningElement {
 
     _updateValueAndValidityAttribute(value) {
         this._value = value;
-        console.log('_updateValueAndValidityAttribute to ', value);
         this._updateProxyInputAttributes('value');
     }
 
@@ -1893,8 +1603,8 @@ export default class NswDSInputBase extends LightningElement {
 /*
     _synchronizeA11y() {
         const input = this.template.querySelector('input');
-        const datepicker = this.template.querySelector('c-nsw-d-s-form-date-picker-base');
-        const timepicker = this.template.querySelector('c-nsw-d-s-form-time-picker-base');
+        const datepicker = this.template.querySelector('c-nsw-d-s-date-picker-base');
+        const timepicker = this.template.querySelector('c-nsw-d-s-time-picker-base');
 
         if (input) {
             synchronizeAttrs(input, {

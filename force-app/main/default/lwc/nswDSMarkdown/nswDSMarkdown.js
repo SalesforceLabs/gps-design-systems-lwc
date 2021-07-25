@@ -23,12 +23,14 @@ export default class NswDSMarkdown {
         return this.writer.render(node);
     }
 
-    renderLinks(markdown) {
+
+    extractLinks(markdown) {
         let ast = this.parse(markdown),
             walker = ast.walker(),
             event,
             type,
-            html = "";
+            index = 1,
+            links = [];
 
         while ((event = walker.next())) {
             type = event.node.type;
@@ -36,11 +38,17 @@ export default class NswDSMarkdown {
                 if (event.node.attrs == null) {
                     event.node.attrs = [];
                 } 
-                html += "<li>" + this.renderNode(event.node) + "</li>";
+
+                const node = new DOMParser().parseFromString(this.renderNode(event.node), "text/html").body.firstElementChild;
+                links.push({
+                    url: node.getAttribute("href"),
+                    text: node.textContent,
+                    index: index++
+                });
             }
         }
 
-        return html;
+        return links;
     }
 
     // ---- extractFirstLink(String markdown) returns { url: String, text: String }

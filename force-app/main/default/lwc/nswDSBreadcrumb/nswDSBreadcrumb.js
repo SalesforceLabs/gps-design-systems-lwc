@@ -9,7 +9,6 @@ export default class NswDSBreadcrumb extends LightningElement {
     @track _breadcrumbs;
 
     @api set items(markdown) {
-        console.log('bc');
         this._items = normalizeString(markdown, { toLowerCase: false });
         let breadcrumbs = [];
 
@@ -50,8 +49,9 @@ export default class NswDSBreadcrumb extends LightningElement {
         return this._items;
     }
 
-    renderedCallback() {
-        console.log('> rendered bc');
-        console.log('rendered bc ', this, this.template, this.template.host);
+    @api nswClass;
+
+    get computedNavClass() {
+        return "nsw-breadcrumb" + (this.nswClass ? " " + this.nswClass : "")
     }
 }

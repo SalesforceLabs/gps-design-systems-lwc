@@ -1,0 +1,8 @@
+<template>
+    <div class={computedDivClass}>
+        <template for:each={_links} for:item="item">
+            <a if:true={item.url} key={item.id} href={item.url} class="nsw-tag">{item.text}</a>
+            <span if:false={item.url} key={item.id} class="nsw-tag">{item.text}</span>
+        </template>
+    </div>    
+</template>

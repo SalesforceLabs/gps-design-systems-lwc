@@ -1,8 +1,10 @@
 <template>
     <div class="nsw-body-content">
         <div class="nsw-form">
-            <div class="nsw-form-group">
+           <div class="nsw-form-group">
+<!--
                 <fieldset class="nsw-form-fieldset">
+--> 
                     <template if:true={isTypeSimple}>
                         <c-nsw-d-s-legend-base if:true={isLegend}
                             label={label}
@@ -43,19 +45,19 @@
                             <template if:true={isTypeSearch}>
                                 <template if:true={_showClearButton}>
                                     <div data-element-id="searchClear" class="nsw-form-search__clear" onblur={handleBlur} onclick={_clearAndSetFocusOnInput}>
-                                        <i class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">clear</i>
-                                        <span class="sr-only">Clear</span>
+                                        <i class="material-icons nsw-material-icons" aria-hidden="true">clear</i>
+                                        <span class="sr-only">{i18n.clear}</span>
                                     </div>
                                 </template>
 
                                 <button class="nsw-form-search__submit" type="submit">
-                                    <i class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">search</i>
-                                    <span class="sr-only">Search</span>
+                                    <i class="material-icons nsw-material-icons" aria-hidden="true">search</i>
+                                    <span class="sr-only">{i18n.search}</span>
                                 </button>
 
                                 <template if:true={isLoading}>
                                     <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_x-small slds-input__spinner">
-                                        <span class="slds-assistive-text">Loading TODO i18n</span>
+                                        <span class="slds-assistive-text">{i18n.loading}</span>
                                         <div class="slds-spinner__dot-a"></div>
                                         <div class="slds-spinner__dot-b"></div>
                                     </div>
@@ -91,7 +93,7 @@
                                 required={required}
                                 readonly={readOnly}
                                 disabled={disabled}>
-                            <span id="toggle-description" data-toggle-description  class="slds-checkbox_faux_container" aria-live="assertive">
+                                <span id="toggle-description" data-toggle-description  class="slds-checkbox_faux_container" aria-live="assertive">
                                 <span class="slds-checkbox_faux"></span>
                                 <span class="slds-checkbox_on">{messageToggleActive}</span>
                                 <span class="slds-checkbox_off">{messageToggleInactive}</span>
@@ -106,31 +108,36 @@
                     </template>
 
                     <template if:true={isTypeCheckbox}>
-                        <fieldset class="nsw-form-fieldset">
-                            <div class="nsw-form-checkbox">
-                                <input
-                                    type="checkbox"
-                                    id="checkbox"
-                                    class="nsw-form-checkbox__input"
-                                    accesskey={accesskey}
-                                    onblur={handleBlur}
-                                    onfocus={handleFocus}
-                                    onchange={handleChange}
-                                    name={name}
-                                    required={required}
-                                    readonly={readOnly}
-                                    disabled={disabled}>
-                            </div>
-                            <label for="checkbox" class="nsw-form-checkbox__label">
-                                {label}
-                            </label>
-                        </fieldset>  
+                        <c-nsw-d-s-legend-base if:true={isLegend}
+                            label={label}
+                            required={required}
+                            helper={helper}>
+                        </c-nsw-d-s-legend-base>
+                        <c-nsw-d-s-form-label if:false={isLegend}
+                            label={label}
+                            required={required}
+                            helper={helper}>
+                        </c-nsw-d-s-form-label>
 
+                        <div class="nsw-form__checkbox">
+                            <input id="checkbox" name={name} type="checkbox"
+                                class="nsw-form__checkbox-input"
+                                accesskey={accesskey}
+                                onchange={handleChange}
+                                onfocus={handleFocus} onblur={handleBlur}
+                                required={required}
+                                readonly={readOnly}
+                                disabled={disabled}>
+                            <label for="checkbox" class="nsw-form__checkbox-label">
+                                {checkboxLabel}
+                            </label>     
+                        </div>
+        
                         <span if:true={computedAriaInvalid}
                             class="nsw-form-helper nsw-form-helper--error">
                             {_helpMessage}
                         </span>
-                    </template>
+                    </template>                
 <!-- TODO
                     <template if:true={isTypeFile}>
                         <span id="form-label" class={computedLabelClass} data-form-label>
@@ -219,7 +226,7 @@
 -->
 
                     <template if:true={isTypeDesktopDate}>
-                        <c-nsw-d-s-form-date-picker-base
+                        <c-nsw-d-s-date-picker-base
                             max={max}
                             min={min}
                             label={label}
@@ -242,11 +249,11 @@
                             message-when-range-underflow={messageWhenRangeUnderflow}
                             disabled={disabled}
                         >
-                        </c-nsw-d-s-form-date-picker-base>
+                        </c-nsw-d-s-date-picker-base>
                     </template>
                 
                     <template if:true={isTypeDesktopTime}>
-                        <c-nsw-d-s-form-time-picker-base
+                        <c-nsw-d-s-time-picker-base
                             max={max}
                             min={min}
                             label={label}
@@ -267,7 +274,7 @@
                             message-when-range-overflow={messageWhenRangeOverflow}
                             message-when-range-underflow={messageWhenRangeUnderflow}
                             disabled={disabled}>
-                        </c-nsw-d-s-form-time-picker-base>
+                        </c-nsw-d-s-time-picker-base>
                     </template>
 
                     <template if:true={isTypeDesktopDateTime}>
@@ -306,8 +313,9 @@
                         </lightning-datetimepicker>
                     -->
                     </template> <!-- isTypeDesktopDateTime -->
-
+<!--
                 </fieldset>
+-->
             </div> 
         </div>    
     </div>

@@ -21,16 +21,16 @@ const constraintsSortedByPriority = [
 ];
 
 const defaultLabels = {
-    badInput: "Enter a valid value.", //labelBadInput,
-    customError: "Enter a valid value.", //labelBadInput,
-    patternMismatch: "Your entry does not match the allowed pattern.", //labelPatternMismatch,
-    rangeOverflow: "The number is too high.", //labelRangeOverflow,
-    rangeUnderflow: "The number is too low.", //labelRangeUnderflow,
-    stepMismatch: "Your entry isn't a valid increment.", //labelStepMismatch,
-    tooLong: "Your entry is too long.", //labelTooLong,
-    tooShort: "Your entry is too short.", //labelTooShort,
-    typeMismatch: "You have entered an invalid format.", //labelTypeMismatch,
-    valueMissing: "Complete this field.", //labelValueMissing
+    badInput: "Enter a valid value", //labelBadInput,
+    customError: "Enter a valid value", //labelBadInput,
+    patternMismatch: "Your entry does not match the allowed pattern", //labelPatternMismatch,
+    rangeOverflow: "The number is too high", //labelRangeOverflow,
+    rangeUnderflow: "The number is too low", //labelRangeUnderflow,
+    stepMismatch: "Your entry isn't a valid increment", //labelStepMismatch,
+    tooLong: "Your entry is too long", //labelTooLong,
+    tooShort: "Your entry is too short", //labelTooShort,
+    typeMismatch: "You have entered an invalid format", //labelTypeMismatch,
+    valueMissing: "Complete this field", //labelValueMissing
 };
 
 function resolveBestMatch(validity) {
@@ -170,9 +170,6 @@ export class FieldConstraintApi {
         const valid = this.checkValidity();
 
         if (this.inputComponent) {
-            //TODO check for side effects
-            //this.inputComponent.classList.toggle('slds-has-error', !valid);
-
             if (callback) {
                 callback(this.validationMessage);
             }
@@ -182,6 +179,7 @@ export class FieldConstraintApi {
     }
 
     setCustomValidity(message) {
+        console.log('setCustomValidity', message);
         this._customValidityMessage = message;
     }
 

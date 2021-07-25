@@ -1,0 +1,15 @@
+<template>
+    <div class={nswClass}>
+        <div class="nsw-progress-indicator">
+            <div class="nsw-progress-indicator__count">Step {currentStep} of {totalSteps}</div>
+            <div class="nsw-progress-indicator__bar">
+                <template for:each={_activeSteps} for:item="step">
+                    <div key={step.key} class="nsw-progress-indicator__step nsw-progress-indicator__step--active"></div>
+                </template>
+                <template for:each={_inactiveSteps} for:item="step">
+                    <div key={step.key} class="nsw-progress-indicator__step"></div>
+                </template>
+            </div>
+        </div>        
+    </div>
+</template>

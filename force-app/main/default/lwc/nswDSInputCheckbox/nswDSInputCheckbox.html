@@ -1,0 +1,16 @@
+<template>
+    <c-nsw-d-s-input-base if:false={isButton} type="checkbox"
+        label={label} name={name} is-legend={isLegend} helper={helper} checked={value}
+        checkbox-label={checkboxLabel}
+        disabled={disabled} read-only={readOnly} required={required}
+        validate-on-blur={validateOnBlur} message-when-value-missing={messageWhenValueMissing}
+        onchange={handleChange}>
+    </c-nsw-d-s-input-base>
+    <c-nsw-d-s-input-base if:true={isButton} type="checkbox-button"
+        label={label} name={name} is-legend={isLegend} helper={helper} checked={value}
+        checkbox-label={checkboxLabel}
+        disabled={disabled} read-only={readOnly} required={required}
+        validate-on-blur={validateOnBlur} message-when-value-missing={messageWhenValueMissing}
+        onchange={handleChange}>
+    </c-nsw-d-s-input-base>
+</template>

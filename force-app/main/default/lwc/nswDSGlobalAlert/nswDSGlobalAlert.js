@@ -8,6 +8,7 @@ export default class NswDSGlobalAlert extends LightningElement {
     @api alertType = "default";
     @api title;
     @api content;
+    @track _isClosed;
     
 
     get alertTypeClass() {
@@ -43,7 +44,6 @@ export default class NswDSGlobalAlert extends LightningElement {
     
     get isLinkButton() {
         let lt = this.linkType.toString().toUpperCase();
-        console.log('isLinkButton', lt, this._buttonLabel);
         return lt === 'BUTTON' && this._buttonLabel && this._buttonLabel.trim().length > 0;
     }
 
@@ -56,4 +56,8 @@ export default class NswDSGlobalAlert extends LightningElement {
         return " ";
     }
 
+
+    handleClick(event) {
+        this._isClosed = true;
+    }
 }

@@ -1,0 +1,101 @@
+@import "c/nswDSForm";
+
+.nsw-sidenav__header {
+    border-bottom: 2px solid #002664
+}
+
+.nsw-sidenav__heading {
+    margin: 0;
+/*    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.5
+}
+
+@media (min-width: 62em) {
+    .nsw-sidenav__heading {
+        font-size:1rem;
+        line-height: 1.5
+    }
+}
+
+.nsw-sidenav__list {
+    margin: 0;
+    padding-left: 0;
+    list-style: none
+}
+
+.nsw-sidenav__list-item {
+/*    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 400;
+    border-top: 1px solid #e4e4e6
+}
+
+.nsw-sidenav__heading-link {
+    padding: .5rem .5rem .5rem 0;
+    display: block;
+    color: #333;
+    text-decoration: none;
+    background-color: #fff
+}
+
+.nsw-sidenav__heading-link:hover {
+    background-color: rgba(0,133,179,.2)
+}
+
+.nsw-sidenav__heading-link:focus {
+    outline: 3px solid #0085b3;
+    outline-offset: 0
+}
+
+.nsw-sidenav__link {
+    padding: 1rem;
+    display: block;
+    color: #333;
+    text-decoration: none;
+    background-color: #fff
+}
+
+.nsw-sidenav__link:hover {
+    background-color: rgba(0,133,179,.2)
+}
+
+.nsw-sidenav__link:focus {
+    outline: 3px solid #0085b3;
+    outline-offset: 0
+}
+
+.nsw-sidenav__link.is-current {
+    background-color: #f4f4f7
+}
+
+.has-active-children>.nsw-sidenav__link {
+/*    font-family: Montserrat,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+    font-weight: 600
+}
+
+.has-active-children>.nsw-sidenav__link:hover {
+    background-color: rgba(0,133,179,.2)
+}
+
+.nsw-sidenav__list--level-2 .nsw-sidenav__link {
+    padding-left: 1.5rem
+}
+
+.nsw-sidenav__list--level-3 .nsw-sidenav__link {
+    padding-left: 2rem
+}
+
+.nsw-sidenav__list--level-4 .nsw-sidenav__link {
+    padding-left: 3rem
+}
+
+.nsw-sidenav .nsw-sidenav__list--level-1>.has-active-children {
+    border-left: 2px solid #d7153a
+}

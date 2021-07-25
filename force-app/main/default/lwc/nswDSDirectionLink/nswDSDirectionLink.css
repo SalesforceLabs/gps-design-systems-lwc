@@ -1,8 +1,6 @@
+@import 'c/nswDSBase';
 
 .nsw-direction-link {
-    font-family: Montserrat,Arial,sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     font-weight: 600;
     position: relative;
     display: inline-flex;

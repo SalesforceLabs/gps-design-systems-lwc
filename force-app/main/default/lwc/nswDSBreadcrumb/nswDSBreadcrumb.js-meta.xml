@@ -11,12 +11,17 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightningCommunity__Default">
-            <property label="Items" name="items" type="String"></property>
-        </targetConfig>
+            <property label="Items" name="items"
+                type="String" description="Items in Markdown link format"></property>
+            <property label="NSW Class" name="nswClass"
+                type="String" description="Additional styling to apply"></property>        </targetConfig>
         <targetConfig targets="lightning__FlowScreen">
             <property label="Items" name="items"
                 type="String" role="inputOnly"
                 description="Item links in Markdown format"></property>
+            <property label="NSW Class" name="nswClass"
+                type="String" default="false" role="inputOnly"
+                description="Additional styling to apply"></property>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

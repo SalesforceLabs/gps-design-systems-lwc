@@ -1,0 +1,14 @@
+<template>
+    <div style="max-width: 300px;">
+        <nav class="nsw-sidenav">
+            <ul class="nsw-sidenav__list nsw-sidenav__list--level-1">
+                <template for:each={_displayItems} for:item="item">
+                    <c-nsw-d-s-side-navigation-item
+                        key={item.keyId} item={item} level="1" current-page={currentPage}
+                        base-url={_baseUrl}>
+                    </c-nsw-d-s-side-navigation-item>
+                </template>
+            </ul>
+        </nav>
+    </div>
+</template>

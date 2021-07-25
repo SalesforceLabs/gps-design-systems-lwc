@@ -56,6 +56,9 @@
     margin-top: 1rem
 }
 
+.nsw-form__label--small {
+    font-weight: 400;
+}
 
 .nsw-form-required:after,
 .nsw-form__required:after {
@@ -455,10 +458,17 @@
     }
 }
 
-*+.nsw-form-group {
+.nsw-form-group,
+.nsw-form__group {
     margin-top: 1rem;
-    border: 0
 }
+
+/* ESC: removed as we have form groups within forms individually - one for each lwc
+.nsw-form-group:first-child,
+.nsw-form__group:first-child {
+    margin-top: 1rem;
+}
+*/
 
 .nsw-form-search {
     display: flex;

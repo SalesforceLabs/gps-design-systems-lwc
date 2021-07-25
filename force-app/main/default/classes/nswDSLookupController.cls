@@ -47,7 +47,9 @@ public with sharing class nswDSLookupController {
 
             Url communityUrl = new Url(Network.getLoginUrl(networkId));
             sfdcUrl = communityUrl.getProtocol() + '://' + communityUrl.getAuthority() + '/' + n.UrlPathPrefix;
+            System.debug(n);
         }
+
 
         if (fieldApiName == null || targetApiName == null) {
             throw new CalloutException('Wrong fieldApiName');
@@ -100,7 +102,7 @@ public with sharing class nswDSLookupController {
             throw e;  
         }  
 
-        System.debug(' ** response ** : ' + response );  
+//        System.debug(' ** response ** : ' + response );  
         return JSON.deserializeUntyped(response);
     }
 }

@@ -1,0 +1,4 @@
+.actionsLeft,
+.actionsRight {
+    display: flex;
+}

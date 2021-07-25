@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>51.0</apiVersion>
-    <isExposed>false</isExposed>
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>NSW DS Direction Link</masterLabel>
+    <description>A direction link in the NSW Government Design System</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property label="Title Link" name="titleLink" default="[Next](#)"
+                type="String" description="Title Link in Markdown format"></property>
+            <property label="Icon Name" name="iconName" datasource="north,east,south,west"
+                default="east" type="String"
+                description="Icon name in the Google Material collection"></property>
+            <property label="NSW Class" name="nswClass"
+                    type="String"
+                    description="Additional styling to apply"></property>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property label="TitleLink" name="titleLink"
+                type="String" role="inputOnly"
+                    description="Title Link in Markdown format"></property>
+                <property label="Icon Name" name="iconName" datasource="north,east,south,west"
+                    default="east" type="String"
+                description="Icon name in the Google Material collection"></property>
+                <property label="NSW Class" name="nswClass"
+                    type="String" role="inputOnly"
+                    description="Additional styling to apply"></property>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

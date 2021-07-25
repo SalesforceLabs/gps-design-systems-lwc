@@ -1,0 +1,28 @@
+<template>
+    <template if:true={header}>
+        <div class="nsw-sidenav__header">
+            <h2 class="nsw-sidenav__heading">
+              <a href={header.Target} class="nsw-sidenav__heading-link">{header.Label}</a></h2>
+          </div>
+    </template>
+
+    <template if:true={item}>
+        <li class="nsw-sidenav__list-item">
+
+            <a href={item.Target} class={computedItemAClass}>
+                {item.Label}
+            </a>
+        </li>
+
+        <ul if:true={item.children.length} class={computedUlClass}>
+            <template for:each={_displayItems} for:item="item">
+                <c-nsw-d-s-side-navigation-item
+                    key={item.keyId}
+                    item={item}
+                    level={nextLevel}>
+                </c-nsw-d-s-side-navigation-item>
+            </template>
+        </ul>
+
+   </template>    
+</template>

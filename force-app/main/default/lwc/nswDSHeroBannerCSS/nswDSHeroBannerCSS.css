@@ -13,10 +13,12 @@
     }
 }
 
-.nsw-hero-banner__image-area { /* ESC counter nsw-container */
+/*
+.nsw-hero-banner__image-area {  ESC counter nsw-container 
     margin-left: -1rem;
     margin-right: -1rem;
 }
+*/
 
 @media(min-width: 48em) {
     .nsw-hero-banner__image-area {

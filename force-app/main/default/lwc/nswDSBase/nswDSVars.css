@@ -1,0 +1,7 @@
+:root {
+	--nsw-ds-bodyFontSize: 16px;
+	--nsw-ds-bodyFontColor: #333;
+	--nsw-ds-brandColor: #d7153a;
+
+    --nsw-ds-bodyMaxWidth: 75rem;
+}

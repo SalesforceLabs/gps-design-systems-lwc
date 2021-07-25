@@ -16,7 +16,7 @@ import {
     normalizeString,
     synchronizeAttrs,
 } from 'c/nswUtilsPrivate';
-// remove-next-line-for-c-namespace
+
 import { AutoPosition, Direction } from 'c/nswPositionLibrary';
 import { VARIANT } from 'c/nswInputUtils';
 
@@ -252,10 +252,6 @@ export default class NswDSBaseCombobox extends LightningElement {
                     } else {
                         // We have new items, update highlight
                         this.highlightDefaultItem();
-
-                        // Since the items have changed, the positioning should be recomputed
-                        // remove-next-line-for-c-namespace
-                        this.startDropdownAutoPositioning();
                     }
                 }
             }
@@ -405,7 +401,6 @@ export default class NswDSBaseCombobox extends LightningElement {
     }
 
     get computedPlaceholder() {
-        console.log('inputPill', JSON.stringify(this.inputPill));
         return this.hasInputPill ? this.inputPill.label : this.placeholder;
     }
 
@@ -533,11 +528,9 @@ export default class NswDSBaseCombobox extends LightningElement {
     }
 
     handleOptionClick(event) {
-        console.log('handle option click');
         if (event.target.hasAttribute('aria-selected')) {
             event.stopPropagation();
             event.preventDefault();
-            console.log('ok');
             this.selectOptionAndCloseDropdown(event.target);
         }
     }
@@ -631,6 +624,7 @@ export default class NswDSBaseCombobox extends LightningElement {
             }
 
             if (selectedItem) {
+                console.log(JSON.stringify(selectedItem));
                 this._events.dispatchSelect(selectedItem.value);
             }
         } else {
@@ -719,7 +713,6 @@ export default class NswDSBaseCombobox extends LightningElement {
 
     handleInputSelect(event) {
         event.stopPropagation();
-        console.log('handle input select');
     }
 
     openDropdownIfNotEmpty() {
@@ -751,13 +744,8 @@ export default class NswDSBaseCombobox extends LightningElement {
         }
 
         this._requestedDropdownOpen = false;
-
         this._dropdownVisible = true;
-
-        // remove-next-line-for-c-namespace
-        //this.startDropdownAutoPositioning();
         this.highlightDefaultItem();
-
         this._events.dispatchDropdownOpen();
     }
 
@@ -766,8 +754,7 @@ export default class NswDSBaseCombobox extends LightningElement {
             // Already closed
             return;
         }
-        // remove-next-line-for-c-namespace
-        this.stopDropdownPositioning();
+
         this.removeHighlight();
         this._dropdownVisible = false;
     }
@@ -798,44 +785,6 @@ export default class NswDSBaseCombobox extends LightningElement {
 
     get inputElement() {
         return this.template.querySelector('input');
-    }
-
-    // remove-next-line-for-c-namespace
-    startDropdownAutoPositioning() {
-        if (this.dropdownAlignment !== 'auto') {
-            return;
-        }
-
-        if (!this._autoPosition) {
-            this._autoPosition = new AutoPosition(this);
-        }
-
-        this._autoPosition.start({
-            target: () => this.template.querySelector('input'),
-            element: () => this.template.querySelector('div.slds-dropdown'),
-            align: {
-                horizontal: Direction.Left,
-                vertical: Direction.Top,
-            },
-            targetAlign: {
-                horizontal: Direction.Left,
-                vertical: Direction.Bottom,
-            },
-            autoFlip: true,
-            alignWidth: true,
-            autoShrinkHeight: true,
-            minHeight:
-                this._selectableItems < 3
-                    ? SMALL_MIN_HEIGHT
-                    : MEDIUM_MIN_HEIGHT,
-        });
-    }
-
-    // remove-next-line-for-c-namespace
-    stopDropdownPositioning() {
-        if (this._autoPosition) {
-            this._autoPosition.stop();
-        }
     }
 
     get hasInputPill() {

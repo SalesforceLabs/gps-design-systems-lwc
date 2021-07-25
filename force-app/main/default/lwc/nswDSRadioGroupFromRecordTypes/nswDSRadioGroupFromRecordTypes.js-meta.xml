@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>NSW DS Radio Group from Record Types</masterLabel>
+    <description>A radio group in the NSW Government Design System, populated from an object's record types</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property label="Label" name="label"
+                type="String" default="Radio group"
+                description="The label"></property>
+            <property label="Is Legend" name="isLegend"
+                type="Boolean" default="false"
+                description="Renders the label as a Legend"></property>
+            <property label="Helper" name="helper"
+                type="String"
+                description="Help text presented to the user"></property>
+            <property label="Name" name="name"
+                type="String"
+                description="The name of the HTML element"></property>
+            <property label="Object API Name" name="objectApiName"
+                type="String"
+                description="API name of the object, e.g. CustomObj__c"></property>
+            <property label="Value" name="value"
+                type="String"
+                description="Selected record type ID"></property>
+            <property label="Disabled" name="disabled"
+                type="Boolean" default="false"
+                description="Render the component as disabled"></property>
+            <property label="Required" name="required"
+                type="Boolean" default="false"
+                description="Renders a visual cue that the field is mandatory and validates it"></property>
+            <property label="Message when value missing" name="messageWhenValueMissing"
+                type="String"
+                description="Message displayed when no value is selected when required"></property>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property label="Label" name="label"
+                type="String" role="inputOnly"
+                description="The label"></property>
+            <property label="Name" name="name"
+                type="String" role="inputOnly"
+                description="The name of the HTML element"></property>
+            <property label="Is Legend" name="isLegend"
+                type="Boolean" default="false" role="inputOnly"
+                description="Renders the label as a Legend"></property>
+            <property label="Helper" name="helper"
+                type="String" role="inputOnly"
+                description="Help text presented to the user"></property>
+            <property label="Object API Name" name="objectApiName"
+                type="String" role="inputOnly"
+                description="API name of the field, e.g. CustomObj__c"></property>
+            <property label="Value" name="value"
+                type="String"
+                description="Id of the selected record type"></property>
+            <property label="Disabled" name="disabled"
+                type="Boolean" default="false" role="inputOnly"
+                description="Render the component as disabled"></property>
+            <property label="Required" name="required"
+                type="Boolean" default="false" role="inputOnly"
+                description="Renders a visual cue that the field is mandatory and validates it"></property>
+            <property label="Message when value missing" name="messageWhenValueMissing"
+                type="String" role="inputOnly"
+                description="Message displayed when no value is selected when required"></property>
+            <property label="Validate on blur" name="validateOnBlur"
+                type="Boolean" role="inputOnly" default="false"
+                description="Must be set to false in flows"></property> 
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

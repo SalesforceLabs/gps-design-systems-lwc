@@ -19,7 +19,6 @@ export {
 } from './keyboard';
 export { raf } from './scroll';
 export { isChrome, isIE11, isSafari } from './browser';
-export { ContentMutation } from './contentMutation';
 export { observePosition } from './observers';
 export { hasOnlyAllowedVideoIframes } from './videoUtils';
 export {

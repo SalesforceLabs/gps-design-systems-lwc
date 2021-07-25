@@ -1,0 +1,13 @@
+<template>
+    <c-nsw-lookup-desktop
+        disabled={disabled} enable-create-new={_isCreateNewEnabled} field-name={fieldName}
+        items={items} label={label} max-values={maxValues} object-infos={_objectInfos}
+        pills={internalPills} text-info={textInfo} record={_record} required={required}
+        onentityfilterselect={handleEntityFilterSelect}
+        onlookuprecordsrequest={handleLookupRecordsRequest}
+        onpillremove={handlePillRemove}
+        onrecorditemselect={handleRecordItemSelect}
+        onreportvalidity={handleReportValidity}
+    >
+    </c-nsw-lookup-desktop>
+</template>

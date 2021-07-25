@@ -1,146 +1,66 @@
 import { LightningElement, api, track } from "lwc";
-import { InteractingState, FieldConstraintApi, generateUniqueId } from "c/nswInputUtils"
-import { normalizeBoolean } from "c/nswUtilsPrivate"
+import { NswDSOptionsMixin } from "c/nswDSFormUtils";
+import { generateUniqueId } from "c/nswInputUtils";
 
-const NO_ITEM_ERR = "This component has not been configured with any item";
-
-export default class NswDSRadioGroupBase extends LightningElement {
+export default class NswDSRadioGroupBase
+extends NswDSOptionsMixin(LightningElement) {
     static delegatesFocus = true;
 
-    @api label = "Form Radio";
-    @api options = [];
-    @api messageWhenValueMissing;
+    @api label;
     @api name = generateUniqueId();
-    @api helper = "";
+    @api helper;
     @api isLegend = false;
 
 
-    // ---- interactingState
-    interactingState;
-
     connectedCallback() {
-        this.interactingState = new InteractingState();
-        //this.interactingState.onleave(this.showHelpMessageIfInvalid.bind(this));
+        console.log('connect');
+        this.cbHook();
     }
 
-
-    // ---- value
-    _value;
-
-    @api get value() {
-        return this._value;
-    }
-
-    set value(v) {
-        this._value = v;
-    }
-    
-
-    // ---- disabled
-    @track _disabled = false;
-
-    @api get disabled() {
-        return this._disabled;
-    }
-
-    set disabled(value) {
-        this._disabled = normalizeBoolean(value);
-    }
-
-
-    // ---- required
-    @track _required = false;
-
-    @api get required() {
-        return this._required;
-    }
-
-    set required(value) {
-        this._required = normalizeBoolean(value);
-    }
-
-
-    // ---- errorText
-    _errorText = ""; // "Please select at least one option";
-
-    @api get error() {
-        return this._errorText;
-    }
-
-    set error(error) {
-        this._errorText = error;
-    }
-    
-    get hasError() {
-        return this._errorText ? this._errorText.length > 0 : false;
-    }
-
-
-    // ---- validity
-    @api get validity() {
-        return this._constraint.validity;
-    }
-
-    @api checkValidity() {
-        return this._constraint.checkValidity();
-    }
-
-    @api setCustomValidity(message) {
-        this._constraint.setCustomValidity(message);
+    disconnectCallback() {
+        console.log('disconnect');
+        this.dcHook();
     }
 
 
     // ---- methods
 
     @api focus() {
+        console.log('focus')
         const firstRadio = this.template.querySelector("input");
         if (firstRadio) {
             firstRadio.focus();
         }
     }
 
-    // ---- internal utilities
-
-    get transformedOptions() {
-        const { options, value } = this;
-        let itemIndex = 1;
-
-        if (Array.isArray(options)) {
-            return options.map((option) => ({
-                label: option.label,
-                value: option.value,
-                id: `radio-${itemIndex++}`,
-                isChecked: value == option.value
-            }));
-        } 
-
-        return [];
-    }
 
     // ---- event management
 
-    handleFocus() {
+    handleFocus(event) {
+        console.log('handleFocus', event.target.id, this.template.activeElement.id, this.interactingState.isInteracting());
         this.interactingState.enter();
         this.dispatchEvent(new CustomEvent("focus"));
     }
 
-    handleBlur() {
+    handleBlur(event) {
+        console.log('handleBlur', event.target.id, this.template.activeElement ? this.template.activeElement.id : 'nada', this.interactingState.isInteracting());
         this.interactingState.leave();
         this.dispatchEvent(new CustomEvent("blur"));
     }
     
     handleClick(event) {
+        console.log('handleClick', JSON.stringify(this.template.activeElement.id), JSON.stringify(event.target.id))
         if (this.template.activeElement !== event.target) {
+            console.log('click focus');
             event.target.focus();
         }
     }
 
     handleChange(event) {
         event.stopPropagation();
-
         this.interactingState.interacting();
 
-        const value = event.target.value;
+        const value = [ event.target.value ];
         this._value = value;
 
         this.dispatchEvent(
@@ -152,17 +72,4 @@ export default class NswDSRadioGroupBase extends LightningElement {
             })
         );
     }    
-
-
-    // ---- constraint
-
-    get _constraint() {
-        if (!this._constraintApi) {
-            this._constraintApi = new FieldConstraintApi(() => this, {
-                valueMissing: () =>
-                    !this.disabled && this.required && this.value.length === 0
-            });
-        }
-        return this._constraintApi;
-    }
 }

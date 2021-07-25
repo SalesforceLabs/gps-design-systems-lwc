@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>NSW DS Callout</masterLabel>
+    <description>A callout in the NSW Government Design System</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property label="Icon Name" name="iconName"
+                type="String" description="Icon Name from the Google Material library"></property>
+            <property label="Title" name="title"
+                type="String" description="Title of the callout"></property>
+            <property label="Content" name="content"
+                type="String" description="Content in Markdown format"></property>
+            <property label="NSW Class" name="nswClass"
+            type="String" description="Additional styling to apply"></property>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property label="Icon Name" name="iconName"
+                type="String" role="inputOnly"
+                description="Icon Name from the Google Material library"></property>
+            <property label="Title" name="title"
+                type="String" role="inputOnly"
+                description="Title of the callout"></property>
+            <property label="Content" name="content"
+                type="String" default="false" role="inputOnly"
+                description="Content in Markdown format"></property>
+            <property label="NSW Class" name="nswClass"
+                type="String" default="false" role="inputOnly"
+                description="Additional styling to apply"></property>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

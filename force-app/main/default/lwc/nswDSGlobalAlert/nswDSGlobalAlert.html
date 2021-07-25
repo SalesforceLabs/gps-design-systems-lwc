@@ -1,5 +1,5 @@
 <template>
-    <div class={alertTypeClass} role="alert">
+    <div if:false={_isClosed} class={alertTypeClass} role="alert">
             <div class="nsw-sitewide-message__wrapper">
             <div class="nsw-sitewide-message__content">
             <h2 class="nsw-sitewide-message__title">{title}</h2>
@@ -12,7 +12,7 @@
 
             <a if:true={isLinkButton} href={_buttonLink} class="nsw-button">{_buttonLabel}</a>
 
-            <button type="button" class="nsw-sitewide-message__close">
+            <button type="button" class="nsw-sitewide-message__close" onclick={handleClick}>
                 <i class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">close</i>
                 <span class="sr-only">Close message</span>
             </button>

@@ -17,27 +17,26 @@
 
                 <div class="slds-grow textarea-container">
                     <textarea 
+                        id="input"
                         class="nsw-form-input"
                         aria-invalid={hasError}
                         name={name}
+                        placeholder={placeholder}
+                        accesskey={accessKey}
                         maxlength={maxLength}
                         minlength={minLength}
-                        placeholder={placeholder}
                         required={required}
                         readonly={readOnly}
                         disabled={disabled}
-                        accesskey={accessKey}
                         oninput={handleInput}
                         onchange={handleChange}
                         onfocus={handleFocus}
                         onblur={handleBlur}
                     >
                         {_defaultValue}
-                    </textarea>   
+                    </textarea>  
                 </div>
-
-                <span if:true={_hasError}
-                    class="nsw-form-helper nsw-form-helper--error">
+                <span if:true={hasError} class="nsw-form-helper nsw-form-helper--error">
                     {_errorText}
                 </span>
             </div> 

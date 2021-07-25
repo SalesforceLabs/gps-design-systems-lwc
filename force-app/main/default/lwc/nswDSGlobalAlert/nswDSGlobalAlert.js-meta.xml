@@ -7,14 +7,35 @@
     <targets>
         <target>lightningCommunity__Page</target>
         <target>lightningCommunity__Default</target>
+        <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightningCommunity__Default">
-            <property label="Alert Type" name="alertType" type="String"></property>
-            <property label="Title" name="title" type="String"></property>
-            <property label="Content" name="content" type="String"></property>
-            <property label="Button Link" name="buttonLink" type="String"></property>
-            <property label="Link Type" name="linkType" type="String"></property>
+            <property label="Alert Type" name="alertType"
+                type="String" datasource="default,critical,light" default="default"
+                description="Alert Type used for the colour scheme"></property>
+            <property label="Title" name="title"
+                type="String" default="Global alert"></property>
+            <property label="Content" name="content"
+                type="String" description="Content text"></property>
+            <property label="Button Link" name="buttonLink"
+                type="String" description="Link in Markdown format"></property>
+            <property label="Link Type" name="linkType" datasource="button,href,none" default="button"
+                type="String" description="Defines how the link is rendered"></property>
         </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property label="Alert Type" name="alertType"
+                type="String" role="inputOnly"
+                description="Alert Type used for the colour scheme"></property>
+            <property label="Title" name="title"
+                type="String" role="inputOnly" default="Global alert"></property>
+            <property label="Content" name="content"
+                type="String" role="inputOnly" description="Content text"></property>
+            <property label="Button Link" name="buttonLink"
+                type="String" role="inputOnly" description="Link in Markdown format"></property>
+            <property label="Link Type" name="linkType" datasource="button,href,none" default="button"
+                type="String" role="inputOnly" description="Defines how the link is rendered"></property>
+        </targetConfig>
+
     </targetConfigs>
 </LightningComponentBundle>
