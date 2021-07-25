@@ -5,10 +5,12 @@ export default class NswDSBannerBase extends LightningElement {
     @api isDark = false;
     @api isWide = false;
     @api hasLinks = false;
+    @api nswClass;
 
     get computedBannerClass() {
         return "nsw-banner" + (this.isDark ? " nsw-banner--dark" : "")
-                            + (this.isWide ? " nsw-banner--wide" : "");
+                            + (this.isWide ? " nsw-banner--wide" : "")
+                            + (this.nswClass ? " " + this.nswClass : "");
     }
 
     get computedButtonClass() {

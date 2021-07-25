@@ -1,11 +1,11 @@
 <template>
     <div class={nswClass}>
         <div class="nsw-hero-banner">
-            <div class="nsw-container">
-                <div if:true={imageSrc} class="nsw-hero-banner__image-area">
-                    <img src={imageSrc} alt={imageAlt} class="nsw-hero-banner__image">
-                </div>
+            <div if:true={imageSrc} class="nsw-hero-banner__image-area">
+                <img src={imageSrc} alt={imageAlt} class="nsw-hero-banner__image">
+            </div>
 
+            <div class="nsw-container">
                 <div class="nsw-hero-banner__content-area">
                     <div class="nsw-hero-banner__content">
                         <h2 class="nsw-hero-banner__title">

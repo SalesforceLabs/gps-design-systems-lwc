@@ -3,7 +3,7 @@ import NswDSMarkdown from "c/nswDSMarkdown";
 import { normalizeString } from 'c/nswUtilsPrivate';
 
 export default class NswDSContentBlock extends LightningElement {
-    mdEngine = new NswDSMarkdown();
+    static mdEngine = new NswDSMarkdown();
 
     // ---- links
     _links;
@@ -18,7 +18,7 @@ export default class NswDSContentBlock extends LightningElement {
         this._links = markdown;
 
         try {
-            this._linksHtml = this.mdEngine.renderLinks(markdown);   
+            this._linksHtml = NswDSContentBlock.mdEngine.renderLinks(markdown);   
         } catch(e) {
             console.log(e);
         }
@@ -39,7 +39,7 @@ export default class NswDSContentBlock extends LightningElement {
         this._content = markdown;
 
         try {
-            this._contentHtml = this.mdEngine.renderEscaped(markdown);
+            this._contentHtml = NswDSContentBlock.mdEngine.renderEscaped(markdown);
         } catch(e) {
             console.log(e);
         }
@@ -61,7 +61,7 @@ export default class NswDSContentBlock extends LightningElement {
         this._buttonLink = markdown;
 
         try {
-           const { url, text } = this.mdEngine.extractFirstLink(markdown);
+           const { url, text } = NswDSContentBlock.mdEngine.extractFirstLink(markdown);
            this._buttonUrl = url;
            this._buttonLabel = text;
         } catch(e) {
@@ -122,6 +122,7 @@ export default class NswDSContentBlock extends LightningElement {
         if (this._rendered == false) {
             let element = this.template.querySelector(".nsw-content-block__list");
             if (element && this._linksHtml) {
+                console.log('adding block list', this._linksHtml);
                 element.innerHTML = this._linksHtml;
             }
 

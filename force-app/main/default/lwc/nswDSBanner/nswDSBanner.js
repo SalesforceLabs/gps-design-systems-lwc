@@ -3,16 +3,20 @@ import NswDSMarkdown from "c/nswDSMarkdown";
 import { normalizeString } from 'c/nswUtilsPrivate';
 
 export default class NswDSBanner extends LightningElement {
-    mdEngine = new NswDSMarkdown();
+    static mdEngine = new NswDSMarkdown();
 
     @api isDark = false;
     @api isWide = false;
     @api title;
     @api subtitle;
+    @api imageSrc;
+    @api imageAlt;
+    @api nswClass;
 
     get computedBannerClass() {
-        return (this.isDark ? " nsw-banner--dark-font" : "")
-                + (this.isWide ? " nsw-banner--wide" : "");
+        return (this.isDark ? " nsw-banner--dark" : "")
+                + (this.isWide ? " nsw-banner--wide" : "")
+                + (this.nswClass ? " " + this.nswClass : "");
     }
 
 
@@ -29,7 +33,7 @@ export default class NswDSBanner extends LightningElement {
         this._links = markdown;
 
         try {
-            this._linksHtml = this.mdEngine.renderLinks(markdown);   
+            this._linksHtml = NswDSBanner.mdEngine.renderLinks(markdown);   
         } catch(e) {
             console.log(e);
         }
@@ -53,7 +57,7 @@ export default class NswDSBanner extends LightningElement {
         this._content = normalizeString(markdown, { toLowerCase: false });
 
         try {
-            this._contentHtml = this.mdEngine.render(markdown.replaceAll("\\n", "\n"));
+            this._contentHtml = NswDSBanner.mdEngine.render(markdown.replaceAll("\\n", "\n"));
         } catch(e) {
             console.log(e);
         }
@@ -74,17 +78,13 @@ export default class NswDSBanner extends LightningElement {
         this._buttonLink = normalizeString(markdown, { toLowerCase: false });
 
         try {
-            const { url, text } = this.mdEngine.extractFirstLink(markdown);
+            const { url, text } = NswDSBanner.mdEngine.extractFirstLink(markdown);
             this._buttonUrl = url;
             this._buttonLabel = text;
          } catch(e) {
              console.log(e);
          }
      }
-
-
-    @api imageSrc;
-    @api imageAlt;
 
 
     // ---- rendering

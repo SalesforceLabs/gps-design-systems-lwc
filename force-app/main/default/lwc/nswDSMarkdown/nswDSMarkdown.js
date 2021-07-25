@@ -23,6 +23,25 @@ export default class NswDSMarkdown {
         return this.writer.render(node);
     }
 
+    renderLinks(markdown) {
+        let ast = this.parse(markdown),
+            walker = ast.walker(),
+            event,
+            type,
+            html = "";
+
+        while ((event = walker.next())) {
+            type = event.node.type;
+            if (type === "link" && event.entering) {
+                if (event.node.attrs == null) {
+                    event.node.attrs = [];
+                } 
+                html += "<li>" + this.renderNode(event.node) + "</li>";
+            }
+        }
+
+        return html;
+    }
 
     extractLinks(markdown) {
         let ast = this.parse(markdown),
