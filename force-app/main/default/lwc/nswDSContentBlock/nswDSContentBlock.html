@@ -1,4 +1,5 @@
 <template>
+    <p>Text</p>
     <div class={nswClass}> <!-- "nsw-docs nsw-body-content nsw-container" -->
         <div class="nsw-content-block">
             <div class="nsw-content-block__content">
@@ -7,8 +8,10 @@
                     <!-- content is added here -->
                 </div>
 
-                <ul class="nsw-content-block__list" lwc:dom="manual">
-                    <!-- links are added here -->
+                <ul class="nsw-content-block__list">
+                    <template for:each={_linkItems} for:item="item">
+                        <li key={item.index}><a href={item.url}>{item.text}</a></li>
+                    </template>
                 </ul>
 
                 <div if:true={_buttonUrl} class="nsw-content-block__link">

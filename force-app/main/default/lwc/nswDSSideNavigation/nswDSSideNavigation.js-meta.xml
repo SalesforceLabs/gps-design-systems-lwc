@@ -10,8 +10,12 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightningCommunity__Default">
-             <property label="Navigation Developer Name" name="navDevName"
+            <property label="Title Link" name="titleLink" default="[Side navigation](#)"
+                type="String" description="Title Link in Markdown format"></property>
+            <property label="Navigation Developer Name" name="navDevName"
                 type="String" description="Developer Name of the Navigation to be rendered"></property>
+            <property label="NSW Class" name="nswClass"
+                type="String" description="Additional styling to apply"></property>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

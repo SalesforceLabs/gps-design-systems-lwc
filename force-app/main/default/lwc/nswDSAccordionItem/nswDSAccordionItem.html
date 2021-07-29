@@ -1,0 +1,14 @@
+<template>
+    <h2 class="nsw-accordion__title">
+        <button class={computedButtonClass} aria-expanded={isOpen} onclick={handleClick}>
+            {title}
+            <i class="material-icons nsw-material-icons nsw-accordion__icon" aria-hidden="true">keyboard_arrow_right</i>
+        </button>
+    </h2>
+
+    <div if:true={isOpen} class="nsw-accordion__content">
+        <div class="nsw-wysiwyg-content" lwc:dom="manual">
+        </div>
+    </div>
+
+</template>

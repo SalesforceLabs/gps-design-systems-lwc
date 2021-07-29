@@ -1,7 +1,7 @@
 @import 'c/nswDSBaseMaterial';
 
 /* The following must be used in a community to fix Community Cloud setting
-   and .nsw-body-content class must be applied to element
+   and .nsw-body-content class must be applied to element */
    
 .nsw-body-content ul {
     list-style: disc outside;
@@ -18,7 +18,7 @@
 .nsw-body-content a {
     text-decoration: underline;
 }
-*/
+
 
 h1 {
     font-size: 2em;
@@ -3315,177 +3315,7 @@ h4.nsw-section-title {
 }
 
 
-.nsw-page-nav {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    border-left: 4px solid #d7153a
-}
 
-.nsw-page-nav:first-child {
-    margin-top: 0
-}
-
-@media (min-width: 48em) {
-    .nsw-page-nav {
-        margin-top:2rem
-    }
-}
-
-.nsw-page-nav__title {
-    margin: 0;
-    font-family: Montserrat,Arial,sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 600;
-    font-size: 1.125rem;
-    line-height: 1.33
-}
-
-@media (min-width: 62em) {
-    .nsw-page-nav__title {
-        font-size:1.25rem;
-        line-height: 1.33
-    }
-}
-
-.nsw-page-nav__list {
-    margin: 0;
-    padding: 0;
-    list-style: none
-}
-
-.nsw-page-nav__list-item {
-    margin-top: 1rem;
-    display: block
-}
-
-.nsw-page-nav__link {
-    font-family: Montserrat,Arial,sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 600;
-    color: #002664;
-    display: inline-block
-}
-
-.nsw-page-nav__link:hover {
-    background-color: rgba(0,133,179,.2);
-    outline: 2px solid rgba(0,133,179,.2)
-}
-
-.nsw-page-nav__link:focus {
-    outline: 3px solid #0085b3;
-    outline-offset: 0
-}
-
-.nsw-page-nav__link:active {
-    background-color: #0085b3;
-    color: #fff
-}
-
-.nsw-link-list {
-    font-family: Montserrat,Arial,sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 600;
-    margin-top: 1.5rem
-}
-
-.nsw-link-list:first-child {
-    margin-top: 0
-}
-
-@media (min-width: 48em) {
-    .nsw-link-list {
-        margin-top:2rem
-    }
-}
-
-.nsw-link-list__title {
-    font-size: 1.375rem;
-    line-height: 1.25;
-    padding-bottom: 1rem
-}
-
-@media (min-width: 62em) {
-    .nsw-link-list__title {
-        font-size:1.5rem;
-        line-height: 1.25
-    }
-}
-
-@media (min-width: 48em) {
-    .nsw-link-list__title {
-        padding-bottom:1.5rem
-    }
-}
-
-.nsw-link-list__list {
-    margin: 0;
-    padding: 0;
-    list-style-type: none
-}
-
-.nsw-link-list__item {
-    border-top: 1px solid #e4e4e6
-}
-
-.nsw-link-list__item:last-child {
-    border-bottom: 1px solid #e4e4e6
-}
-
-.nsw-link-list__item a {
-    padding: 1rem;
-    color: #002664;
-    display: flex;
-    justify-content: space-between;
-    align-items: center
-}
-
-.nsw-link-list__item a:hover {
-    background-color: rgba(0,133,179,.2)
-}
-
-.nsw-link-list__item a:focus {
-    outline: 3px solid #0085b3;
-    outline-offset: 0;
-    outline-offset: 3px
-}
-
-.nsw-link-list__item a span {
-    text-decoration: underline
-}
-
-.nsw-link-list__item a:not([class]) {
-    text-decoration: none
-}
-
-.nsw-link-list__item a:not([class]):visited {
-    color: #002664
-}
-
-.nsw-link-list__item a:not([class]):active {
-    background-color: rgba(0,133,179,.2);
-    color: #002664
-}
-
-.nsw-link-list__item .nsw-link-list__link {
-    text-decoration: underline
-}
-
-.nsw-link-list__icon {
-    margin-left: 1rem;
-    flex: none;
-    font-size: 1.25rem;
-    position: relative;
-    right: -2px
-}
-
-.nsw-link-list__icon.nsw-icon {
-    width: 1rem;
-    height: 1rem;
-    position: static
-}
 
 .navigation-open {
     overflow: hidden

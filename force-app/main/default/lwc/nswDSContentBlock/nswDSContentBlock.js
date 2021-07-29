@@ -1,13 +1,13 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track } from "lwc";
 import NswDSMarkdown from "c/nswDSMarkdown";
-import { normalizeString } from 'c/nswUtilsPrivate';
+import { normalizeString } from "c/nswUtilsPrivate";
 
 export default class NswDSContentBlock extends LightningElement {
     static mdEngine = new NswDSMarkdown();
 
     // ---- links
     _links;
-    _linksHtml;
+    @track _linkItems = [];
 
     @api get links() {
         return this._links;
@@ -18,7 +18,7 @@ export default class NswDSContentBlock extends LightningElement {
         this._links = markdown;
 
         try {
-            this._linksHtml = NswDSContentBlock.mdEngine.renderLinks(markdown);   
+            this._linkItems = NswDSContentBlock.mdEngine.extractLinks(markdown);   
         } catch(e) {
             console.log(e);
         }
@@ -92,7 +92,7 @@ export default class NswDSContentBlock extends LightningElement {
     }
 
     set imageSrc(newValue) {
-        this._imageSrc = normalizeString(newValue);
+        this._imageSrc = normalizeString(newValue, { toLowerCase: false });
     }
 
 
@@ -120,18 +120,11 @@ export default class NswDSContentBlock extends LightningElement {
 
     renderedCallback() {
         if (this._rendered == false) {
-            let element = this.template.querySelector(".nsw-content-block__list");
-            if (element && this._linksHtml) {
-                console.log('adding block list', this._linksHtml);
-                element.innerHTML = this._linksHtml;
-            }
-
-            element = this.template.querySelector(".nsw-content-block__copy");
+            let element = this.template.querySelector(".nsw-content-block__copy");
             if (element && this._contentHtml) {
                 element.innerHTML = this._contentHtml;
+                this._rendered = true;
             }
-
-            this._rendered = true;
         }
     }
 

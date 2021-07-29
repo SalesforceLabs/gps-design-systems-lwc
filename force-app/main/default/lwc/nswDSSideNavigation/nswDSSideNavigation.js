@@ -1,14 +1,17 @@
 import { LightningElement, api, track, wire } from 'lwc';
-import { NavigationMixin } from "lightning/navigation";
 import isGuest from "@salesforce/user/isGuest";
 import cId from "@salesforce/community/Id";
 import cBasePath from "@salesforce/community/basePath";
 import getNavigationItems from "@salesforce/apex/nswDSNavigation.getNavigationItems";
 import getBaseUrl from "@salesforce/apex/nswDSNavigation.getBaseUrl";
+import NswDSMarkdown from "c/nswDSMarkdown";
 
-export default class NswDSSideNavigation extends NavigationMixin(LightningElement) {
+export default class NswDSSideNavigation extends LightningElement {
+    static mdEngine = new NswDSMarkdown();
+
+    @api nswClass;
     @api navDevName;
-    @api currentPage;
+    @track currentPage;
 
     @track _communityId = cId;
     @track _errorText;
@@ -17,7 +20,6 @@ export default class NswDSSideNavigation extends NavigationMixin(LightningElemen
 
     get isPreview() {
         let r = !document.URL.startsWith(this._baseUrl);
-        console.log('** isPreview', r);
         return r;
     }
 
@@ -104,4 +106,31 @@ export default class NswDSSideNavigation extends NavigationMixin(LightningElemen
             keyId: `item-${itemIndex++}`,
         }));
     }
+
+
+    // -- titleLink: text in markdown format
+
+    _titleLink;
+    @track _titleLabel;
+    @track _titleUrl;
+
+    @api set titleLink(markdown) {
+        console.log('> set titlelink');
+        this._titleLink = markdown;
+
+        try {
+            const { url, text } = NswDSSideNavigation.mdEngine.extractFirstLink(markdown);
+            this._titleUrl = url;
+            this._titleLabel = text;
+            console.log(this._titleLabel);
+        } catch(e) {
+            console.log(e);
+        }
+        console.log('< set titlelink');
+    }
+
+    get titleLink() {
+        return this._titleLink;
+    }
+
 }

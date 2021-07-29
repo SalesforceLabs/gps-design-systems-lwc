@@ -8,4 +8,9 @@
         <target>lightningCommunity__Page</target>
         <target>lightningCommunity__Default</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property label="Content" name="content" type="String"></property>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

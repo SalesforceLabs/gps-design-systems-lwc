@@ -1,15 +1,8 @@
 <template>
-    <template if:true={header}>
-        <div class="nsw-sidenav__header">
-            <h2 class="nsw-sidenav__heading">
-              <a href={header.Target} class="nsw-sidenav__heading-link">{header.Label}</a></h2>
-          </div>
-    </template>
-
     <template if:true={item}>
-        <li class="nsw-sidenav__list-item">
+        <li class="nsw-sidenav__list-item" onclick={handleClick}>
 
-            <a href={item.Target} class={computedItemAClass}>
+            <a href="#" class={computedItemAClass}>
                 {item.Label}
             </a>
         </li>

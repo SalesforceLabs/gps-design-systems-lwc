@@ -1,8 +1,5 @@
 
 .nsw-tag:not(.nsw-tag--checkbox),.nsw-tag label {
-    font-family: Montserrat,Arial,sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
     font-size: .875rem;
     line-height: 1.35;

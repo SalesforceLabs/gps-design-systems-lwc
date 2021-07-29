@@ -91,4 +91,61 @@ export default class NswDSMarkdown {
 
         return { url: null, text: null };
     }
+
+
+    // ---- extract H1s and content
+    extractH1s(markdown) {
+        let ast = this.parse(markdown),
+        walker = ast.walker(),
+        event,
+        type,
+        level,
+        html = "",
+        index = 1,
+        h1s = [],
+        h1;
+
+        while ((event = walker.next())) {
+            type = event.node.type;
+            level = event.node.level;
+            if (type === "heading" && level == 1) {
+                if (event.entering) {
+
+                    if (event.node.attrs == null) {
+                        event.node.attrs = [];
+                    } 
+
+                    const node = new DOMParser().parseFromString(this.renderNode(event.node), "text/html").body.firstElementChild;
+                    if (h1) { // flush ongoing one
+                        h1.html = html;
+                        h1s.push(h1);
+                    }
+
+                    h1 = {
+                        title: node.textContent,
+                        index: index++
+                    };
+
+                    html = "";
+                } 
+            } else if (event.entering && h1) {
+                switch(event.node.type) {
+                    case "text":
+                    case "linebreak":
+                        break;
+                    default:
+                        let n = this.renderNode(event.node);
+                        console.log('rendering ' + event.node.type, n);
+                        html += n;
+                }
+            }
+        }
+
+        if (h1) { // flush final one
+            h1.html = html;
+            h1s.push(h1);
+        }
+
+        return h1s;
+    }
 }

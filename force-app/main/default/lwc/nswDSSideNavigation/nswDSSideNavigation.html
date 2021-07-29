@@ -1,6 +1,12 @@
 <template>
-    <div style="max-width: 300px;">
+    <div class={nswClass} style="max-width: 300px;">
         <nav class="nsw-sidenav">
+            <div if:true={_titleLabel} class="nsw-sidenav__header">
+                <h2 class="nsw-sidenav__heading">
+                    <a href={_titleUrl} class="nsw-sidenav__heading-link">{_titleLabel}</a>
+                </h2>
+            </div>
+          
             <ul class="nsw-sidenav__list nsw-sidenav__list--level-1">
                 <template for:each={_displayItems} for:item="item">
                     <c-nsw-d-s-side-navigation-item

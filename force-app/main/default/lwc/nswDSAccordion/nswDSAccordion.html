@@ -1,35 +1,10 @@
 <template>
     <div class="nsw-container">
-        <div class="nsw-accordion js-accordion">
-            <h2 class="nsw-accordion__title">
-                <button type="button" aria-expanded="true" class="nsw-accordion__button is-open">Making a Single Donation
-                    <i class="material-icons nsw-material-icons nsw-accordion__icon" focusable="false" aria-hidden="true">keyboard_arrow_right</i>
-                </button>
-            </h2>
-
-            <div class="nsw-accordion__content">
-                <div class="nsw-wysiwyg-content">
-                    <p>Donations made directly to the NSW SES are for the benefit of volunteers and are always gratefully
-                        received and are a tremendous help. All donations over $2.00 are tax-deductible.</p>
-    
-                    <p>Making a one off donation by Credit Card:
-                        This is simple and you can do that by filling out the form on this page.</p>
-    
-                    <p>You can choose the local unit you wish your donation to go towards and you will receive an automatic
-                        thankyou letter acknowledging your donation along with a taxation receipt for your personal
-                        records.</p>
-                </div>
-            </div>
-            <h2 class="nsw-accordion__title">
-                <button type="button" aria-expanded="true" class="nsw-accordion__button is-open">Deposit Funds Directly
-                    <i class="material-icons nsw-material-icons nsw-accordion__icon" focusable="false" aria-hidden="true">keyboard_arrow_right</i>
-                </button>
-            </h2>
-            <div class="nsw-accordion__content">
-                <div class="nsw-wysiwyg-content">
-                    <p>Accordion content 2</p>
-                </div>
-            </div>
+        <div class="nsw-accordion">
+            <template for:each={_h1s} for:item="item">
+                <c-nsw-d-s-accordion-item key={item.index} title={item.title} content={item.html}>
+                </c-nsw-d-s-accordion-item>
+            </template>
         </div>
     </div>
 </template>
