@@ -5,7 +5,7 @@
       <ul class="nsw-page-nav__list">
         <template for:each={_linkItems} for:item="item">
           <li key={item.index} class="nsw-page-nav__list-item">
-            <a href={item.url} class="nsw-page-nav__link">{item.text}</a>
+            <a href="#" data-href={item.url} class="nsw-page-nav__link" onclick={handleClick}>{item.text}</a>
           </li> 
         </template>
       </ul>

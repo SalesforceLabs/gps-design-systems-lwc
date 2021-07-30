@@ -1,5 +1,11 @@
 @import 'c/nswDSBase';
 
+.nsw-body-content .nsw-accordion__content ul:not([class]),
+.nsw-body-content .nsw-accordion__content ol:not([class]),
+.nsw-accordion__content ul:not([class]),
+.nsw-accordion__content ol:not([class]) {
+    margin-left: 1rem;
+}
 
 .nsw-accordion__button,
 .nsw-accordion__title {

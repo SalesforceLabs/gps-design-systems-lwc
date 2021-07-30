@@ -103,40 +103,44 @@ export default class NswDSMarkdown {
         html = "",
         index = 1,
         h1s = [],
-        h1;
+        h1,
+        currentNode;
 
         while ((event = walker.next())) {
             type = event.node.type;
             level = event.node.level;
-            if (type === "heading" && level == 1) {
-                if (event.entering) {
 
+            if (event.entering) {
+                if (type === "heading" && level == 1) {
                     if (event.node.attrs == null) {
                         event.node.attrs = [];
                     } 
 
-                    const node = new DOMParser().parseFromString(this.renderNode(event.node), "text/html").body.firstElementChild;
                     if (h1) { // flush ongoing one
                         h1.html = html;
                         h1s.push(h1);
                     }
 
+                    const node = new DOMParser().parseFromString(this.renderNode(event.node), "text/html").body.firstElementChild;
                     h1 = {
                         title: node.textContent,
                         index: index++
                     };
 
                     html = "";
-                } 
-            } else if (event.entering && h1) {
-                switch(event.node.type) {
-                    case "text":
-                    case "linebreak":
-                        break;
-                    default:
-                        let n = this.renderNode(event.node);
-                        console.log('rendering ' + event.node.type, n);
-                        html += n;
+                    currentNode = event.node;
+                    console.log('h1 ' + node.textContent);
+                } else if (h1 && !currentNode) {
+                    currentNode = event.node;
+                    console.log('> rendering node', type, level, this.renderNode(event.node), '< rendering node');
+                    html += this.renderNode(event.node);
+                }
+            } else {
+                if (event.node == currentNode) {
+                    console.log('closing current node');
+                    currentNode = undefined;
+                } else {
+                    console.log('skipping node');
                 }
             }
         }

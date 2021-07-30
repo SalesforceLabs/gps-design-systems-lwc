@@ -1,0 +1,128 @@
+@import "c/nswDSBase";
+
+@media print {
+    .nsw-footer {
+        display: none
+    }
+}
+
+.nsw-footer {
+    font-weight: 400;
+    border-top: 1px solid #a0a5ae
+}
+
+.nsw-footer hr {
+    margin: 1rem 0;
+    height: 1px;
+    border: 0;
+    color: #a0a5ae;
+    background-color: #a0a5ae
+}
+
+.nsw-footer__upper {
+    padding-top: 1.5rem;
+    background-color: #fff
+}
+
+.nsw-footer__lower {
+    padding: 1rem 0 1.5rem;
+    background-color: #333;
+    color: #fff;
+    font-size: .75rem
+}
+
+.nsw-footer__lower a {
+    color: #fff
+}
+
+.nsw-footer__lower a:focus {
+    outline: 3px solid #fff;
+    outline-offset: 0;
+    outline-offset: 3px
+}
+
+.nsw-footer__lower p:not([class]) {
+    margin: .75rem 0
+}
+
+@media (min-width: 48em) {
+    .nsw-footer__info {
+        display:flex;
+        flex-wrap: nowrap
+    }
+}
+
+.nsw-footer__copyright {
+    flex: 1 1 auto
+}
+
+.nsw-footer__built {
+    flex: 0 0 12.5rem
+}
+
+.nsw-footer__built a:not([class]) {
+    color: #fff
+}
+
+.nsw-footer__built a:not([class]):hover {
+    background-color: transparent;
+    outline: none;
+    text-decoration: none
+}
+
+.nsw-footer__built a:not([class]):focus {
+    outline: 3px solid #fff;
+    outline-offset: 0
+}
+
+.nsw-footer__built a:not([class]):visited {
+    color: #fff
+}
+
+.nsw-footer__built a:not([class]):active {
+    background-color: transparent
+}
+
+@media (min-width: 48em) {
+    .nsw-footer__built {
+        text-align:right
+    }
+}
+
+.nsw-footer-links {
+    font-weight: 600;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap
+}
+
+.nsw-footer-links__item {
+    margin: 0 0 1rem;
+    flex: 1 0 50%;
+    max-width: 50%
+}
+
+@media (min-width: 48em) {
+    .nsw-footer-links__item {
+        margin-right:1.5rem;
+        flex: 0 0 auto;
+        max-width: none
+    }
+}
+
+.nsw-footer-links__link {
+    text-decoration: underline
+}
+
+.nsw-footer-links__link:hover {
+    text-decoration: none
+}
+
+.nsw-footer-links__link:focus {
+    outline: 3px solid #fff;
+    outline-offset: 0;
+    outline-offset: 3px
+}

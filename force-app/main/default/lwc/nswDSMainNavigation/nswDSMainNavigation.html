@@ -1,4 +1,5 @@
 <template>
+    <a name="top"></a>
     <!-- infobar -->
     <div if:true={infobarLabel} class="nsw-infobar">
         <div class="nsw-container">
@@ -24,7 +25,7 @@
                 </div>
         
                 <div class="nsw-header__left">
-                    <button type="button" class="nsw-header-btn nsw-header-btn--menu">
+                    <button type="button" class="nsw-header-btn nsw-header-btn--menu" onclick={handleMobileMenuClick}>
                         <i class="material-icons nsw-material-icons">menu</i>
                         <span class="nsw-header-btn__sub"><span class="sr-only">Open</span> Menu</span> 
                     </button>
@@ -36,17 +37,15 @@
         </div>
     </header>   
 
-
-    <!-- nav -->
+    <!-- nav  -->
     <div class="region region-header-top-highlighted-first">
         <nav role="navigation" aria-labelledby="nsw-navigation" id="main-navigation-1"
             class="clearfix block block-menu nsw-navigation menu--main">
 
             <div class="nsw-navigation__header">
                 <h2 id="nsw-navigation">Menu</h2>
-                <button type="button" class="nsw-navigation__close">
-
-                <i class="material-icons nsw-material-icons">close</i>
+                <button type="button" class="nsw-navigation__close" aria-expanded={mobileMenuIsOpen} onclick={handleMobileMenuClick}>
+                    <i class="material-icons nsw-material-icons">close</i>
                     <span class="sr-only">Close Menu</span>
                 </button>
             </div>

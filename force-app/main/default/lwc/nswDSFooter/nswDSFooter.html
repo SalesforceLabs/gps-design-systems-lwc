@@ -1,68 +1,21 @@
 <template>
     <footer class="nsw-footer">
-        <div class="nsw-footer__upper">
-          <div class="nsw-container section-links">
-              <div class="section-links__group">
-                <h3 class="section-links__heading"><a href="#">Section Link</a></h3>
-                <ul class="section-links__list">
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                </ul>
-              </div>
-              <div class="section-links__group">
-                <h3 class="section-links__heading"><a href="#">Section Link</a></h3>
-                <ul class="section-links__list">
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                </ul>
-              </div>
-              <div class="section-links__group">
-                <h3 class="section-links__heading"><a href="#">Section Link</a></h3>
-                <ul class="section-links__list">
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                </ul>
-              </div>
-              <div class="section-links__group">
-                <h3 class="section-links__heading"><a href="#">Section Link</a></h3>
-                <ul class="section-links__list">
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                    <li class="section-links__item"><a href="#">Secondary link</a></li>
-                </ul>
-              </div>
-          </div>
-        </div>
         <div class="nsw-footer__lower">
           <div class="nsw-container">
-            <p>We pay respect to the Traditional Custodians and First Peoples of NSW, and acknowledge their continued connection to their country and culture.</p>
+            <p>{statement}</p>
             <hr>
-            <ul class="nsw-footer-links">
-                <li class="nsw-footer-links__item">
-                  <a href="#" class="nsw-footer-links__link">Tertiary</a>
-                </li>
-                <li class="nsw-footer-links__item">
-                  <a href="#" class="nsw-footer-links__link">Tertiary</a>
-                </li>
-                <li class="nsw-footer-links__item">
-                  <a href="#" class="nsw-footer-links__link">Tertiary</a>
-                </li>
-                <li class="nsw-footer-links__item">
-                  <a href="#" class="nsw-footer-links__link">Tertiary</a>
-                </li>
-            </ul>
-            <p>Copyright © 2019</p>
+            <nav role="navigation" aria-labelledby="block-data-menu" class="clearfix">
+              <h4 class="visually-hidden" id="block-data-menu">Legal &amp; Privacy</h4>
+               <ul class="clearfix nsw-footer-links">
+                <template for:each={_linkItems} for:item="item">
+                  <li key={item.index} class="nsw-footer-links__item">
+                    <a href={item.url} class="nsw-footer-links__link">{item.text}</a>
+                  </li> 
+                </template>
+              </ul>
+            </nav>
+            <div class="copyrightMention" lwc:dom="manual">
+            </div>
           </div>
         </div>
       </footer>    

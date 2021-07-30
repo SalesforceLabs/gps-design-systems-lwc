@@ -74,7 +74,8 @@
   }
   
   
-  .nsw-body-content {
+  .nsw-body-content,
+  .nsw-wysiwyg-content {
       font-weight: 400;
       font-size: 1rem;
       line-height: 1.5;
@@ -111,32 +112,21 @@
       margin-bottom: 0 !important;
   }
   
-  .forceCommunityRichText ul>li:before {
-      content: none !important;
+  .forceCommunityRichText .nsw-body-content ul>li:before,
+  .forceCommunityRichText .nsw-wysiwyg-content ul>li:before {
+      content: none;
   }
   
-  .forceCommunityRichText li:before {
-      display: inherit !important;
-      margin-right: inherit !important;
-      text-align: inherit !important;
-      white-space: inherit !important;
-      width: inherit !important;
+  /* to counter community default setting for rich text output */
+  .forceCommunityRichText .nsw-footer li:not(.ql-direction-rtl):before {
+      margin-left: 0;
   }
   
-  /*
-  .forceCommunityRichText ol li,
-  .forceCommunityRichText ul li {
-      padding-left: inherit !important;
+  .forceCommunityRichText .nsw-footer ul>li:before {
+      content: none;
   }
-  */
+  /* end */
   
-  /*.forceCommunityRichText ol li,
-  .forceCommunityRichText ul li*/
-  .nsw-body-content ol li,
-  .nsw-body-content ul li {
-      list-style-type: disc; /*!important;*/
-      list-style-position: outside;
-  }
   
   .nsw-footer ol,
   .nsw-footer ul,
@@ -145,17 +135,48 @@
       padding-left: 0 !important;
   }
   
-  .forceCommunityRichText .nsw-body-content ol>li,
-  .forceCommunityRichText .nsw-body-content ul>li {
-      list-style-type: disc;
+  .nsw-body-content ul>li,
+  .nsw-wysiwyg-content ul>li {
+      list-style: disc outside;
   }
   
+  .forceCommunityRichText .nsw-body-content ul>li,
+  .forceCommunityRichText .nsw-wysiwyg-content ul>li {
+      list-style: disc outside;
+  }
+  
+  .forceCommunityRichText .nsw-body-content ul>ol,
+  .forceCommunityRichText .nsw-wysiwyg-content ul>ol {
+      list-style: decimal outside;
+  }
+  
+  .forceCommunityRichText .nsw-feature-tile ul>li {
+      list-style-type: none;
+  }
+  
+  /* flow */
   .forceCommunityFlowCommunity {
       border-style: none !important;
   }
   
+  .flowruntimeErrorText {
+      background-color: #f7e7eb;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg fill='%23b81237' xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cpath d='M16 32A16.003 16.003 0 0027.314 4.686a16.003 16.003 0 00-22.628 0 16.003 16.003 0 000 22.628C7.687 30.314 11.756 32 16 32zm0-25a2 2 0 110 4.001A2 2 0 0116 7zm-2 7h4v11h-4V14z'/%3E%3C/svg%3E");
+      background-position: left .5rem center;
+      background-repeat: no-repeat;
+      background-size: 1rem auto;
+      color: #333;
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-top: .5rem;
+      padding: .5rem 1rem .5rem 2rem;
+  }
+  /* end flow */
+  
+  
   /* NSW DS base */
   
+  /*
   ul {
       list-style-type: disc;
       list-style-position: inside;
@@ -165,6 +186,7 @@
       list-style-type: decimal;
       list-style-position: inside;
   }
+  */
   
   a {
       text-decoration: underline;
@@ -363,7 +385,6 @@
   .nsw-wysiwyg-content ol:not([class]) li,
   .nsw-wysiwyg-content ul:not([class]) li {
       margin-top: .5rem;
-      padding-inline-start: 40px;
   }    
   
   
@@ -514,20 +535,4 @@
   .forceCommunityRichText .nsw-feature-tile ol li,
   .forceCommunityRichText .nsw-feature-tile ul li {
       padding-left: 0;
-  }
-  
-  
-  /* flow */
-  
-  .flowruntimeErrorText {
-      background-color: #f7e7eb;
-      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg fill='%23b81237' xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cpath d='M16 32A16.003 16.003 0 0027.314 4.686a16.003 16.003 0 00-22.628 0 16.003 16.003 0 000 22.628C7.687 30.314 11.756 32 16 32zm0-25a2 2 0 110 4.001A2 2 0 0116 7zm-2 7h4v11h-4V14z'/%3E%3C/svg%3E");
-      background-position: left .5rem center;
-      background-repeat: no-repeat;
-      background-size: 1rem auto;
-      color: #333;
-      font-weight: 600;
-      font-size: 0.875rem;
-      margin-top: .5rem;
-      padding: .5rem 1rem .5rem 2rem;
   }

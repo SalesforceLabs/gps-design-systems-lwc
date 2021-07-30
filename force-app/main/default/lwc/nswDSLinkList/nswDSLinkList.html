@@ -4,7 +4,7 @@
           <ul class="nsw-link-list__list">
             <template for:each={_linkItems} for:item="item">
               <li key={item.index} class="nsw-link-list__item">
-                <a href={item.url}>
+                <a href={item.url} class="no-link-decoration">
                   <span>{item.text}</span>
                   <i class="material-icons nsw-material-icons nsw-link-list__icon" aria-hidden="true">east</i>
                 </a>

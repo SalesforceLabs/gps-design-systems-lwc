@@ -187,9 +187,6 @@
 }
 
 .nsw-header-btn__sub {
-    font-family: Montserrat,Arial,sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     font-weight: 600;
     font-size: .75rem
 }
@@ -409,7 +406,8 @@
     transform: translateX(-100%);
     visibility: hidden;
     outline: none;
-    height: 100%;
+/*    height: 100%; */
+    height: 100vh;
     overflow-y: auto
 }
 

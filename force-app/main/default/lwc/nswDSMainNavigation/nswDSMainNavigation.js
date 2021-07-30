@@ -154,4 +154,18 @@ export default class NswDSMainNavigationBase extends NavigationMixin(LightningEl
             state: state,
         });
     }
+
+    // ---- mobileMenu
+
+    @track mobileMenuIsOpen = false;
+
+    handleMobileMenuClick() {
+        this.mobileMenuIsOpen = !this.mobileMenuIsOpen;
+
+        let element = this.template.querySelector(".nsw-navigation");
+        if (element) {
+            console.log("found");
+            element.classList.toggle("is-open", this.mobileMenuIsOpen);
+        }
+    }
 }

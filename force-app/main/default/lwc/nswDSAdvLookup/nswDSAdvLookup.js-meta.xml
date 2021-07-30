@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
-    <isExposed>true</isExposed>
+    <isExposed>false</isExposed>
     <masterLabel>NSW DS Advanced Lookup</masterLabel>
     <description>A uiApi-based lookup in the NSW Government Design System</description>
     <targets>
