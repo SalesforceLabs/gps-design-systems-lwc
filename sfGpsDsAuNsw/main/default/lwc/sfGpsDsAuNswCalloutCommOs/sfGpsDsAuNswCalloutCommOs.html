@@ -1,0 +1,16 @@
+<template>
+  <c-sf-gps-ds-au-nsw-callout-os
+    if:false={_sfGpsErrors}
+    title={title}
+    level={_level}
+    class-name={className}
+  >
+    <div class="sf-gps-markdown" lwc:dom="manual"></div>
+  </c-sf-gps-ds-au-nsw-callout-os>
+
+  <c-sf-gps-ds-configuration-error-os
+    if:true={_sfGpsErrors}
+    errors={_sfGpsErrors}
+  >
+  </c-sf-gps-ds-configuration-error-os>
+</template>

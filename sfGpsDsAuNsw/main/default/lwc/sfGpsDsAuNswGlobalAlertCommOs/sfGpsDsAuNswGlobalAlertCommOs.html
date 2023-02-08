@@ -1,0 +1,19 @@
+<template>
+  <c-sf-gps-ds-au-nsw-global-alert-os
+    if:false={_sfGpsErrors}
+    as={as}
+    title={title}
+    copy={copy}
+    cta-style={ctaStyle}
+    cta-text={_cta.text}
+    cta-href={_cta.url}
+    class-name={className}
+  >
+  </c-sf-gps-ds-au-nsw-global-alert-os>
+
+  <c-sf-gps-ds-configuration-error-os
+    if:true={_sfGpsErrors}
+    errors={_sfGpsErrors}
+  >
+  </c-sf-gps-ds-configuration-error-os>
+</template>

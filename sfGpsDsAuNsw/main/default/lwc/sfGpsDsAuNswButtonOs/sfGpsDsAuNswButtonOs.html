@@ -1,0 +1,13 @@
+<template>
+  <template if:true={link}>
+    <a class={computedClassName} href={link}>
+      <slot></slot>
+    </a>
+  </template>
+
+  <template if:false={link}>
+    <button type={type} class={computedClassName} onclick={handleClick}>
+      {label}
+    </button>
+  </template>
+</template>

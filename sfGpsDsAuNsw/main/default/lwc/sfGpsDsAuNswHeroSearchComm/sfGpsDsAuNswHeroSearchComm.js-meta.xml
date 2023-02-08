@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+  <apiVersion>55.0</apiVersion>
+  <isExposed>true</isExposed>
+  <masterLabel>NSW DS Hero Search</masterLabel>
+  <targets>
+    <target>lightningCommunity__Page</target>
+    <target>lightningCommunity__Default</target>
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightningCommunity__Default">
+      <property
+        name="title"
+        type="String"
+        label="Title"
+        description="Clearly identifies the site, service or product."
+        default="Hero Search"
+      />
+      <property
+        name="intro"
+        type="String"
+        label="Intro"
+        description="Gives additional context for the search when the title alone may not be insufficient."
+        default="Find information, access services and have your say."
+      />
+      <property
+        name="image"
+        type="String"
+        label="Image source"
+        description="URL of a supporting image."
+      />
+      <property
+        name="links"
+        type="String"
+        label="Links"
+        description="Surfaces access to popular search content - as a series of Markdown links."
+        default=""
+      />
+      <property
+        name="srLabel"
+        type="String"
+        label="Screenreader label"
+        description="Text used to label the search input field on screen-readers."
+        default="Search for:"
+      />
+      <property
+        name="srSearchButtonLabel"
+        type="String"
+        label="Screenreader search button label"
+        description="Text used to label the search button on screen-readers."
+        default="Search"
+      />
+      <property
+        name="className"
+        type="String"
+        label="Class name"
+        description="Additional CSS class to be applied."
+      />
+    </targetConfig>
+  </targetConfigs>
+</LightningComponentBundle>

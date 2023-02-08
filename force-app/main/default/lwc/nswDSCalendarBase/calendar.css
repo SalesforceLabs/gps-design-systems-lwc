@@ -1,8 +1,0 @@
-/**
- * For RTL languages, slds-dropdown_left will have left: 0 swapped with right: 0 which is why we
- * need to reset the right property value back to its default of auto.
- */
-.slds-dropdown_left:dir(rtl) {
-    left: 0;
-    right: auto;
-}

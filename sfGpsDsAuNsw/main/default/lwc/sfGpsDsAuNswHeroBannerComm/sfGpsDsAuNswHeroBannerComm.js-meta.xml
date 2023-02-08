@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+  <apiVersion>55.0</apiVersion>
+  <isExposed>true</isExposed>
+  <masterLabel>NSW DS Hero Banner</masterLabel>
+  <targets>
+    <target>lightningCommunity__Page</target>
+    <target>lightningCommunity__Default</target>
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightningCommunity__Default">
+      <property
+        name="title"
+        type="String"
+        label="Title"
+        description="Clearly identifies the primary purpose or action of the site, service or product."
+        default="Hero Banner"
+      />
+      <property
+        name="intro"
+        type="String"
+        label="Intro"
+        description="Gives additional context when the title alone would be insufficient - in Markdown format."
+        default="The hero banner reflects the goals or purpose of the site, service or product."
+      />
+      <property
+        name="cstyle"
+        type="String"
+        label="Style"
+        description="Style used for the hero banner."
+        datasource="dark,light,white"
+        default="dark"
+      />
+      <property
+        name="cta"
+        type="String"
+        label="Call to action"
+        description="Call to action for the user in Markdown link format."
+        default="[Learn more](#)"
+      />
+      <property
+        name="featured"
+        type="Boolean"
+        label="Featured"
+        description="Sets a minimum height."
+        default="false"
+      />
+      <property
+        name="wide"
+        type="Boolean"
+        label="Wide"
+        description="Grants extra horizontal space for the primary content."
+        default="false"
+      />
+      <property
+        name="image"
+        type="String"
+        label="Image source"
+        description="URL of a supporting image."
+      />
+      <property
+        name="imageAlt"
+        type="String"
+        label="Image alt"
+        description="Text used should there be an issue displaying the image."
+      />
+      <property
+        name="subtitle"
+        type="String"
+        label="Subtitle"
+        description="Text that clearly identifies the nature of the listed links."
+        default="Subtitle"
+      />
+      <property
+        name="links"
+        type="String"
+        label="Links"
+        description="A series of links displayed on the right hand side - in Markdown link format."
+        default=""
+      />
+      <property
+        name="className"
+        type="String"
+        label="Class name"
+        description="Additional CSS class to be applied."
+      />
+    </targetConfig>
+  </targetConfigs>
+</LightningComponentBundle>

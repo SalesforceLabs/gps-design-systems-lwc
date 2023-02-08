@@ -1,0 +1,49 @@
+<template>
+  <div>
+    <fieldset if:true={isCheckbox} aria-invalid={computedAriaInvalid}>
+      <legend class={computedLegendClassName}>
+        <span>
+          {label}
+          <span if:true={required}> ({requiredLabel})</span>
+        </span>
+        <slot name="label"> </slot>
+      </legend>
+      <span if:true={fieldLevelHelp} id="helper" class="form__help"
+        >{fieldLevelHelp}</span
+      >
+
+      <div class="form__checkboxes">
+        <template for:each={internalOpts} for:item="e" for:index="index">
+          <div key={e.id} class="form__item">
+            <input
+              class={computedInputClassName}
+              type="checkbox"
+              required={required}
+              disabled={disabled}
+              id={e.id}
+              data-index={index}
+              tabindex={tabIndex}
+              name={name}
+              checked={e.selected}
+              value={e.value}
+              aria-invalid={isAriaInvalid}
+              aria-describedby={computedAriaDescribedBy}
+              onfocus={handleFocus}
+              onchange={onchangevalue}
+            />
+            <label data-index={index} for={e.id}> {e.label} </label>
+          </div>
+        </template>
+      </div>
+
+      <span
+        if:true={isRealError}
+        class="form__error"
+        aria-live="assertive"
+        id="errorMessageBlock"
+      >
+        {errorMessage}
+      </span>
+    </fieldset>
+  </div>
+</template>

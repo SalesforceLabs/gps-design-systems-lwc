@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+  <apiVersion>55.0</apiVersion>
+  <isExposed>true</isExposed>
+  <masterLabel>NSW DS Header and Main Nav</masterLabel>
+  <targets>
+    <target>lightningCommunity__Page</target>
+    <target>lightningCommunity__Default</target>
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightningCommunity__Default">
+      <property
+        name="ipName"
+        type="String"
+        label="Integration procedure name"
+        description="Name of the Integration procedure mapping content to this nav."
+      />
+      <property
+        name="inputJSON"
+        type="String"
+        label="Input JSON"
+        description="JSON formatted input parameters for the Integration procedure."
+      />
+      <property
+        name="optionsJSON"
+        type="String"
+        label="Options JSON"
+        description="JSON formatted options for the Integration procedure."
+      />
+      <property
+        name="masterbrand"
+        type="String"
+        label="Masterbrand"
+        description="Logo URL for masterbrand, leave empty to keep NSW Government Waratah logo."
+        default=""
+      />
+      <property
+        name="masterbrandAlt"
+        type="String"
+        label="Masterbrand alternative text"
+        description="Alternative text to masterbrand logo."
+        default=""
+      />
+      <property
+        name="srMasterbrandLabel"
+        type="String"
+        label="Screenreader masterbrand label"
+        description="Label used on screenreaders for the masterbrand logo."
+        default="NSW Government"
+      />
+      <property
+        name="logo"
+        type="String"
+        label="Logo"
+        description="Logo URL for co-brand."
+      />
+      <property
+        name="logoAlt"
+        type="String"
+        label="Logo alternative text"
+        description="Alternative text to co-brand logo."
+      />
+      <property
+        name="siteTitle"
+        type="String"
+        label="Site title"
+        description="Provides user context of the product or service."
+        default=""
+      />
+      <property
+        name="siteDescriptor"
+        type="String"
+        label="Site descriptor"
+        description="Provides user context of the cluster/department/agency if required."
+        default=""
+      />
+      <property
+        name="headerUrl"
+        type="String"
+        label="Home page URL"
+        description="URL to alternative home page, leave blank otherwise."
+      />
+      <property
+        name="mobile"
+        type="Boolean"
+        label="Mobile"
+        description="Show a responsive menu on mobile."
+        default="true"
+      />
+      <property
+        name="search"
+        type="Boolean"
+        label="Show search bar"
+        description="Provide user with easy access to a targeted search."
+        default="true"
+      />
+      <property
+        name="menuLabel"
+        type="String"
+        label="Menu icon name"
+        description="Name of the Google Material icon used to render the menu waffle on mobile."
+        default="menu"
+      />
+      <property
+        name="searchLabel"
+        type="String"
+        label="Screenreader search label"
+        description="Accessibility label used for the search box with screen readers."
+        default="Search site for:"
+      />
+      <property
+        name="headerClassName"
+        type="String"
+        label="Header class name"
+        description="Additional CSS class to be applied to header."
+      />
+      <property
+        name="megaMenu"
+        type="Boolean"
+        label="Mega menu"
+        default="false"
+      />
+      <property
+        name="mainNavClassName"
+        type="String"
+        label="Main nav class name"
+        description="Additional CSS class to be applied to main nav."
+      />
+    </targetConfig>
+  </targetConfigs>
+</LightningComponentBundle>
