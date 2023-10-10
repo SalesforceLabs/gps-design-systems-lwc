@@ -6,10 +6,10 @@
  */
 
 import { api, track } from "lwc";
-import SfGpsDsLwcOsN from "c/sfGpsDsLwcOsN";
+import SfGpsDsLwc from "c/sfGpsDsLwcOsN";
 import mdEngine from "c/sfGpsDsMarkdownOs";
 
-export default class SfGpsDsAuNswGlobalAlertCommOs extends SfGpsDsLwcOsN {
+export default class SfGpsDsAuNswGlobalAlertComm extends SfGpsDsLwc {
   @api title;
   @api copy;
   @api as = "default";
@@ -37,4 +37,11 @@ export default class SfGpsDsAuNswGlobalAlertCommOs extends SfGpsDsLwcOsN {
   }
 
   @api ctaStyle = "link";
+
+  /* lifecycle */
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.classList.add("nsw-scope");
+  }
 }

@@ -8,11 +8,10 @@
 import { LightningElement, api } from "lwc";
 import { computeClass } from "c/sfGpsDsHelpersOs";
 
-export default class SfGpsDsAuNswContentBlockOs extends LightningElement {
+export default class SfGpsDsAuNswContentBlock extends LightningElement {
+  static renderMode = "light";
+
   @api headline;
-  // ADJUSTED: moved from atribute to slot
-  // @api copy;
-  // END ADJUSTED
   @api image;
   @api imageAlt;
   @api icon;

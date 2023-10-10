@@ -8,7 +8,7 @@
 import { LightningElement, api } from "lwc";
 import { computeClass } from "c/sfGpsDsHelpersOs";
 
-export default class SfGpsDsAuNswProgressIndicatorOs extends LightningElement {
+export default class SfGpsDsAuNswProgressIndicator extends LightningElement {
   @api step = 1;
   @api of = 1;
   @api className;

@@ -1,2 +1,3 @@
 @import "c/sfGpsDsAuNswCoreOs";
-@import "./results-bar.css";
+@import "c/sfGpsDsAuNswFormOs";
+@import "./results-bar.gen.css";
