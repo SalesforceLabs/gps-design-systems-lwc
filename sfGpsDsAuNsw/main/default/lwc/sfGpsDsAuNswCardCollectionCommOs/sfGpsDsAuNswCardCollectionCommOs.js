@@ -6,10 +6,10 @@
  */
 
 import { api } from "lwc";
-import { htmlDecode } from "c/sfGpsDsHelpersOs";
-import SfGpsDsIpLwcOsN from "c/sfGpsDsIpLwcOsN";
+import { htmlDecode, computeClass } from "c/sfGpsDsHelpersOs";
+import SfGpsDsIpLwc from "c/sfGpsDsIpLwcOsN";
 
-export default class SfGpsDsAuNswCardCollectionCommOs extends SfGpsDsIpLwcOsN {
+export default class SfGpsDsAuNswCardCollectionComm extends SfGpsDsIpLwc {
   @api
   get ipName() {
     return super.ipName;
@@ -38,7 +38,9 @@ export default class SfGpsDsAuNswCardCollectionCommOs extends SfGpsDsIpLwcOsN {
   }
 
   @api cstyle = "white";
+  @api orientation = "vertical";
   @api displayDate = false;
+  @api dateStyle = "medium";
 
   @api xsWidth = "12";
   @api smWidth = "12";
@@ -48,15 +50,27 @@ export default class SfGpsDsAuNswCardCollectionCommOs extends SfGpsDsIpLwcOsN {
   @api className;
 
   mapIpData(data) {
-    return data.map((card) => ({
+    if (!data) {
+      return null;
+    }
+
+    if (!Array.isArray(data)) {
+      data = [data];
+    }
+
+    return data.map((card, index) => ({
       ...card,
       copy: card.copy ? htmlDecode(card.copy) : null,
-      footer: card.footer ? htmlDecode(card.footer) : null
+      footer: card.footer ? htmlDecode(card.footer) : null,
+      index: card.index || `card-${index + 1}`
     }));
   }
 
   get computedClassName() {
-    return `nsw-grid ${this.className ? this.className : ""}`;
+    return computeClass({
+      "nsw-grid": true,
+      [this.className]: this.className
+    });
   }
 
   get computedColClassName() {
@@ -73,7 +87,11 @@ export default class SfGpsDsAuNswCardCollectionCommOs extends SfGpsDsIpLwcOsN {
     );
   }
 
+  /* lifecycle */
+
   connectedCallback() {
     super.connectedCallback();
+
+    this.classList.add("nsw-scope");
   }
 }

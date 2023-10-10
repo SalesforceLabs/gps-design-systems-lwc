@@ -1,1 +1,2 @@
-@import "c/sfGpsDsAuNswListItemCss";
+@import "c/sfGpsDsAuNswCoreOs";
+@import "./list-item.gen.css";

@@ -6,16 +6,19 @@
  */
 
 import { api, track } from "lwc";
-import SfGpsDsLwcOsN from "c/sfGpsDsLwcOsN";
+import SfGpsDsLwc from "c/sfGpsDsLwcOsN";
 import mdEngine from "c/sfGpsDsMarkdownOs";
 import { replaceInnerHtml } from "c/sfGpsDsHelpersOs";
 
-export default class SfGpsDsAuNswHeroBannerCommOs extends SfGpsDsLwcOsN {
+const MARKDOWN_SELECTOR = ".sf-gps-ds-markdown";
+
+export default class SfGpsDsAuNswHeroBannerComm extends SfGpsDsLwc {
   @api title;
   @api subtitle;
   @api cstyle;
   @api wide;
   @api featured;
+  @api lines;
   @api image;
   @api imageAlt;
   @api className;
@@ -90,6 +93,13 @@ export default class SfGpsDsAuNswHeroBannerCommOs extends SfGpsDsLwcOsN {
     return this.image ? { src: this.image, alt: this.imageAlt } : null;
   }
 
+  /* lifecycle */
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.classList.add("nsw-scope");
+  }
+
   _rendered = false;
 
   renderedCallback() {
@@ -97,7 +107,7 @@ export default class SfGpsDsAuNswHeroBannerCommOs extends SfGpsDsLwcOsN {
       let element;
 
       if (this.intro) {
-        if ((element = this.template.querySelector(".sfGpsMarkdown"))) {
+        if ((element = this.template.querySelector(MARKDOWN_SELECTOR))) {
           replaceInnerHtml(element, this._introHtml);
         } else {
           this.addError(

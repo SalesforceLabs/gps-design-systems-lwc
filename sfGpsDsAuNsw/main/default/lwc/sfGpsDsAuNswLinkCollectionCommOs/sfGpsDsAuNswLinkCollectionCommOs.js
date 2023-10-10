@@ -7,10 +7,10 @@
 
 import { api } from "lwc";
 import { NavigationMixin } from "lightning/navigation";
-import SfGpsDsIpLwcOsN from "c/sfGpsDsIpLwcOsN";
+import SfGpsDsIpLwc from "c/sfGpsDsIpLwcOsN";
 
-export default class SfGpsDsAuNswLinkCollectionCommOs extends NavigationMixin(
-  SfGpsDsIpLwcOsN
+export default class SfGpsDsAuNswLinkCollectionComm extends NavigationMixin(
+  SfGpsDsIpLwc
 ) {
   @api
   get ipName() {
@@ -42,6 +42,14 @@ export default class SfGpsDsAuNswLinkCollectionCommOs extends NavigationMixin(
   @api className;
 
   mapIpData(data) {
+    if (!data) {
+      return null;
+    }
+
+    if (!Array.isArray(data)) {
+      data = [data];
+    }
+
     return data.map((item) => ({
       ...item,
       text: item.text,
@@ -55,7 +63,10 @@ export default class SfGpsDsAuNswLinkCollectionCommOs extends NavigationMixin(
     );
   }
 
+  /* lifecycle */
+
   connectedCallback() {
     super.connectedCallback();
+    this.classList.add("nsw-scope");
   }
 }

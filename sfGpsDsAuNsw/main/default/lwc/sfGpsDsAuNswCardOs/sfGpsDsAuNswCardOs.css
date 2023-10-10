@@ -1,1 +1,2 @@
-@import "c/sfGpsDsAuNswCardCssOs";
+@import "c/sfGpsDsAuNswCoreOs";
+@import "./card.gen.css";

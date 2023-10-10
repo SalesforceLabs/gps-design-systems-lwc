@@ -7,11 +7,11 @@
 
 import { api, track } from "lwc";
 import { NavigationMixin } from "lightning/navigation";
-import SfGpsDsLwcOsN from "c/sfGpsDsLwcOsN";
+import SfGpsDsLwc from "c/sfGpsDsLwcOsN";
 import mdEngine from "c/sfGpsDsMarkdownOs";
 
-export default class SfGpsDsAuNswLinkListCommOs extends NavigationMixin(
-  SfGpsDsLwcOsN
+export default class SfGpsDsAuNswLinkListComm extends NavigationMixin(
+  SfGpsDsLwc
 ) {
   @api className;
 
@@ -38,5 +38,12 @@ export default class SfGpsDsAuNswLinkListCommOs extends NavigationMixin(
     } catch (e) {
       this.addError("LI-MD", "Issue when parsing Links markdown");
     }
+  }
+
+  /* lifecycle */
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.classList.add("nsw-scope");
   }
 }

@@ -1,14 +1,16 @@
 import { LightningElement, api } from "lwc";
 import { computeClass } from "c/sfGpsDsHelpersOs";
 
-export default class SfGpsDsAuNswPaginationOs extends LightningElement {
+export default class SfGpsDsAuNswPagination extends LightningElement {
+  static renderMode = "light";
+
   @api lastPage;
   @api activePage;
 
   @api ariaLabel = "Pagination";
   @api srOnlyPre = "Page ";
   @api srOnlyPost;
-  @api srOnlyPrevious = "Back";
+  @api srOnlyPrevious = "Previous";
   @api srOnlyNext = "Next";
 
   @api className;
@@ -75,6 +77,8 @@ export default class SfGpsDsAuNswPaginationOs extends LightningElement {
   get nextDisabled() {
     return !this.showNext;
   }
+
+  /* events */
 
   handlePreviousPageClick(event) {
     event.preventDefault();

@@ -6,10 +6,10 @@
  */
 
 import { api } from "lwc";
-import { htmlDecode } from "c/sfGpsDsHelpersOs";
-import SfGpsDsIpLwcOsN from "c/sfGpsDsIpLwcOsN";
+import { htmlDecode, computeClass } from "c/sfGpsDsHelpersOs";
+import SfGpsDsIpLwc from "c/sfGpsDsIpLwcOsN";
 
-export default class SfGpsDsAuNswContentBlockCollectionCommOs extends SfGpsDsIpLwcOsN {
+export default class SfGpsDsAuNswContentBlockCollectionComm extends SfGpsDsIpLwc {
   @api
   get ipName() {
     return super.ipName;
@@ -45,14 +45,26 @@ export default class SfGpsDsAuNswContentBlockCollectionCommOs extends SfGpsDsIpL
   @api className;
 
   mapIpData(data) {
-    return data.map((block) => ({
+    if (!data) {
+      return null;
+    }
+
+    if (!Array.isArray(data)) {
+      data = [data];
+    }
+
+    return data.map((block, index) => ({
       ...block,
-      copy: block.copy ? htmlDecode(block.copy) : null
+      copy: block.copy ? htmlDecode(block.copy) : null,
+      index: block.index || `block-${index + 1}`
     }));
   }
 
   get computedClassName() {
-    return `nsw-grid ${this.className ? this.className : ""}`;
+    return computeClass({
+      "nsw-grid": true,
+      [this.className]: this.className
+    });
   }
 
   get computedColClassName() {
@@ -69,7 +81,10 @@ export default class SfGpsDsAuNswContentBlockCollectionCommOs extends SfGpsDsIpL
     );
   }
 
+  /* lifecycle */
+
   connectedCallback() {
     super.connectedCallback();
+    this.classList.add("nsw-scope");
   }
 }

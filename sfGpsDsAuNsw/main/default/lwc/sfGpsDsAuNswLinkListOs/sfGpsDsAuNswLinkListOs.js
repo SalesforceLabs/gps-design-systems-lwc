@@ -8,7 +8,9 @@
 import { LightningElement, api } from "lwc";
 import { computeClass } from "c/sfGpsDsHelpersOs";
 
-export default class SfGpsDsAuNswLinkListOs extends LightningElement {
+export default class SfGpsDsAuNswLinkList extends LightningElement {
+  static renderMode = "light";
+
   @api links;
   @api className;
 
