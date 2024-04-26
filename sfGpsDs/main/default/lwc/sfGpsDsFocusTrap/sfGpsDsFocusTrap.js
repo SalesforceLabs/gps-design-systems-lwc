@@ -2,7 +2,8 @@ import { api, LightningElement } from "lwc";
 import { findAllTabbableElements } from "c/sfGpsDsHelpers";
 
 export default class SfGpsDsFocusTrap extends LightningElement {
-  static delegatesFocus = true;
+  //static delegatesFocus = true;
+  @api options;
 
   _startNode;
   _endNode;
@@ -75,14 +76,17 @@ export default class SfGpsDsFocusTrap extends LightningElement {
         node = focusableElements[0];
       }
       node.focus();
+      return true;
     }
+
+    return false;
   }
 
   /**
    * Focuses the last focusable element in the focus trap.
    */
   _focusFirstElement() {
-    this._moveFocusTo("first");
+      this._moveFocusTo("first");
   }
 
   /**
@@ -96,6 +100,7 @@ export default class SfGpsDsFocusTrap extends LightningElement {
    * Returns a list of the focusable children found within the element.
    */
   _getFocusableElements() {
-    return findAllTabbableElements(this.template.querySelector("slot"));
+    const rv = findAllTabbableElements(this.template.querySelector("slot"));
+    return rv;
   }
 }

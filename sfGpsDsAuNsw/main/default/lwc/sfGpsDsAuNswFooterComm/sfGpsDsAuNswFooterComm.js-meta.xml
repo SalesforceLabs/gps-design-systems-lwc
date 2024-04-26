@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-  <apiVersion>57.0</apiVersion>
+  <apiVersion>60.0</apiVersion>
   <isExposed>true</isExposed>
   <masterLabel>NSW DS Footer</masterLabel>
   <targets>
@@ -10,10 +10,24 @@
   <targetConfigs>
     <targetConfig targets="lightningCommunity__Default">
       <property
+        name="upperFooterMode"
+        type="String"
+        label="Upper footer mode"
+        datasource="Demo,Experience Cloud Navigation,Integration Procedure,Hide"
+        default="Integration Procedure"
+      />
+      <property
+        name="upperFooterNavigationDevName"
+        type="String"
+        label="Upper footer navigation name"
+        description="Pick the target upper footer nav when mode is set to Experience Cloud Navigation."
+        editor="c/sfGpsDsNavigationCpe"
+      />
+      <property
         name="upperFooterIpName"
         type="String"
         label="Upper footer integration procedure name"
-        description="Name of the Integration Procedure mapping content to the upper footer nav."
+        description="Name of the Integration Procedure mapping content to the upper footer nav when mode is set to Integration Procedure."
       />
       <property
         name="upperFooterInputJSON"
@@ -30,10 +44,24 @@
         default="{}"
       />
       <property
+        name="mode"
+        type="String"
+        label="Lower footer mode"
+        datasource="Demo,Experience Cloud Navigation,Integration Procedure"
+        default="Integration Procedure"
+      />
+      <property
+        name="navigationDevName"
+        type="String"
+        label="Lower footer navigation name"
+        description="Pick the target lower footer nav when mode is set to Experience Cloud Navigation."
+        editor="c/sfGpsDsNavigationCpe"
+      />
+      <property
         name="ipName"
         type="String"
         label="Lower footer integration procedure name"
-        description="Name of the Integration Procedure mapping content to the lower footer nav."
+        description="Name of the Integration Procedure mapping content to the lower footer nav when move is set to Integration Procedure."
       />
       <property
         name="inputJSON"
@@ -57,11 +85,29 @@
         default="We pay respect to the Traditional Custodians and First Peoples of NSW, and acknowledge their continued connection to their country and culture."
       />
       <property
+        name="linkedInUrl"
+        type="String"
+        label="LinkedIn URL"
+        description="URL of the LinkedIn page, leave blank to omit the LinkedIn social icon."
+      />
+      <property
+        name="twitterXUrl"
+        type="String"
+        label="Twitter/X URL"
+        description="URL of the Twitter/X page, leave blank to omit the Twitter/X social icon."
+      />
+      <property
+        name="facebookUrl"
+        type="String"
+        label="Facebook URL"
+        description="URL of the Facebook page, leave blank to omit the Facebook social icon."
+      />
+      <property
         name="copyrightMention"
         type="String"
         label="Copyright mention"
         description="Copyright text in Markdown format"
-        default="Copyright © 2022"
+        default="Copyright © 2023"
       />
       <property
         name="builtMention"

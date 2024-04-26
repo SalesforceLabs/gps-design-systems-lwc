@@ -4,8 +4,8 @@
     label={mergedLabel}
     required={_propSetMap.required}
     read-only={_propSetMap.readOnly}
-    date-placeholder={_propSetMap.datePlaceholder}
-    time-placeholder={_propSetMap.timePlaceholder}
+    date-placeholder={mergedDatePlaceholder}
+    time-placeholder={mergedTimePlaceholder}
     value={elementValue}
     tab-index={tabIndex}
     output-type="date"
@@ -33,15 +33,15 @@
     timezone={_timezone}
     interval={_timeInterval}
     field-level-help={mergedHelpText}
+    filed-level-help-position={_propSetMap.helpTextPos}
     theme={_theme}
     time-label=""
     date-label=""
-    class={_styleClasses.input}
     data-omni-input
     onblur={handleBlur}
     onchange={handleChange}
   >
-    <template if:true={_propSetMap.repeat}>
+    <template lwc:if={_propSetMap.repeat}>
       <span
         slot="label"
         style="bottom: 7px; right: 13px"
@@ -49,7 +49,7 @@
         role="group"
       >
         <button
-          if:true={canRepeat}
+          lwc:if={canRepeat}
           class={_styleClasses.repeatAdd}
           onclick={handleAdd}
         >
@@ -62,7 +62,7 @@
           </omnistudio-icon>
         </button>
         <button
-          if:true={canRemove}
+          lwc:if={canRemove}
           class={_styleClasses.repeatRemove}
           onclick={handleRemove}
         >

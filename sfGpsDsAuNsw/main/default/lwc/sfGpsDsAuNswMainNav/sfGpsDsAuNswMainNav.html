@@ -15,47 +15,28 @@
         <span class="sr-only">{closeMenuLabel}</span>
       </button>
     </div>
-    <ul class="nsw-main-nav__list">
-      <template for:each={_navItems} for:item="navItem">
-        <li key={navItem.index}>
-          <a
-            if:false={navItem.subNav}
-            href={navItem.url}
-            data-ndx={navItem.index}
-            onclick={handleClick}
-          >
-            <!-- navigate -->
-            <span>{navItem.text}</span>
-            <template if:true={navItem.subNav}>
-              <span
-                class="material-icons nsw-material-icons nsw-main-nav__link-icon"
-                aria-hidden="true"
-              >
-                keyboard_arrow_right
-              </span>
-            </template>
-          </a>
 
-          <template if:true={navItem.subNav}>
+    <ul class="nsw-main-nav__list" onkeydown={handleKeydown}>
+      <template for:each={_navItems} for:item="navItem">
+        <li key={navItem.id} class={navItem.className}>
+          <template lwc:if={navItem.subNav}>
             <a
               href={navItem.url}
-              class={navItem.className}
               role="button"
               aria-expanded={navItem.isActive}
               aria-controls={navItem.id}
+              class={navItem.anchorClassName}
               data-ndx={navItem.index}
               onclick={handleClick}
             >
               <!-- expand -->
               <span>{navItem.text}</span>
-              <template if:true={navItem.subNav}>
-                <span
-                  class="material-icons nsw-material-icons nsw-main-nav__link-icon"
-                  aria-hidden="true"
-                >
-                  keyboard_arrow_right
-                </span>
-              </template>
+              <span
+                class="material-icons nsw-material-icons"
+                aria-hidden="true"
+              >
+                keyboard_arrow_right
+              </span>
             </a>
 
             <!-- SubNav TODO change id -->
@@ -63,7 +44,7 @@
               class={navItem.subNavClassName}
               id={navItem.id}
               role="region"
-              aria-label={navItem.text}
+              aria-label={navItem.subNavAriaLabel}
             >
               <!-- SubNavHeader -->
               <div class="nsw-main-nav__header">
@@ -86,6 +67,7 @@
                     <span class="sr-only"> to previous menu</span>
                   </span>
                 </button>
+
                 <button
                   type="button"
                   class="nsw-icon-button"
@@ -104,7 +86,7 @@
 
               <div class="nsw-main-nav__title">
                 <a
-                  if:true={navItem.url}
+                  lwc:if={navItem.url}
                   href={navItem.url}
                   data-ndx={navItem.index}
                   onclick={handleClickNavigate}
@@ -119,15 +101,20 @@
                   </span>
                 </a>
 
-                <span if:false={navItem.url}>{navItem.text}</span>
+                <span lwc:else>{navItem.text}</span>
               </div>
+
               <div class="nsw-main-nav__description">{navItem.description}</div>
               <!-- End SubNavHeader -->
 
               <!-- SubNav -->
-              <ul class="nsw-main-nav__sub-list">
+              <ul
+                class="nsw-main-nav__sub-list"
+                data-ndx={navItem.index}
+                onkeydown={handleKeydown}
+              >
                 <template for:each={navItem.subNav} for:item="subNavItem">
-                  <li key={subNavItem.index}>
+                  <li key={subNavItem.id}>
                     <a
                       href={subNavItem.url}
                       class={subNavItem.className}
@@ -139,7 +126,7 @@
                       <span> {subNavItem.text} </span>
 
                       <span
-                        if:true={subNavItem.subNav}
+                        lwc:if={subNavItem.subNav}
                         class="material-icons nsw-material-icons nsw-main-nav__link-icon"
                         aria-hidden="true"
                       >
@@ -147,7 +134,7 @@
                       </span>
                     </a>
 
-                    <template if:true={subNavItem.subNav}>
+                    <template lwc:if={subNavItem.subNav}>
                       <div
                         class={subNavItem.subNavClassName}
                         id={subNavItem.id}
@@ -175,6 +162,7 @@
                               <span class="sr-only"> to previous menu</span>
                             </span>
                           </button>
+
                           <button
                             type="button"
                             class="nsw-icon-button"
@@ -190,6 +178,7 @@
                             <span class="sr-only">Close Menu</span>
                           </button>
                         </div>
+
                         <div class="nsw-main-nav__title">
                           <a
                             href={subNavItem.url}
@@ -207,17 +196,22 @@
                             </span>
                           </a>
                         </div>
+
                         <div class="nsw-main-nav__description">
                           {navItem.description}
                         </div>
                         <!-- End SubNavHeader-->
 
-                        <ul class="nsw-main-nav__sub-list">
+                        <ul
+                          class="nsw-main-nav__sub-list"
+                          data-ndx={subNavItem.index}
+                          onkeydown={handleKeydown}
+                        >
                           <template
                             for:each={subNavItem.subNav}
                             for:item="subSubNavItem"
                           >
-                            <li key={subSubNavItem.index}>
+                            <li key={subSubNavItem.id}>
                               <a
                                 href={subSubNavItem.url}
                                 class="nsw-subnavigation__link"
@@ -227,7 +221,7 @@
                                 <!-- navigate -->
                                 <span>{subSubNavItem.text}</span>
                                 <span
-                                  if:true={subSubNavItem.subNav}
+                                  lwc:if={subSubNavItem.subNav}
                                   class="material-icons nsw-material-icons nsw-main-nav__link-icon"
                                   aria-hidden="true"
                                 >
@@ -239,12 +233,25 @@
                         </ul>
                       </div>
                     </template>
+                    <!-- lwc:if={subNavItem.subNav} -->
                   </li>
                 </template>
               </ul>
               <!-- End SubNav -->
             </div>
           </template>
+          <!-- lwc:if={navItem.subNav} -->
+
+          <a
+            lwc:else
+            href={navItem.url}
+            class={navItem.anchorClassName}
+            data-ndx={navItem.index}
+            onclick={handleClick}
+          >
+            <!-- navigate -->
+            <span>{navItem.text}</span>
+          </a>
         </li>
       </template>
     </ul>

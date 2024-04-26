@@ -1,0 +1,15 @@
+@import "./file-upload.gen.css";
+
+:host {
+  font-family: Marianne, arial, sans-serif;
+}
+
+.sfgpsds-file {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.sfgpsds-file ul {
+  list-style-type: none;
+  padding-inline-start: 0;
+}

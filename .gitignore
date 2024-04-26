@@ -11,6 +11,7 @@ deploy-options.json
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
 jsconfig.json
+.vscode
 
 # LWC Jest coverage reports
 coverage/
@@ -50,12 +51,18 @@ $RECYCLE.BIN/
 # non repo temp code
 sfGpsTemp/*
 
-# non repo UkGovFull
+# non repo *Full
+sfGpsDsAuNswFull/*
+sfGpsDsAuNswSFull/*
+sfGpsDsAuVic1Full/*
+sfGpsDsAuVic2Full/*
+sfGpsDsFrGovFull/*
 sfGpsDsUkGovFull/*
 
 # auto-generated LWCs for Omniscript/Omnistudio
 **/lwc/*Os/**
 
+# auto-generated CSS
 **/lwc/**/*.gen.css
 **/aura/**/*.gen.css
 **/staticresources/**/*.gen.css

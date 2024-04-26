@@ -1,20 +1,20 @@
 /*
- * Copyright (c) 2022, Emmanuel Schweitzer and salesforce.com, inc.
+ * Copyright (c) 2022-2023, Emmanuel Schweitzer and salesforce.com, inc.
  * All rights reserved.
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import OmniscriptMessaging from "omnistudio/omniscriptMessaging";
+import SfGpsDsFormMessagingOsN from "c/sfGpsDsFormMessagingOsN";
 import { omniGetMergedField } from "c/sfGpsDsOmniHelpersOsN";
 import { computeClass, replaceInnerHtml } from "c/sfGpsDsHelpersOs";
 import mdEngine from "c/sfGpsDsMarkdownOs";
 
 import tmpl from "./sfGpsDsAuVicFormMessagingOsN.html";
 
-const MARKDOWN_SELECTOR = ".sf-gps-ds-markdown";
+const MARKDOWN_SELECTOR = "[data-sfgpsds-markdown]";
 
-export default class SfGpsDsAuVicFormMessagingOsN extends OmniscriptMessaging {
+export default class SfGpsDsAuVicFormMessagingOsN extends SfGpsDsFormMessagingOsN {
   render() {
     return tmpl;
   }
@@ -91,11 +91,6 @@ export default class SfGpsDsAuVicFormMessagingOsN extends OmniscriptMessaging {
     if (mth) {
       if ((element = this.template.querySelector(MARKDOWN_SELECTOR))) {
         replaceInnerHtml(element, mth);
-      } else {
-        console.log(
-          "CO-PH",
-          "Couldn't find internal intro markdown placeholder"
-        );
       }
     }
   }

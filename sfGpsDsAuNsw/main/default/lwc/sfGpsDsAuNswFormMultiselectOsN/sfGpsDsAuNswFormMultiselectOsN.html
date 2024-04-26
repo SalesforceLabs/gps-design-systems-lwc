@@ -5,21 +5,22 @@
     options={_realtimeOptions}
     value={elementValue}
     label={mergedLabel}
-    onchange={handleChange}
     required={_propSetMap.required}
     tab-index={tabIndex}
     theme={_theme}
     alignment={_horizontalMode}
     field-level-help={mergedHelpText}
-    data-refresh={refresh}
+    field-level-help-position={_propSetMap.helpTextPos}
     message-when-value-missing={_messageWhenValueMissing}
     required-label={allCustomLabelsUtil.OmniRequired}
+    data-refresh={refresh}
     data-omni-input
+    onchange={handleChange}
   >
-    <template if:true={_propSetMap.repeat}>
+    <template lwc:if={_propSetMap.repeat}>
       <span slot="label" class={_styleClasses.repeatContainer} role="group">
         <button
-          if:true={canRepeat}
+          lwc:if={canRepeat}
           class={_styleClasses.repeatAdd}
           onclick={handleAdd}
         >
@@ -32,7 +33,7 @@
           </omnistudio-icon>
         </button>
         <button
-          if:true={canRemove}
+          lwc:if={canRemove}
           class={_styleClasses.repeatRemove}
           onclick={handleRemove}
         >

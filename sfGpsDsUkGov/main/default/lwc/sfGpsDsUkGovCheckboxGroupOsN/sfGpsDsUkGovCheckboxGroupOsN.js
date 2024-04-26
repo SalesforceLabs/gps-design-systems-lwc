@@ -5,37 +5,29 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import OmniscriptCheckboxGroup from "omnistudio/checkboxGroup";
+import OmniscriptCheckboxGroup from "c/sfGpsDsOmniCheckboxGroupOsN";
 import SfGpsDsUkGovLabelMixin from "c/sfGpsDsUkGovLabelMixinOsN";
 import { computeClass } from "c/sfGpsDsHelpersOs";
 import tmpl from "./sfGpsDsUkGovCheckboxGroupOsN.html";
 
 export default class SfGpsDsUkGovCheckboxGroupOsN extends SfGpsDsUkGovLabelMixin(
-  OmniscriptCheckboxGroup,
-  "large"
+  OmniscriptCheckboxGroup
 ) {
   render() {
     return tmpl;
   }
 
-  get computedAriaInvalid() {
-    return this.isError;
-  }
-
-  get computedAriaDescribedBy() {
-    let isRealError = this.isRealError;
-
+  get computedFormGroupClassName() {
     return computeClass({
-      errorMessageBlock: isRealError,
-      helper: isRealError && this.fieldLevelHelp
+      "govuk-form-group": true,
+      "govuk-form-group--error": this.sfGpsDsIsError
     });
   }
 
-  get isRealError() {
-    return this.isError && this._errorMessage;
-  }
-
-  get _errorMessage() {
-    return this.errorMessage?.replace("Error: ", "");
+  get computedAriaDescribedBy() {
+    return computeClass({
+      helper: this.fieldLevelHelp,
+      errorMessageBlock: this.sfGpsDsIsError
+    });
   }
 }

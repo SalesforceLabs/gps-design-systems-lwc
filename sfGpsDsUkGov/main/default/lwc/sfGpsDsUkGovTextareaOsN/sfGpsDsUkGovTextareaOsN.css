@@ -1,10 +1,6 @@
 @import "c/sfGpsDsUkGovCoreOs";
-@import "./character-count.gen.css";
 @import "./textarea.gen.css";
-
-.govuk-form-group:first-child {
-  margin-top: 1rem;
-}
+@import "./character-count.gen.css";
 
 /* Override bottom margin ONLY when using Text character counter */
 .govuk-textarea.govuk-js-character-count {
@@ -17,13 +13,9 @@
 }
 
 [data-label] {
-  display: table;
+  display: flex;
 }
 
-[data-label] .govuk-label-wrapper {
+[data-label] .govuk-label {
   margin-right: 0.5rem;
-}
-
-[data-label] slot {
-  display: table-cell;
 }

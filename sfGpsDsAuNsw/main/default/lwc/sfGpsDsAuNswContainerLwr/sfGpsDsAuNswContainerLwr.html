@@ -1,10 +1,13 @@
 <template lwc:render-mode="light">
-  <template if:false={_sfGpsErrors}>
-    <div class={containerClassName}>
-      <slot name="Content-Region">Content Region</slot>
+  <c-sf-gps-ds-configuration-error
+    lwc:if={_sfGpsDsErrors}
+    errors={_sfGpsDsErrors}
+  >
+  </c-sf-gps-ds-configuration-error>
+
+  <template lwc:else>
+    <div class={computedContainerClassName}>
+      <slot name="Container"></slot>
     </div>
   </template>
-
-  <c-sf-gps-ds-configuration-error if:true={_sfGpsErrors} errors={_sfGpsErrors}>
-  </c-sf-gps-ds-configuration-error>
 </template>

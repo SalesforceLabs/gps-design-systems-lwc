@@ -1,10 +1,16 @@
 <template>
   <div class="govuk-form-group">
-    <label class="govuk-label" style="width: auto" for="frt">
+    <h1 lwc:if={computedIsH1} class="govuk-label-wrapper">
+      <label class={computedLabelClassName} for="frt"> {mergedLabel} </label>
+    </h1>
+    <h2 lwc:elseif={computedIsH2} class="govuk-label-wrapper">
+      <label class={computedLabelClassName} for="frt"> {mergedLabel} </label>
+    </h2>
+    <h3 lwc:elseif={computedIsH3} class="govuk-label-wrapper">
+      <label class={computedLabelClassName} for="frt"> {mergedLabel} </label>
+    </h3>
+    <label lwc:else class={computedLabelClassName} for="frt">
       {mergedLabel}
-      <span if:true={_propSetMap.required} class="sr-only">
-        ({allCustomLabelsUtil.OmniRequired})</span
-      >
     </label>
 
     <div class="govuk-disclosure">
@@ -15,7 +21,6 @@
 
       <div class="govuk-disclosure__consent">
         <c-sf-gps-ds-uk-gov-input-os-n
-          data-omni-input=""
           type="checkbox"
           label={mergedCheckLabel}
           required={_propSetMap.required}
@@ -24,7 +29,10 @@
           checked={elementValue}
           message-when-value-missing={_messageWhenValueMissing}
           tab-index={tabIndex}
+          data-omni-input
           onchange={handleChange}
+          hide-form-group="false"
+          read-only={_propSetMap.readOnly}
         >
         </c-sf-gps-ds-uk-gov-input-os-n>
       </div>

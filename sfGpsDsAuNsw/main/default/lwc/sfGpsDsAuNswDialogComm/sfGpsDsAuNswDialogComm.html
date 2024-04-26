@@ -1,11 +1,18 @@
 <template>
-  <template if:false={_sfGpsErrors}>
+  <c-sf-gps-ds-configuration-error
+    lwc:if={_sfGpsDsErrors}
+    errors={_sfGpsDsErrors}
+  >
+  </c-sf-gps-ds-configuration-error>
+
+  <template lwc:else>
     <c-sf-gps-ds-au-nsw-button
       if:false={_isOpen}
       label={computedButtonLabel}
       cstyle="dark"
       rendering="button"
       button-type="button"
+      aria-haspopup="dialog"
       onclick={handleClick}
     >
     </c-sf-gps-ds-au-nsw-button>
@@ -22,10 +29,7 @@
       onsecondaryclick={handleDismissed}
       onclose={handleDismissed}
     >
-      <div class="sf-gps-ds-markdown" lwc:dom="manual"></div>
+      <div lwc:ref="markdown" lwc:dom="manual"></div>
     </c-sf-gps-ds-au-nsw-dialog>
   </template>
-
-  <c-sf-gps-ds-configuration-error if:true={_sfGpsErrors} errors={_sfGpsErrors}>
-  </c-sf-gps-ds-configuration-error>
 </template>

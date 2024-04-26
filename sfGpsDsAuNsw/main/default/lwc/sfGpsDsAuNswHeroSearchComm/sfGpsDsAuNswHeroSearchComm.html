@@ -1,7 +1,13 @@
 <template>
-  <template if:false={_sfGpsErrors}>
+  <c-sf-gps-ds-configuration-error
+    lwc:if={_sfGpsDsErrors}
+    errors={_sfGpsDsErrors}
+  >
+  </c-sf-gps-ds-configuration-error>
+
+  <template lwc:else>
     <div
-      if:true={image}
+      lwc:if={image}
       class="nsw-section nsw-section--image"
       style={computedStyle}
     >
@@ -28,6 +34,4 @@
     >
     </c-sf-gps-ds-au-nsw-hero-search>
   </template>
-  <c-sf-gps-ds-configuration-error if:true={_sfGpsErrors} errors={_sfGpsErrors}>
-  </c-sf-gps-ds-configuration-error>
 </template>

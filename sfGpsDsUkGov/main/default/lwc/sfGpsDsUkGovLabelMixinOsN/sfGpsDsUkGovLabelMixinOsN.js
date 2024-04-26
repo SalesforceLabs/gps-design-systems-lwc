@@ -10,11 +10,18 @@ import { computeClass } from "c/sfGpsDsHelpersOs";
 
 const ERROR_SR_LABEL = "Error: ";
 
-let SfGpsUkGovLabelMixin = (base, defaultLabelSize = "medium") =>
+let SfGpsUkGovLabelMixin = (base) =>
   class extends base {
-    @api labelSize = defaultLabelSize;
+    @api labelSize;
 
-    get errorSrLabel() {
+    /*
+    get _labelSize() {
+      // empty labelSize is a legitimate value, so test for null
+      return this.labelSize == null ? defaultLabelSize : this.labelSize;
+    }
+    */
+
+    get sfGpsDsErrorSrLabel() {
       return ERROR_SR_LABEL;
     }
 
@@ -23,40 +30,52 @@ let SfGpsUkGovLabelMixin = (base, defaultLabelSize = "medium") =>
     }
 
     computeLabelClassName(className) {
+      let ls = this.labelSize;
+
       return computeClass({
         "govuk-label": true,
         [className]: className,
         "govuk-label--xl":
-          this.labelSize === "xl" || this.labelSize === "x-large",
-        "govuk-label--l": this.labelSize === "l" || this.labelSize === "large",
-        "govuk-label--m": this.labelSize === "m" || this.labelSize === "medium",
-        "govuk-label--s": this.labelSize === "s" || this.labelSize === "small"
-      });
-    }
-
-    get computedMultiLabelClassName() {
-      return this.computeMultiLabelClassName();
-    }
-
-    computeMultiLabelClassName(className) {
-      return computeClass({
-        "govuk-label": true,
-        [className]: className
+          ls === "xl" || ls === "x-large" || (ls == null) & this.computedIsH1,
+        "govuk-label--l":
+          ls === "l" || ls === "large" || (ls == null) & this.computedIsH2,
+        "govuk-label--m":
+          ls === "m" || ls === "medium" || (ls == null) & this.computedIsH3,
+        "govuk-label--s": ls === "s" || ls === "small"
       });
     }
 
     get computedLegendClassName() {
+      let ls = this.labelSize;
+
       return computeClass({
         "govuk-fieldset__legend": true,
         "govuk-fieldset__legend--xl":
-          this.labelSize === "xl" || this.labelSize === "x-large",
+          ls === "xl" || ls === "x-large" || (ls == null) & this.computedIsH1,
         "govuk-fieldset__legend--l":
-          this.labelSize === "l" || this.labelSize === "large",
+          ls === "l" || ls === "large" || (ls == null) & this.computedIsH2,
         "govuk-fieldset__legend--m":
-          this.labelSize === "m" || this.labelSize === "medium",
-        "govuk-fieldset__legend--s":
-          this.labelSize === "s" || this.labelSize === "small"
+          ls === "m" || ls === "medium" || (ls == null) & this.computedIsH3,
+        "govuk-fieldset__legend--s": ls === "s" || ls === "small"
       });
+    }
+
+    @api isHeading;
+
+    get computedIsH1() {
+      return this.isHeading == null
+        ? true
+        : this.isHeading === true ||
+            this.isHeading === 1 ||
+            this.isHeading === "1";
+    }
+
+    get computedIsH2() {
+      return this.isHeading === 2 || this.isHeading === "2";
+    }
+
+    get computedIsH3() {
+      return this.isHeading === 3 || this.isHeading === "3";
     }
   };
 

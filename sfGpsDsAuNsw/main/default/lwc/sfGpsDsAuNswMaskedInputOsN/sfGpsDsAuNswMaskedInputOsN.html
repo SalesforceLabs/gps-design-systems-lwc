@@ -1,42 +1,47 @@
 <template>
   <div if:false={isCustomLwc} class={errorClass}>
     <div class="nsw-form__group">
-      <div if:true={labelVisible} data-label="true">
-        <label class={computedLabelClassName} style="width: auto" for={inputId}>
+      <div lwc:if={labelVisible}>
+        <label class={computedLabelClassName} for={inputId}>
           {label}
-          <span if:true={required} class="sr-only"> ({requiredLabel})</span>
+          <span lwc:if={required} class="sr-only"> ({requiredLabel})</span>
         </label>
 
         <slot name="label"> </slot>
       </div>
-      <span if:true={fieldLevelHelp} id="helper" class="nsw-form__helper"
+
+      <span lwc:if={fieldLevelHelp} id="helper" class="nsw-form__helper"
         >{fieldLevelHelp}</span
       >
 
       <!-- formula -->
-      <div if:true={_isFormula}>
+      <div lwc:if={_isFormula}>
         <div>
           <label class={computedLabelClassName} for={inputId}>
             {label}
-            <span if:true={required} class="sr-only"> ({requiredLabel})</span>
+            <span lwc:if={required} class="sr-only"> ({requiredLabel})</span>
           </label>
         </div>
 
         <input
-          class="vlocity-input nsw-form__input"
+          class="nsw-form__input"
           type="text"
-          readonly=""
-          disabled=""
+          readonly
+          disabled
           id={inputId}
           value={maskedValue}
+          aria-describedby={computedAriaDescribedBy}
         />
       </div>
+      <!-- formula -->
 
       <div if:false={static} class={pretextClass}>
-        <template if:true={isCurrencySFlocale}>
+        <span lwc:if={pretext}> {pretext} </span>
+
+        <template lwc:if={isCurrencySFlocale}>
           <input
-            if:true={isInput}
-            class="vlocity-input nsw-form__input nsw-form__input--number"
+            lwc:if={isInput}
+            class="nsw-form__input nsw-form__input--number"
             id={inputId}
             tabindex={tabIndex}
             accesskey={accessKey}
@@ -51,9 +56,11 @@
             required={required}
             readonly={readOnly}
             placeholder={placeholder}
+            aria-readonly={readOnly}
             aria-labelledby={ariaLabelledBy}
-            aria-describedby={ariaDescribedBy}
+            aria-describedby={computedAriaDescribedBy}
             aria-label={ariaLabel}
+            aria-invalid={sfGpsDsIsError}
             value={_currencyVal}
             onfocus={handleFocus}
             onblur={handleBlur}
@@ -63,9 +70,9 @@
           />
         </template>
 
-        <template if:false={isCurrencySFlocale}>
+        <template lwc:else>
           <input
-            if:true={isNumber}
+            lwc:if={isNumber}
             class="hiddenNumber slds-hide"
             required={required}
             min={min}
@@ -76,8 +83,8 @@
           />
 
           <input
-            if:true={isInput}
-            class="vlocity-input nsw-form__input"
+            lwc:if={isInput}
+            class="nsw-form__input"
             id={inputId}
             tabindex={tabIndex}
             accesskey={accessKey}
@@ -86,17 +93,19 @@
             max={max}
             maxlength={maxLength}
             minlength={minLength}
-            type={type}
+            type={inputType}
             inputmode={inputmode}
             disabled={disabled}
             required={required}
             readonly={readOnly}
+            aria-readonly={readOnly}
             placeholder={placeholder}
             aria-labelledby={ariaLabelledBy}
-            aria-describedby={ariaDescribedBy}
+            aria-describedby={computedAriaDescribedBy}
             aria-label={ariaLabel}
             autocomplete={autocomplete}
             name={name}
+            aria-invalid={sfGpsDsIsError}
             onfocus={handleFocus}
             onblur={handleBlur}
             oninput={handleInput}
@@ -105,30 +114,36 @@
           />
         </template>
 
+        <span lwc:if={posttext} class="sfgpsds-form-element__addon">
+          {posttext}
+        </span>
+
         <span
+          lwc:if={sfGpsDsIsError}
           id="errorMessageBlock"
-          if:true={isError}
           class={computedHelperClassName}
+          aria-live="assertive"
+          role="alert"
         >
           <span
-            if:true={computedStatusIcon}
+            lwc:if={computedStatusIcon}
             class="material-icons nsw-material-icons"
             aria-hidden="true"
           >
             {computedStatusIcon}
           </span>
-          {errorMessage}
+          {sfGpsDsErrorMessage}
         </span>
       </div>
 
-      <div class="slds-grid">
-        <div if:true={static} class="slds-form-element__static">
-          {maskedValue}
-        </div>
-        <span if:true={inlineHelp} class="slds-form-element__static">
-          {inlineHelp}
-        </span>
+      <!-- shifted testing static one level up to avoid the empty div -->
+      <div lwc:if={static} class="slds-grid">
+        <div class="slds-form-element__static">{maskedValue}</div>
       </div>
+
+      <span lwc:if={inlineHelp} class="slds-form-element__static">
+        {inlineHelp}
+      </span>
     </div>
   </div>
 </template>

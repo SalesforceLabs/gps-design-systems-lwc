@@ -1,6 +1,12 @@
 <template>
+  <c-sf-gps-ds-configuration-error-os
+    lwc:if={_sfGpsDsErrors}
+    errors={_sfGpsDsErrors}
+  >
+  </c-sf-gps-ds-configuration-error-os>
+
   <c-sf-gps-ds-au-nsw-global-alert-os
-    if:false={_sfGpsErrors}
+    lwc:else
     as={as}
     title={title}
     copy={copy}
@@ -10,10 +16,4 @@
     class-name={className}
   >
   </c-sf-gps-ds-au-nsw-global-alert-os>
-
-  <c-sf-gps-ds-configuration-error-os
-    if:true={_sfGpsErrors}
-    errors={_sfGpsErrors}
-  >
-  </c-sf-gps-ds-configuration-error-os>
 </template>

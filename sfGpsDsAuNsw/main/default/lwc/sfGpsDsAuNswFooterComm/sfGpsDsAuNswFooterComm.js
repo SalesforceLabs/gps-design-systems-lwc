@@ -9,15 +9,22 @@ import { computeClass } from "c/sfGpsDsHelpers";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
 
 export default class SfGpsDsAuNswFooterComm extends SfGpsDsLwc {
+  @api upperFooterMode = "Integration Procedure";
+  @api upperFooterNavigationDevName;
   @api upperFooterIpName;
   @api upperFooterInputJSON;
   @api upperFooterOptionsJSONN;
   @api upperFooterClassName;
 
+  @api mode = "Integration Procedure";
+  @api navigationDevName;
   @api ipName;
   @api inputJSON;
   @api optionsJSON;
   @api statement;
+  @api linkedInUrl;
+  @api twitterXUrl;
+  @api facebookUrl;
   @api copyrightMention;
   @api builtMention;
   @api cstyle = "default";
@@ -33,6 +40,10 @@ export default class SfGpsDsAuNswFooterComm extends SfGpsDsLwc {
       "nsw-footer--custom": this.cstyle === "custom",
       [this.className]: this.className
     });
+  }
+
+  get computedShowUpperFooter() {
+    return this.upperMode !== "Hide";
   }
 
   /* lifecycle */

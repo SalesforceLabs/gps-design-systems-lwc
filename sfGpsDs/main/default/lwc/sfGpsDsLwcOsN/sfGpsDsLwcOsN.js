@@ -13,11 +13,11 @@ import { OmniscriptBaseMixin } from "omnistudio/omniscriptBaseMixin";
 export default class SfGpsDsLwcOsN extends OmniscriptBaseMixin(
   LightningElement
 ) {
-  @track _sfGpsErrors;
+  @track _sfGpsDsErrors;
 
   addError(code, description) {
-    let errors = this._sfGpsErrors ? this._sfGpsErrors : [];
-    this._sfGpsErrors = [
+    let errors = this._sfGpsDsErrors ? this._sfGpsDsErrors : [];
+    this._sfGpsDsErrors = [
       ...errors,
       {
         index: errors.length,
@@ -28,13 +28,27 @@ export default class SfGpsDsLwcOsN extends OmniscriptBaseMixin(
   }
 
   clearErrors() {
-    this._sfGpsErrors = null;
+    this._sfGpsDsErrors = null;
   }
 
   // For testing purposes only
 
   @api getErrors() {
-    return this._sfGpsErrors;
+    return this._sfGpsDsErrors;
+  }
+
+  /* getters for parity with non OS version - no easy way to do that with scope imports not permitted */
+  
+  get communityId() {
+    return null;
+  }
+
+  get communityBasePath() {
+    return null;
+  }
+
+  get isPreview() {
+    return false;
   }
 
   /* lifecycle */

@@ -10,143 +10,189 @@
 // set Step as the ElementType and this LWC as the Lightning Web Component
 
 import { track } from "lwc";
-import OmniscriptStep from "omnistudio/omniscriptStep";
-import { omniGetMergedField } from "c/sfGpsDsOmniHelpersOsN";
+import OmniscriptStep from "c/sfGpsDsFormStepOsN";
+import { computeClass } from "c/sfGpsDsHelpersOs";
 import tmpl from "./sfGpsDsUkGovFormStepOsN.html";
+
+const DEBUG = false;
+const CLASS_NAME = "SfGpsDsUkGovFormStepOsN";
 
 export default class SfGpsDsUkGovFormStepOsN extends OmniscriptStep {
   render() {
     return tmpl;
   }
 
-  @track _errorMessages;
+  handleBack(e) {
+    e.preventDefault(); // avoid default behaviour with the href on anchor
+    super.handleBack(e);
+  }
 
   handleNext(e) {
-    e.stopPropagation();
+    if (DEBUG) console.log(CLASS_NAME, "handleNext");
 
-    // temporary fix to solve the sfGpsDs...FormSelect issue of having an invalidated value when
-    // configured as dependent picklist. It looks like it's actually an issue with the original
-    // omnistudioSelect not updating the validation state of its parent when options are updated
-    // asynchronously as part of the dependent picklist mechanism. It prevents moving to the next
-    // screen even though the widget is actually in valid state, requiring you to hit next twice.
+    /* Prepare snapshot captures errors so that they can be kept until the next time the user does next */
     this.reportValidity();
+    this.prepareSnapshot();
 
-    let invalidIds = Object.keys(this.invalidElements);
-    let errorMessages = [];
-
-    invalidIds.forEach((invalidId) => {
-      let elt = this.invalidElements[invalidId];
-
-      // Only do it for widgets that have getErrorDetails
-      if (elt.getErrorDetails) {
-        let errorDetails = elt.getErrorDetails();
-
-        errorMessages.push({
-          id: invalidId,
-          href: "#" + errorDetails.id,
-          message: errorDetails.errorMessage,
-          elt: elt
-        });
-      }
-    });
-
-    this._errorMessages = errorMessages.length ? errorMessages : null;
-
-    if (!invalidIds.length) {
-      this.dispatchEvent(
-        new CustomEvent("omniautoadvance", {
-          bubbles: true,
-          detail: {
-            moveToStep: "next"
-          }
-        })
-      );
-    }
-  }
-
-  handleBack(e) {
-    e.stopPropagation();
-
-    this.dispatchEvent(
-      new CustomEvent("omniautoadvance", {
-        bubbles: true,
-        detail: {
-          moveToStep: "previous"
-        }
-      })
-    );
-  }
-
-  handleSave(e) {
-    e.stopPropagation();
-
-    if (!this._propSetMap.allowSaveForLater) {
-      return;
-    }
-
-    this.dispatchEvent(
-      new CustomEvent("omnisaveforlater", {
-        bubbles: true,
-        detail: {
-          auto: false
-        }
-      })
-    );
+    super.handleNext(e);
   }
 
   handleErrorClick(e) {
     e.preventDefault();
-    e.stopPropagation();
-
-    let targetId = e.currentTarget.dataset.id;
-    this._errorMessages
-      .filter((message) => message.id === targetId)
-      .forEach((message) => {
-        if (message.elt.scrollTo) {
-          message.elt.scrollTo();
-        }
-      });
-
-    return false;
+    this.focusInvalidInput(e.currentTarget.dataset.errorkey);
   }
 
-  get mergedLabel() {
-    return omniGetMergedField(this, this._propSetMap.label);
+  getCurrentMessages() {
+    if (DEBUG) console.log(CLASS_NAME, "> getCurrentMessages");
+
+    let errorMessages = [];
+
+    Object.keys(this.invalidElements).forEach((key) => {
+      const element = this.invalidElements[key];
+      const hasCustomValidation =
+        element.sfGpsDsHasCustomValidation &&
+        element.sfGpsDsHasCustomValidation();
+
+      if (DEBUG)
+        console.log(
+          CLASS_NAME,
+          "getCurrentMessages",
+          "Element with error",
+          "key: " + key,
+          "vm: " + element.validationMessage,
+          "has func sfGpsDsHasCustomValidation: " +
+            element.sfGpsDsHasCustomValidation !=
+            null,
+          hasCustomValidation
+        );
+
+      if (element.validationMessage) {
+        errorMessages.push({
+          key,
+          href: "#error-" + key,
+          message: element.validationMessage,
+          custom: hasCustomValidation
+        });
+      }
+    });
+
+    if (DEBUG)
+      console.log(
+        CLASS_NAME,
+        "< getCurrentMessages",
+        JSON.stringify(errorMessages, null, 2)
+      );
+    return errorMessages;
   }
 
-  get mergedChartLabel() {
-    return omniGetMergedField(this, this._propSetMap.chartLabel);
+  @track _sfGpsDsErrorSnapshot = [];
+
+  prepareSnapshot() {
+    this._sfGpsDsErrorSnapshot = this.getCurrentMessages()
+      .filter((item) => item.custom === false)
+      .map((item) => ({ ...item }));
+    if (DEBUG)
+      console.log(
+        CLASS_NAME,
+        "prepareSnapshot",
+        JSON.stringify(this._sfGpsDsErrorSnapshot, null, 2)
+      );
   }
 
-  get mergedCancelLabel() {
-    return omniGetMergedField(this, this._propSetMap.cancelLabel);
+  clearSnapshot() {
+    this._sfGpsDsErrorSnapshot = [];
   }
 
-  get mergedSaveLabel() {
-    return omniGetMergedField(this, this._propSetMap.saveLabel);
+  get sfGpsDsErrorMessages() {
+    /**
+     *
+     * BEGIN MANAGE UKGOV ERRORS
+     * NOTE: We can't handle containers, e.g. TypeaheadBlock, Block etc. and anything placed in them using the
+     * standard invalidElements capability.
+     * We typically only display errors that existing when we last hit next and add anything that is a custom error
+     * from a SetErrors step
+     * This avoids having errors that newly sprung on the current page to make it to the summary at the
+     * top of the page.
+     *
+     * There is currently a bug with the original Multiselect element which does not report the validationMessage
+     * correctly.
+     *
+     **/
+
+    let customErrors = this.getCurrentMessages()
+      .filter((item) => item.custom === true)
+      .map((item) => ({ ...item }));
+    let errorMessages = customErrors.concat(this._sfGpsDsErrorSnapshot);
+    return errorMessages.length ? errorMessages : null;
   }
 
-  get mergedPreviousLabel() {
-    return omniGetMergedField(this, this._propSetMap.previousLabel);
+  get computedErrorLabelId() {
+    return "error-summary-title";
   }
 
-  get mergedNextLabel() {
-    return omniGetMergedField(this, this._propSetMap.nextLabel);
-  }
-
-  get showSave() {
-    return this._propSetMap.allowSaveForLater && this._propSetMap.saveLabel;
-  }
-
-  get showNext() {
-    return this._propSetMap.nextWidth > 0 && this._propSetMap.nextLabel;
-  }
-
-  get showPrev() {
+  get computedIsH1() {
     return (
-      this.scriptHeaderDef.asIndex > this.scriptHeaderDef.firstStepIndex &&
-      this._propSetMap.previousWidth > 0 &&
-      this._propSetMap.previousLabel
+      this._propSetMap.isHeading === true ||
+      this._propSetMap.isHeading === 1 ||
+      this._propSetMap.isHeading === "1"
     );
+  }
+
+  get computedIsH2() {
+    return (
+      this._propSetMap.isHeading === 2 || this._propSetMap.isHeading === "2"
+    );
+  }
+
+  get computedIsH3() {
+    return (
+      this._propSetMap.isHeading === 3 || this._propSetMap.isHeading === "3"
+    );
+  }
+
+  get computedHeadingClassName() {
+    let ls = this._propSetMap.labelSize;
+    let h = this._propSetMap.isHeading;
+
+    return computeClass({
+      "govuk-heading-xl":
+        ls === "xl" ||
+        ls === "x-large" ||
+        (ls == null && (h === true || h === 1 || h === "1")),
+      "govuk-heading-l":
+        ls === "l" || ls === "large" || (ls == null && (h === 2 || h === "2")),
+      "govuk-heading-m":
+        ls === "m" || ls === "medium" || (ls == null && (h === 3 || h === "3")),
+      "govuk-heading-s": ls === "s" || ls === "small"
+    });
+  }
+
+  get computedLabelClassName() {
+    let ls = this._propSetMap.labelSize;
+
+    return computeClass({
+      "govuk-label": true,
+      "govuk-label--xl": ls === "xl" || ls === "x-large",
+      "govuk-label--l": ls === "l" || ls === "large",
+      "govuk-label--m": ls === "m" || ls === "medium",
+      "govuk-label--s": ls === "s" || ls === "small"
+    });
+  }
+
+  get computedCaptionClassName() {
+    let ls = this._propSetMap.captionSize || this._propSetMap.labelSize;
+    let h = this._propSetMap.isHeading;
+
+    return computeClass({
+      "govuk-caption--xl":
+        ls === "xl" ||
+        ls === "x-large" ||
+        (ls == null && (h === true || h === 1 || h === "1")),
+      "govuk-caption--l":
+        ls === "l" || ls === "large" || (ls == null && (h === 2 || h === "2")),
+      "govuk-caption--m":
+        ls === "m" || ls === "medium" || (ls == null && (h === 3 || h === "3")),
+      "govuk-caption--s": ls === "s" || ls === "small"
+    });
   }
 }

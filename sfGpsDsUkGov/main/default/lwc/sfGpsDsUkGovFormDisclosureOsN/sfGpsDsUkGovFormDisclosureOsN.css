@@ -1,13 +1,6 @@
 @import "c/sfGpsDsUkGovCoreOs";
 @import "./input.gen.css";
 
-/* Need to adjust this rule as in Omniscript they always be first child */
-/* have same setup as for subsequent children. */
-
-.govuk-form-group:first-child {
-  margin-top: 1rem;
-}
-
 .govuk-disclosure {
   margin-top: 0.5rem;
   padding: 1rem;
@@ -26,4 +19,8 @@
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.3157894737;
+}
+
+.govuk-disclosure__consent {
+  margin-top: 1rem;
 }

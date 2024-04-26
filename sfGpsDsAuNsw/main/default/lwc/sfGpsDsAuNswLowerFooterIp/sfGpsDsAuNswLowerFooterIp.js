@@ -5,6 +5,56 @@ import mdEngine from "c/sfGpsDsMarkdown";
 
 export default class SfGpsDsAuNswLowerFooterIp extends SfGpsDsNavigation {
   @api
+  get mode() {
+    return super.mode;
+  }
+
+  set mode(value) {
+    super.mode = value;
+
+    if (value === "Demo") {
+      /* eslint-disable no-unused-vars */
+      let cbp = this.communityBasePath;
+
+      this._items = this.mapIpData([
+        {
+          actionType: "ExternalLink",
+          actionValue: "https://www.nsw.gov.au/accessibility-statement",
+          imageUrl: null,
+          label: "Accessibility statement",
+          subMenu: [],
+          target: "CurrentWindow"
+        },
+        {
+          actionType: "ExternalLink",
+          actionValue: "https://www.nsw.gov.au/nsw-government/copyright",
+          imageUrl: null,
+          label: "Copyright",
+          subMenu: [],
+          target: "CurrentWindow"
+        },
+        {
+          actionType: "ExternalLink",
+          actionValue: "https://www.nsw.gov.au/nsw-government/disclaimer",
+          imageUrl: null,
+          label: "Disclaimer",
+          subMenu: [],
+          target: "CurrentWindow"
+        }
+      ]);
+    }
+  }
+
+  @api
+  get navigationDevName() {
+    return super.navigationDevName;
+  }
+
+  set navigationDevName(value) {
+    super.navigationDevName = value;
+  }
+
+  @api
   get ipName() {
     return super.ipName;
   }
@@ -32,7 +82,9 @@ export default class SfGpsDsAuNswLowerFooterIp extends SfGpsDsNavigation {
   }
 
   @api statement;
-  @api className;
+  @api linkedInUrl;
+  @api twitterXUrl;
+  @api facebookUrl;
 
   _copyrightMentionHtml;
   _copyrightMention;
@@ -68,6 +120,12 @@ export default class SfGpsDsAuNswLowerFooterIp extends SfGpsDsNavigation {
     }
   }
 
+  @api className;
+
+  get computedShowSocial() {
+    return this.linkedInUrl || this.twitterXUrl || this.facebookUrl;
+  }
+
   handleClick(event) {
     let nav = this.template.querySelector("c-sf-gps-ds-navigation-service");
 
@@ -77,18 +135,12 @@ export default class SfGpsDsAuNswLowerFooterIp extends SfGpsDsNavigation {
   }
 
   renderedCallback() {
-    if (this._copyrightMention) {
-      let element = this.template.querySelector(".nsw-footer__copyright");
-      if (element) {
-        replaceInnerHtml(element, this._copyrightMentionHtml);
-      }
+    if (!this._sfGpsDsErrors && !this._isLoading && this._copyrightMention) {
+      replaceInnerHtml(this.refs.copyright, this._copyrightMentionHtml);
     }
 
-    if (this._builtMention) {
-      let element = this.template.querySelector(".nsw-footer__built");
-      if (element) {
-        replaceInnerHtml(element, this._builtMentionHtml);
-      }
+    if (!this._sfGpsDsErrors && !this._isLoading && this._builtMention) {
+      replaceInnerHtml(this.refs.built, this._builtMentionHtml);
     }
   }
 }

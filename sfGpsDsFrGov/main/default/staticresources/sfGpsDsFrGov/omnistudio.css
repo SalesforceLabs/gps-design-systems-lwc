@@ -1,0 +1,33 @@
+.omniscript-sfl-actions,
+.omniscript-button-position,
+.omniscript-btn-next,
+.omniscript-btn-previous,
+.omniscript-btn-save-for-later {
+  display: none !important;
+}
+
+.omniscript-article.slds-card {
+  border: none;
+}
+
+.omniscript-body {
+  padding: 0 !important;
+}
+
+.slds-omniscript_stepform {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.omniscript-body {
+  border-right: 0 !important;
+}
+
+.omniscript-body {
+  padding-left: 1rem !important;
+}
+
+.slds-omniscript_stepform {
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
+}

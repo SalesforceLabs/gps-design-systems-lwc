@@ -6,16 +6,20 @@
  */
 
 import { LightningElement, api, track } from "lwc";
+import communityId from "@salesforce/community/Id";
+import cBasePath from "@salesforce/community/basePath";
 
 /* IMPORTANT NOTE: if you modify this class, you have to update sfGpsDsLwcOsN
    as it's not automatically derived */
 
 export default class SfGpsDsLwc extends LightningElement {
-  @track _sfGpsErrors;
+  @track _sfGpsDsErrors;
+  @track _isAura;
+  _isLwrOnly;
 
   addError(code, description) {
-    let errors = this._sfGpsErrors || [];
-    this._sfGpsErrors = [
+    let errors = this._sfGpsDsErrors || [];
+    this._sfGpsDsErrors = [
       ...errors,
       {
         index: errors.length,
@@ -26,13 +30,27 @@ export default class SfGpsDsLwc extends LightningElement {
   }
 
   clearErrors() {
-    this._sfGpsErrors = null;
+    this._sfGpsDsErrors = null;
   }
 
   // For testing purposes only
 
   @api getErrors() {
-    return this._sfGpsErrors;
+    return this._sfGpsDsErrors;
+  }
+
+  /* getters */
+  
+  get communityId() {
+    return communityId;
+  }
+
+  get communityBasePath() {
+    return cBasePath;
+  }
+
+  get isPreview() {
+    return !document.URL.startsWith(cBasePath);
   }
 
   /* lifecycle */
@@ -41,6 +59,14 @@ export default class SfGpsDsLwc extends LightningElement {
 
   connectedCallback() {
     this._isConnected = true;
+
+    // eslint-disable-next-line dot-notation
+    if (window["$A"] !== undefined && window["$A"] !== null) {
+      this._isAura = true;
+      if (this._isLwrOnly) {
+        this.addError("CO-AU", "This element is not compatible with Aura.");
+      }
+    }
   }
 
   disconnectedCallback() {

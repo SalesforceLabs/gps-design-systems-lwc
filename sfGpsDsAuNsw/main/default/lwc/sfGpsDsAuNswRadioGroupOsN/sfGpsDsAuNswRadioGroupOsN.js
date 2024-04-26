@@ -1,34 +1,19 @@
 /*
- * Copyright (c) 2022, Emmanuel Schweitzer and salesforce.com, inc.
+ * Copyright (c) 2022-2023, Emmanuel Schweitzer and salesforce.com, inc.
  * All rights reserved.
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import OmnistudioRadioGroup from "omnistudio/radioGroup";
-import { getHelperClassName, getStatusIcon } from "c/sfGpsDsAuNswFormHelperOsN";
+import OmnistudioRadioGroup from "c/sfGpsDsOmniRadioGroupOsN";
+import StatusHelperMixin from "c/sfGpsDsAuNswStatusHelperMixinOsN";
 import { computeClass } from "c/sfGpsDsHelpersOs";
 import tmpl from "./sfGpsDsAuNswRadioGroupOsN.html";
 
-export default class SfGpsDsAuNswRadioGroupOsN extends OmnistudioRadioGroup {
-  render() {
-    return tmpl;
-  }
-
-  renderedCallback() {
-    // Fixing issue #19
-  }
-
-  get computedAriaInvalid() {
-    return this.isError;
-  }
-
-  get computedAriaDescribedBy() {
-    return computeClass({
-      helper: this.fieldLevelHelp,
-      errorMessageBlock: this.isError
-    });
-  }
+export default class SfGpsDsAuNswRadioGroupOsN extends StatusHelperMixin(
+  OmnistudioRadioGroup
+) {
+  /* computed */
 
   get computedLegendClassName() {
     return computeClass({
@@ -37,15 +22,24 @@ export default class SfGpsDsAuNswRadioGroupOsN extends OmnistudioRadioGroup {
     });
   }
 
-  get computedHelperClassName() {
-    return getHelperClassName("invalid");
+  get computedAriaInvalid() {
+    return this.sfGpsDsIsError;
   }
 
-  get computedStatusIcon() {
-    return getStatusIcon("invalid");
+  get computedAriaDescribedBy() {
+    return computeClass({
+      helper: this.fieldLevelHelp,
+      errorMessageBlock: this.sfGpsDsIsError
+    });
   }
 
-  get isRealError() {
-    return this.isError && this.errorMessage;
+  /* lifecycle */
+
+  render() {
+    return tmpl;
+  }
+
+  renderedCallback() {
+    // Fixing issue #19
   }
 }

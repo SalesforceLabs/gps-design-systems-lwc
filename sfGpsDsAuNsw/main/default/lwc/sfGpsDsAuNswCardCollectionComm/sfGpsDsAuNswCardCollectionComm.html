@@ -1,45 +1,52 @@
 <template>
-  <template if:false={_sfGpsErrors}>
-    <c-sf-gps-ds-spinner if:true={_isLoading}> </c-sf-gps-ds-spinner>
-    <div if:false={_isLoading} class={computedClassName}>
+  <c-sf-gps-ds-configuration-error
+    lwc:if={_sfGpsDsErrors}
+    errors={_sfGpsDsErrors}
+  >
+  </c-sf-gps-ds-configuration-error>
+
+  <template lwc:else>
+    <c-sf-gps-ds-spinner lwc:if={_isLoading}> </c-sf-gps-ds-spinner>
+    <div lwc:else class={computedClassName}>
       <template for:each={_items} for:item="card">
         <div key={card.index} class={computedColClassName}>
           <!-- card -->
-          <c-sf-gps-ds-au-nsw-card-comm
-            if:true={displayDate}
+          <c-sf-gps-ds-au-nsw-card-v2-comm
+            lwc:if={displayDate}
             cstyle={cstyle}
+            headline={headline}
+            orientation={orientation}
             tag={card.tag}
             image={card.image}
             image-alt={card.imageAlt}
-            headline={card.headline}
+            title={card.title}
             copy={card.copy}
             footer={card.footer}
             date={card.date}
             date-style={dateStyle}
             use-markup="true"
           >
-          </c-sf-gps-ds-au-nsw-card-comm>
+          </c-sf-gps-ds-au-nsw-card-v2-comm>
 
-          <c-sf-gps-ds-au-nsw-card-comm
-            if:false={displayDate}
+          <c-sf-gps-ds-au-nsw-card-v2-comm
+            lwc:else
             cstyle={cstyle}
+            headline={headline}
+            orientation={orientation}
             tag={card.tag}
             image={card.image}
             image-alt={card.imageAlt}
-            headline={card.headline}
+            title={card.title}
             copy={card.copy}
             footer={card.footer}
             use-markup="true"
           >
-          </c-sf-gps-ds-au-nsw-card-comm>
+          </c-sf-gps-ds-au-nsw-card-v2-comm>
         </div>
       </template>
     </div>
 
-    <c-sf-gps-ds-empty if:true={isEmpty} title="No matching content">
+    <c-sf-gps-ds-empty lwc:if={isEmpty} title="No matching content">
     </c-sf-gps-ds-empty>
   </template>
-
-  <c-sf-gps-ds-configuration-error if:true={_sfGpsErrors} errors={_sfGpsErrors}>
-  </c-sf-gps-ds-configuration-error>
 </template>

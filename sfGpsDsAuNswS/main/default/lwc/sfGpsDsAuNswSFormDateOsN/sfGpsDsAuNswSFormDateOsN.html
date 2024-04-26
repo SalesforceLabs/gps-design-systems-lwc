@@ -1,12 +1,10 @@
 <template>
   <c-sf-gps-ds-au-nsw-s-input-os-n
     type="date"
-    data-omni-input
     label={mergedLabel}
-    class={_styleClasses.input}
     required={_propSetMap.required}
     read-only={_propSetMap.readOnly}
-    placeholder={_propSetMap.placeholder}
+    placeholder={mergedPlaceholder}
     theme={_theme}
     value={elementValue}
     tab-index={tabIndex}
@@ -34,10 +32,11 @@
     max={_max}
     field-level-help={mergedHelpText}
     field-level-help-position={_propSetMap.helpTextPos}
+    data-omni-input
     onblur={handleOnBlur}
     onchange={handleChange}
   >
-    <template if:true={_propSetMap.repeat}>
+    <template lwc:if={_propSetMap.repeat}>
       <span
         slot="label"
         style="bottom: 7px; right: -11px"
@@ -45,7 +44,7 @@
         role="group"
       >
         <button
-          if:true={canRepeat}
+          lwc:if={canRepeat}
           class={_styleClasses.repeatAdd}
           onclick={handleAdd}
         >
@@ -58,7 +57,7 @@
           </omnistudio-icon>
         </button>
         <button
-          if:true={canRemove}
+          lwc:if={canRemove}
           class={_styleClasses.repeatRemove}
           onclick={handleRemove}
         >

@@ -5,23 +5,15 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import OmnistudioDatetimePicker from "omnistudio/datetimePicker";
+import { api } from "lwc";
+import OmnistudioDatetimePicker from "c/sfGpsDsOmniDatetimePickerOsN";
 import SfGpsDsUkGovLabelMixin from "c/sfGpsDsUkGovLabelMixinOsN";
 import tmpl from "./sfGpsDsUkGovDatetimePickerOsN.html";
 import { computeClass } from "c/sfGpsDsHelpersOs";
 
-const TIME_SELECTOR = "c-sf-gps-ds-uk-gov-time-picker-os-n";
-const DATE_SELECTOR = "c-sf-gps-ds-uk-gov-date-picker-os-n";
-// const ERROR_ID_SELECTOR = "[data-sf-gps-uk-gov-error-input]";
-// const DEBUG = false;
-
-const I18N = {
-  timeLabel: "Time"
-};
-
+const ZWSP_CHAR = "​"; // this is the zero width space character, great for forcing a div/span to display with some height.
 export default class SfGpsDsUkGovDatetimePickerOsN extends SfGpsDsUkGovLabelMixin(
-  OmnistudioDatetimePicker,
-  "large"
+  OmnistudioDatetimePicker
 ) {
   render() {
     return tmpl;
@@ -30,32 +22,27 @@ export default class SfGpsDsUkGovDatetimePickerOsN extends SfGpsDsUkGovLabelMixi
   get computedFormGroupClassName() {
     return computeClass({
       "govuk-form-group": true,
-      "govuk-form-group--error": this.isError
+      "govuk-form-group--error": this.sfGpsDsIsError
     });
   }
 
-  get timeEl() {
-    if (!this._timeEl) {
-      this._timeEl = this.template.querySelector(TIME_SELECTOR);
-    }
-
-    return this._timeEl;
+  get computedAriaDescribedBy() {
+    return computeClass({
+      helper: this.fieldLevelHelp
+    });
   }
 
-  get dateEl() {
-    if (!this._dateEl) {
-      this._dateEl = this.template.querySelector(DATE_SELECTOR);
-    }
+  /* override do we can clear the custom validation */
 
-    return this._dateEl;
+  @api setCustomValidation(message) {
+    super.setCustomValidation(message);
+    this.dateEl.setCustomValidation(message);
+    this.timeEl.setCustomValidation(ZWSP_CHAR); // zwsp - zero width space
   }
 
-  get i18n() {
-    return I18N;
-  }
-
-  setCustomValidity(e) {
-    this.template.querySelector(DATE_SELECTOR).setCustomValidity(e);
-    this.template.querySelector(TIME_SELECTOR).setCustomValidity(e);
+  @api sfGpsDsClearCustomValidation() {
+    super.sfGpsDsClearCustomValidation();
+    this.dateEl.sfGpsDsClearCustomValidation();
+    this.timeEl.sfGpsDsClearCustomValidation();
   }
 }

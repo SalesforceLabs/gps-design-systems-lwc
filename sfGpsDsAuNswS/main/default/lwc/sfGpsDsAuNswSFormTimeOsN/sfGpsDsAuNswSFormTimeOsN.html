@@ -26,13 +26,13 @@
     required={_propSetMap.required}
     placeholder={_propSetMap.placeholder}
     field-level-help={mergedHelpText}
+    field-level-help-position={_propSetMap.helpTextPos}
     theme="sfgpsds"
-    class={_styleClasses.input}
     data-omni-input
     onblur={handleBlur}
     onchange={handleChange}
   >
-    <template if:true={_propSetMap.repeat}>
+    <template lwc:if={_propSetMap.repeat}>
       <span
         slot="label"
         style="bottom: 7px; right: -11px"
@@ -40,7 +40,7 @@
         role="group"
       >
         <button
-          if:true={canRepeat}
+          lwc:if={canRepeat}
           class={_styleClasses.repeatAdd}
           onclick={handleAdd}
         >
@@ -53,7 +53,7 @@
           </omnistudio-icon>
         </button>
         <button
-          if:true={canRemove}
+          lwc:if={canRemove}
           class={_styleClasses.repeatRemove}
           onclick={handleRemove}
         >

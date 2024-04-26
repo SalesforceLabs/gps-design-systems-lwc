@@ -3,10 +3,16 @@
 
 /* repeat icons */
 
-.govuk-fieldset__legend .govuk-fieldset__heading {
+.govuk-fieldset__legend .govuk-fieldset__heading,
+.govuk-fieldset__legend span {
   margin-right: 0.5rem;
 }
 
 .govuk-fieldset__legend slot {
   display: table-cell;
+}
+
+/* added to align with omnistudio 246 darkenining the background of read only widgets wholesale */
+.govuk-radios__label:before {
+  background: white;
 }

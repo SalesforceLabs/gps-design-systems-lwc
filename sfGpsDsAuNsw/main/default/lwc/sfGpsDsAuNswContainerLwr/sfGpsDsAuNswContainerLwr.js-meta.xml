@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-  <apiVersion>56.0</apiVersion>
+  <apiVersion>60.0</apiVersion>
   <isExposed>true</isExposed>
   <masterLabel>NSW DS LWR Container</masterLabel>
   <targets>
@@ -10,10 +10,16 @@
   <targetConfigs>
     <targetConfig targets="lightningCommunity__Default">
       <property
-        label="Container class name"
+        label="Mode"
+        name="mode"
+        type="String"
+        datasource="Default,Flush"
+      />
+      <property
+        label="Class name"
         name="containerClassName"
         type="String"
-        default="nsw-container"
+        description="Additional CSS class to be applied."
       />
     </targetConfig>
   </targetConfigs>
