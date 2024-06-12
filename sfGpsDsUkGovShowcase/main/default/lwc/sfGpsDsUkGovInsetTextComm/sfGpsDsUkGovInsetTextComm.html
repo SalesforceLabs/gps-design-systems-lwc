@@ -1,0 +1,10 @@
+<template>
+  <c-sf-gps-ds-configuration-error
+    lwc:if={_sfGpsDsErrors}
+    errors={_sfGpsDsErrors}
+  >
+  </c-sf-gps-ds-configuration-error>
+  <c-sf-gps-ds-uk-gov-inset-text lwc:else class-name={className}>
+    <div lwc:ref="markdown" lwc:dom="manual"></div>
+  </c-sf-gps-ds-uk-gov-inset-text>
+</template>

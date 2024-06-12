@@ -1,0 +1,56 @@
+<template lwc:render-mode="light">
+  <div
+    class={computedClassName}
+    role={computedRole}
+    aria-labelledby={computedLabelId}
+  >
+    <div class="govuk-notification-banner__header">
+      <h1
+        lwc:if={isH1}
+        id={computedLabelId}
+        class="govuk-notification-banner__title"
+      >
+        {computedTitle}
+      </h1>
+      <h2
+        lwc:elseif={isH2}
+        id={computedLabelId}
+        class="govuk-notification-banner__title"
+      >
+        {computedTitle}
+      </h2>
+      <h3
+        lwc:elseif={isH3}
+        id={computedLabelId}
+        class="govuk-notification-banner__title"
+      >
+        {computedTitle}
+      </h3>
+      <h4
+        lwc:elseif={isH4}
+        id={computedLabelId}
+        class="govuk-notification-banner__title"
+      >
+        {computedTitle}
+      </h4>
+      <h5
+        lwc:elseif={isH5}
+        id={computedLabelId}
+        class="govuk-notification-banner__title"
+      >
+        {computedTitle}
+      </h5>
+      <h6
+        lwc:elseif={isH6}
+        id={computedLabelId}
+        class="govuk-notification-banner__title"
+      >
+        {computedTitle}
+      </h6>
+    </div>
+
+    <div class="govuk-notification-banner__content">
+      <slot> </slot>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,38 @@
+<template lwc:render-mode="light">
+  <div class={computedClassName}>
+    <template lwc:if={_items}>
+      <template for:each={_items} for:item="navItem">
+        <div key={navItem.index} class={computedSectionClassName}>
+          <div class="govuk-footer__heading govuk-heading-m">
+            <template lwc:if={navItem.url}>
+              <a
+                class="govuk-footer__link"
+                href={navItem.url}
+                data-ndx={navItem.index}
+                onclick={handleClick}
+              >
+                {navItem.text}
+              </a>
+            </template>
+            <template lwc:else>{navItem.text}</template>
+          </div>
+
+          <ul lwc:if={navItem.subNav} class="govuk-footer__list">
+            <template for:each={navItem.subNav} for:item="subNavItem">
+              <li key={subNavItem.index} class="govuk-footer__list-item">
+                <a
+                  class="govuk-footer__link"
+                  href={subNavItem.url}
+                  data-ndx={subNavItem.index}
+                  onclick={handleClick}
+                >
+                  {subNavItem.text}
+                </a>
+              </li>
+            </template>
+          </ul>
+        </div>
+      </template>
+    </template>
+  </div>
+</template>
