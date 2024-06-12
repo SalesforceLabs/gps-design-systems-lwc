@@ -1,0 +1,24 @@
+<template>
+  <div lwc:ref="swiperElRef" class={containerClassName}>
+    <slot name="container-start"></slot>
+    <div class={wrapperClassName}>
+      <slot name="wrapper-start"></slot>
+      <!-- renderSlides-->
+      <slot name="wrapper-end"></slot>
+
+      <template lwc:if={needsNavigation}>
+        <div lwc:ref="prevElRef" class="swiper-button-prev"></div>
+        <div lwc:ref="nextElRef" class="swiper-button-next"></div>
+      </template>
+
+      <template lwc:if={needsScrollbar}>
+        <div lwc:ref="scrollbarElRef" class="swiper-scrollbar"></div>
+      </template>
+
+      <template lwc:if={needsPagination}>
+        <div lwc:ref="paginationElRef" class="swiper-pagination"></div>
+      </template>
+    </div>
+    <slot name="container-end"></slot>
+  </div>
+</template>
