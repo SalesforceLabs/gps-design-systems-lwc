@@ -1,0 +1,12 @@
+/* 
+  Based on
+  digitalnsw/nsw-design-system/src/components/pagination/_pagination.scss  
+  5e4c4c2 on Oct 13, 2021
+*/
+
+@import "nsw-design-system/src/global/scss/settings/settings";
+@import "nsw-design-system/src/global/scss/base/functions";
+@import "nsw-design-system/src/global/scss/base/mixins";
+
+@import "nsw-design-system/src/components/pagination/pagination";
+@import "./fixes";

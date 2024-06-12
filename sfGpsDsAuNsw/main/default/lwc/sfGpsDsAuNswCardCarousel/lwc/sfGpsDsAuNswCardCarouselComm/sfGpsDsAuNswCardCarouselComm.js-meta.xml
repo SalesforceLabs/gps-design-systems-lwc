@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+  <apiVersion>60.0</apiVersion>
+  <isExposed>true</isExposed>
+  <masterLabel>NSW DS Card Carousel</masterLabel>
+  <targets>
+    <target>lightningCommunity__Page</target>
+    <target>lightningCommunity__Default</target>
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightningCommunity__Default">
+      <property
+        name="ipName"
+        type="String"
+        label="Integration procedure name"
+        description="Name of the Integration procedure mapping content to this collection. Leave empty to pass raw card data in inputJSON."
+        editor="c/sfGpsDsStringCpe"
+      />
+      <property
+        name="inputJSON"
+        type="String"
+        label="Input JSON"
+        description="JSON formatted input parameters for the Integration procedure."
+        default="{}"
+        editor="c/sfGpsDsJsonCpe"
+      />
+      <property
+        name="optionsJSON"
+        type="String"
+        label="Options JSON"
+        description="JSON formatted options for the Integration procedure."
+        default="{}"
+        editor="c/sfGpsDsJsonCpe"
+      />
+      <property
+        name="accessibilityLabel"
+        type="String"
+        label="Accessibility label"
+        default="Card carousel"
+        editor="c/sfGpsDsStringCpe"
+      />
+      <property
+        name="navigation"
+        type="String"
+        label="Navigation mode"
+        datasource="none,navigation,pagination,loop"
+      />
+      <property
+        name="drag"
+        type="Boolean"
+        label="Dragging enabled"
+        description="Enables to drag the cards for previous or next page."
+      />
+      <property
+        name="justifyContent"
+        type="Boolean"
+        label="Center content"
+        description="Centers card horizontally should not all the lateral space be needed."
+      />
+      <property
+        name="cstyle"
+        type="String"
+        label="Style"
+        datasource="dark,white,light,highlight"
+        default="white"
+      />
+      <property
+        name="headline"
+        type="Boolean"
+        label="Headline"
+        description="Apply a specific headline styling."
+      />
+      <property
+        name="orientation"
+        type="String"
+        label="Orientation"
+        datasource="vertical,horizontal"
+        default="vertical"
+      />
+      <property
+        name="displayDate"
+        type="Boolean"
+        label="Display date"
+        description="Use the content publication date as the card date."
+      />
+      <property
+        name="dateStyle"
+        type="String"
+        label="Date style"
+        datasource="short,medium,long,full"
+        default="medium"
+      />
+      <property
+        name="className"
+        type="String"
+        label="Class name"
+        description="Additional CSS class to be applied."
+        editor="c/sfGpsDsStringCpe"
+      />
+    </targetConfig>
+  </targetConfigs>
+</LightningComponentBundle>
