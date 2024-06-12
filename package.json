@@ -30,7 +30,7 @@
     "auvic2-copy": "rm -rf sfGpsDsAuVic2Full;mkdir -p sfGpsDsAuVic2Full;cp -a sfGpsDs/. sfGpsDsAuVic2Full;cp -a sfGpsDsAuVic/. sfGpsDsAuVic2Full",
     "frgov-copy": "rm -rf sfGpsDsFrGovFull;mkdir -p sfGpsDsFrGovFull;cp -a sfGpsDs/. sfGpsDsFrGovFull;cp -a sfGpsDsFrGov/. sfGpsDsFrGovFull",
     "ukgov-copy": "rm -rf sfGpsDsUkGovFull;mkdir -p sfGpsDsUkGovFull;cp -a sfGpsDs/. sfGpsDsUkGovFull;cp -a sfGpsDsUkGov/. sfGpsDsUkGovFull",
-    "synclabs": "set SDIR=../gps-design-systems-lwc;set TDIR=../gps-design-systems-lwcx;rm -rf $TDIR;cp -a . $TDIR;cp -a $SDIR/.git $TDIR"
+    "synclabs": "set SDIR=../gps-design-systems-lwc;set TDIR=../gps-design-systems-lwcx;rm -rf $TDIR;cp -a . $TDIR;cp -a $SDIR/.git $TDIR;rm -rf $TDIR/.github"
   },
   "lint-staged": {
     "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}": [
@@ -52,6 +52,7 @@
   "devDependencies": {
     "@dpc-sdp/ripple-global": "https://registry.npmjs.org/@dpc-sdp/ripple-global/-/ripple-global-1.38.3.tgz",
     "@dpc-sdp/ripple-ui-core": "2.7.1",
+    "@dpc-sdp/ripple-ui-forms": "^2.8.2",
     "@gouvfr/dsfr": "^1.11.0",
     "@lwc/eslint-plugin-lwc": "^1.0.1",
     "@prettier/plugin-xml": "^3.0.0",
@@ -76,11 +77,6 @@
   },
   "devDependencies2": {
     "puppeteer": "^19.3.0"
-  },
-  "dependencies": {
-    "bootstrap": "^4.6.2",
-    "font-awesome": "^4.7.0",
-    "gulp-rev-all": "https://github.com/Amitesh/gulp-rev-all/tarball/master"
   },
   "engines": {
     "node": "18.16.1"
