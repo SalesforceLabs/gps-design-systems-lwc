@@ -38,7 +38,7 @@ export default class SfGpsDsLwcOsN extends OmniscriptBaseMixin(
   }
 
   /* getters for parity with non OS version - no easy way to do that with scope imports not permitted */
-  
+
   get communityId() {
     return null;
   }

@@ -86,7 +86,7 @@ export default class SfGpsDsFocusTrap extends LightningElement {
    * Focuses the last focusable element in the focus trap.
    */
   _focusFirstElement() {
-      this._moveFocusTo("first");
+    this._moveFocusTo("first");
   }
 
   /**

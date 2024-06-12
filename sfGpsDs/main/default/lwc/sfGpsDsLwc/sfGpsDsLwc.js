@@ -40,7 +40,7 @@ export default class SfGpsDsLwc extends LightningElement {
   }
 
   /* getters */
-  
+
   get communityId() {
     return communityId;
   }

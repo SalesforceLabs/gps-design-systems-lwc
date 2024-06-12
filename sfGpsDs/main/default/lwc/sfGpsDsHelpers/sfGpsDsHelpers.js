@@ -5,12 +5,16 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-export { uniqueId, isIPadPro, isMacPlatform } from "./utilities_v6";
+export { styleToString } from "./cssutil";
 
 export {
+  ISO8601_PATTERN,
+  isDate,
+  isValidDate,
   parseIso8601,
   formatDate,
   formatDateRange,
+  getMonthNames,
   getUserLocale,
   getUserLocales
 } from "./datetimeutil_v6";
@@ -45,7 +49,8 @@ export {
 export {
   formatTemplate,
   safeEqualsIgnoreCase,
-  truncateText
+  truncateText,
+  capitalize
 } from "./string_v6";
 
 export {
@@ -55,3 +60,5 @@ export {
   getAnchorLinkName,
   decodeSpecialCharacters
 } from "./urlutil";
+
+export { uniqueId, isIPadPro, isMacPlatform } from "./utilities_v6";
