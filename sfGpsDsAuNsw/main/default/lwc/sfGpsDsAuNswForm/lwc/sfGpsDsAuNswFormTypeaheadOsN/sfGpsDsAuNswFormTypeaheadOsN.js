@@ -11,8 +11,18 @@
 import SfGpsDsFormTypeaheadOsN from "c/sfGpsDsFormTypeaheadOsN";
 import tmpl from "./sfGpsDsAuNswFormTypeaheadOsN.html";
 
-export default class SfGpsDsAuNswFormTypeaheadOsN extends SfGpsDsFormTypeaheadOsN {
+export default class extends SfGpsDsFormTypeaheadOsN {
+  /* lifecycle */
+
   render() {
     return tmpl;
+  }
+
+  connectedCallback() {
+    if (super.connectedCallback) {
+      super.connectedCallback();
+    }
+
+    this._readOnlyClass = "sfgpsdsaunsw-read-only";
   }
 }

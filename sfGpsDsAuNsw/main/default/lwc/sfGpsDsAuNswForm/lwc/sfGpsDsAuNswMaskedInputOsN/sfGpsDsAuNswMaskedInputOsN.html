@@ -1,3 +1,4 @@
+<!-- sldsValidatorIgnore -->
 <template>
   <div if:false={isCustomLwc} class={errorClass}>
     <div class="nsw-form__group">
@@ -52,7 +53,7 @@
             minlength={minLength}
             type={type}
             inputmode={inputmode}
-            disabled={disabled}
+            disabled={checkboxDisabled}
             required={required}
             readonly={readOnly}
             placeholder={placeholder}
@@ -95,7 +96,7 @@
             minlength={minLength}
             type={inputType}
             inputmode={inputmode}
-            disabled={disabled}
+            disabled={checkboxDisabled}
             required={required}
             readonly={readOnly}
             aria-readonly={readOnly}

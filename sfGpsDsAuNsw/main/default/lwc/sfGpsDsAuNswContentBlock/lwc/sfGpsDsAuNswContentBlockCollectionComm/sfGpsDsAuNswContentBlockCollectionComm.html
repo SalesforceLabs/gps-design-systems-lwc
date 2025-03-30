@@ -1,5 +1,5 @@
 <template>
-  <c-sf-gps-ds-spinner lwc:if={_isLoading}> </c-sf-gps-ds-spinner>
+  <c-sf-gps-ds-au-nsw-loader lwc:if={_isLoading}> </c-sf-gps-ds-au-nsw-loader>
 
   <c-sf-gps-ds-configuration-error
     lwc:if={_sfGpsDsErrors}
@@ -26,7 +26,7 @@
       </template>
     </div>
 
-    <c-sf-gps-ds-empty lwc:if={isEmpty} title="No matching content">
+    <c-sf-gps-ds-empty lwc:if={_isEmpty} title="No matching content">
     </c-sf-gps-ds-empty>
   </template>
 </template>

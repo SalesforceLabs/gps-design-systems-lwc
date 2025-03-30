@@ -42,62 +42,142 @@ export default class SfGpsDsAuVic2Accordion extends ExpandableStateMixin(
     ];
   }
 
-  @api set item1Title(value) { this._items[0].title = value; }
-  get item1Title() { return this._items[0].title; }
-  get item1ClassName() { return this._items[0].className }
-  get item1Active() { return this._items[0].active; }
+  @api set item1Title(value) {
+    this._items[0].title = value;
+  }
+  get item1Title() {
+    return this._items[0].title;
+  }
+  get item1ClassName() {
+    return this._items[0].className;
+  }
+  get item1Active() {
+    return this._items[0].active;
+  }
 
-  @api set item2Title(value) { this._items[1].title = value; }
-  get item2Title() { return this._items[1].title; }
-  get item2ClassName() { return this._items[1].className }
-  get item2Active() { return this._items[1].active; }
+  @api set item2Title(value) {
+    this._items[1].title = value;
+  }
+  get item2Title() {
+    return this._items[1].title;
+  }
+  get item2ClassName() {
+    return this._items[1].className;
+  }
+  get item2Active() {
+    return this._items[1].active;
+  }
 
-  @api set item3Title(value) { this._items[2].title = value; }
-  get item3Title() { return this._items[2].title; }
-  get item3ClassName() { return this._items[2].className }
-  get item3Active() { return this._items[2].active; }
+  @api set item3Title(value) {
+    this._items[2].title = value;
+  }
+  get item3Title() {
+    return this._items[2].title;
+  }
+  get item3ClassName() {
+    return this._items[2].className;
+  }
+  get item3Active() {
+    return this._items[2].active;
+  }
 
-  @api 
-  set item4Title(value) { this._items[3].title = value; }
-  get item4Title() { return this._items[3].title; }
-  get item4ClassName() { return this._items[3].className }
-  get item4Active() { return this._items[3].active; }
+  @api
+  set item4Title(value) {
+    this._items[3].title = value;
+  }
+  get item4Title() {
+    return this._items[3].title;
+  }
+  get item4ClassName() {
+    return this._items[3].className;
+  }
+  get item4Active() {
+    return this._items[3].active;
+  }
 
-  @api 
-  set item5Title(value) { this._items[4].title = value; }
-  get item5Title() { return this._items[4].title; }
-  get item5ClassName() { return this._items[4].className }
-  get item5Active() { return this._items[4].active; }
+  @api
+  set item5Title(value) {
+    this._items[4].title = value;
+  }
+  get item5Title() {
+    return this._items[4].title;
+  }
+  get item5ClassName() {
+    return this._items[4].className;
+  }
+  get item5Active() {
+    return this._items[4].active;
+  }
 
-  @api 
-  set item6Title(value) { this._items[5].title = value; }
-  get item6Title() { return this._items[5].title; }
-  get item6ClassName() { return this._items[5].className }
-  get item6Active() { return this._items[5].active; }
+  @api
+  set item6Title(value) {
+    this._items[5].title = value;
+  }
+  get item6Title() {
+    return this._items[5].title;
+  }
+  get item6ClassName() {
+    return this._items[5].className;
+  }
+  get item6Active() {
+    return this._items[5].active;
+  }
 
-  @api 
-  set item7Title(value) { this._items[6].title = value; }
-  get item7Title() { return this._items[6].title; }
-  get item7ClassName() { return this._items[6].className }
-  get item7Active() { return this._items[6].active; }
+  @api
+  set item7Title(value) {
+    this._items[6].title = value;
+  }
+  get item7Title() {
+    return this._items[6].title;
+  }
+  get item7ClassName() {
+    return this._items[6].className;
+  }
+  get item7Active() {
+    return this._items[6].active;
+  }
 
-  @api 
-  set item8Title(value) { this._items[7].title = value; }
-  get item8Title() { return this._items[7].title; }
-  get item8ClassName() { return this._items[7].className }
-  get item8Active() { return this._items[7].active; }
+  @api
+  set item8Title(value) {
+    this._items[7].title = value;
+  }
+  get item8Title() {
+    return this._items[7].title;
+  }
+  get item8ClassName() {
+    return this._items[7].className;
+  }
+  get item8Active() {
+    return this._items[7].active;
+  }
 
-  @api 
-  set item9Title(value) { this._items[8].title = value; }
-  get item9Title() { return this._items[8].title; }
-  get item9ClassName() { return this._items[8].className }
-  get item9Active() { return this._items[8].active; }
+  @api
+  set item9Title(value) {
+    this._items[8].title = value;
+  }
+  get item9Title() {
+    return this._items[8].title;
+  }
+  get item9ClassName() {
+    return this._items[8].className;
+  }
+  get item9Active() {
+    return this._items[8].active;
+  }
 
-  @api 
-  set item10Title(value) { this._items[9].title = value; }
-  get item10Title() { return this._items[9].title; }
-  get item10ClassName() { return this._items[9].className }
-  get item10Active() { return this._items[9].active; }
+  @api
+  set item10Title(value) {
+    this._items[9].title = value;
+  }
+  get item10Title() {
+    return this._items[9].title;
+  }
+  get item10ClassName() {
+    return this._items[9].className;
+  }
+  get item10Active() {
+    return this._items[9].active;
+  }
 
   @api className;
 

@@ -8,8 +8,18 @@
 import SfGpsDsFormDateOsN from "c/sfGpsDsFormDateOsN";
 import tmpl from "./sfGpsDsAuNswFormDateOsN.html";
 
-export default class SfGpsDsAuNswFormDateOsN extends SfGpsDsFormDateOsN {
+export default class extends SfGpsDsFormDateOsN {
+  /* lifecycle */
+
   render() {
     return tmpl;
+  }
+
+  connectedCallback() {
+    if (super.connectedCallback) {
+      super.connectedCallback();
+    }
+
+    this._readOnlyClass = "sfgpsdsaunsw-read-only";
   }
 }

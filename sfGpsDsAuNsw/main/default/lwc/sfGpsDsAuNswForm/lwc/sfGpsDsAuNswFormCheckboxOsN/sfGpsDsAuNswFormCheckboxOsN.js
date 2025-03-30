@@ -8,8 +8,18 @@
 import SfGpsDsFormCheckboxOsN from "c/sfGpsDsFormCheckboxOsN";
 import tmpl from "./sfGpsDsAuNswFormCheckboxOsN.html";
 
-export default class SfGpsDsAuNswFormCheckboxOsN extends SfGpsDsFormCheckboxOsN {
+export default class extends SfGpsDsFormCheckboxOsN {
+  /* lifecycle */
+
   render() {
     return tmpl;
+  }
+
+  connectedCallback() {
+    if (super.connectedCallback) {
+      super.connectedCallback();
+    }
+
+    this._readOnlyClass = "sfgpsdsaunsw-read-only";
   }
 }

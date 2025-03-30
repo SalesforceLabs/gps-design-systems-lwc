@@ -1,6 +1,6 @@
 /*
  * Portions copyright (c) 2024, Emmanuel Schweitzer and salesforce.com, inc.
- * Portions copyright (2) by Digital.NSW, incorporated under MIT licence.
+ * Portions copyright (c) by Digital.NSW, incorporated under MIT licence.
  * All rights reserved.
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
@@ -20,7 +20,7 @@ import {
   formatTemplate,
   normaliseBoolean
 } from "c/sfGpsDsHelpersOs";
-import OnClickOutside from "c/sfGpsDsOnClickOutside";
+import OnClickOutside from "c/sfGpsDsOnClickOutsideOs";
 
 import dayjs from "omnistudio/dayjs";
 import { shortDateFormat } from "omnistudio/salesforceUtils";
@@ -33,7 +33,7 @@ const I18N = {
   overflowError: "Date is after the allowed range.",
   underflowError: "Date is before the allowed range.",
   valueMissingError: "You must provide a date.",
-  badInputError: "You must provide follow the ${0} format.",
+  badInputError: "You must provide a date following the ${0} format.",
   headerDateFormat: "MMMM YYYY",
   ariaLabel: "Select date using calendar widget.",
   ariaLabelSelection:
@@ -67,14 +67,15 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
   /* NSW DS */
 
   /**
-   * api: multipleInput
+   * api: multipleInput, Boolean
    * pass a boolean or the string true/false to flag this input as being multi-field
    */
 
-  _multipleInputOriginal;
   _multipleInput = false;
+  _multipleInputOriginal;
 
-  @api get multipleInput() {
+  @api
+  get multipleInput() {
     return this._multipleInputOriginal;
   }
 
@@ -91,15 +92,16 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
    * pass a space-separated list of parsable dates to mark them as disabled
    */
 
-  datesDisabledOriginal;
   disabledArray = [];
+  _datesDisabledOriginal;
 
-  @api get datesDisabled() {
-    return this.datesDisabledOriginal;
+  @api
+  get datesDisabled() {
+    return this._datesDisabledOriginal;
   }
 
   set datesDisabled(value) {
-    this.datesDisabledOriginal = value;
+    this._datesDisabledOriginal = value;
     this.disabledArray =
       this.datesDisabled && this.datesDisabled instanceof String
         ? this.datesDisabled.split(" ").map((date) => this.parseValue(date))
@@ -127,11 +129,12 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
    * passed by OmniScript
    */
 
-  _localeFormatOriginal;
   _localeFormat;
+  _localeFormatOriginal;
   _weekdays;
 
-  @api get localeFormat() {
+  @api
+  get localeFormat() {
     return this._localeFormatOriginal;
   }
 
@@ -170,7 +173,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
 
   _messageWhenValueMissing;
 
-  @api get messageWhenValueMissing() {
+  @api
+  get messageWhenValueMissing() {
     return this._messageWhenValueMissing || I18N.valueMissingError;
   }
 
@@ -183,7 +187,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
 
   _messageWhenBadInput;
 
-  @api get messageWhenBadInput() {
+  @api
+  get messageWhenBadInput() {
     return formatTemplate(this._messageWhenBadInput || I18N.badInputError, {
       0: this.format
     });
@@ -198,7 +203,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
 
   _messageWhenRangeUnderflow;
 
-  @api get messageWhenRangeUnderflow() {
+  @api
+  get messageWhenRangeUnderflow() {
     return this._messageWhenRangeUnderflow
       ? this.mergeFields(this._messageWhenRangeUnderflow)
       : I18N.underflowError;
@@ -211,7 +217,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
 
   /* api: messageWhenRangeOverflow */
 
-  @api get messageWhenRangeOverflow() {
+  @api
+  get messageWhenRangeOverflow() {
     return this._messageWhenRangeOverflow
       ? this.mergeFields(this._messageWhenRangeOverflow)
       : I18N.overflowError;
@@ -224,10 +231,11 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
 
   /* api: format */
 
-  _formatOriginal;
   _format;
+  _formatOriginal;
 
-  @api get format() {
+  @api
+  get format() {
     const rv = this._format || dateFormat || "YYYY-MM-DD";
 
     if (DEBUG) console.log(CLASS_NAME, "get format", rv);
@@ -255,7 +263,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
   _min;
   _max;
 
-  @api get max() {
+  @api
+  get max() {
     return this._max;
   }
 
@@ -268,7 +277,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
     if (DEBUG) console.log(CLASS_NAME, "< set format", this._max);
   }
 
-  @api get min() {
+  @api
+  get min() {
     return this._min;
   }
 
@@ -299,7 +309,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
   @track _displayMonthValue = "";
   @track _displayYearValue = "";
 
-  @api get value() {
+  @api
+  get value() {
     if (DEBUG) console.log(CLASS_NAME, "> get value");
 
     const rv = this._value;
@@ -321,6 +332,7 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
   setValue(value) {
     if (DEBUG) console.log(CLASS_NAME, "> setValue", value);
 
+    this.sfGpsDsClearCustomValidation();
     value = this.parseValue(value);
     this._value = this.formatValue(value);
     this._parsedValue = dayjs(value);
@@ -379,7 +391,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
 
   _outputFormat;
 
-  @api get outputFormat() {
+  @api
+  get outputFormat() {
     return this._outputFormat || DEFAULT_OUTPUT_FORMAT;
   }
 
@@ -399,7 +412,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
 
   _outputType;
 
-  @api get outputType() {
+  @api
+  get outputType() {
     return this._outputType || DEFAULT_OUTPUT_TYPE;
   }
 
@@ -503,23 +517,39 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
   }
 
   get computedLabelClassName() {
-    return computeClass({
+    return {
       "nsw-form__label": true,
       "nsw-form__required": this.required && !this.hideAsterisk
-    });
+    };
   }
 
   get computedFormGroupClassName() {
-    return computeClass({
+    return {
       "nsw-form__group": !this.hideFormGroup
-    });
+    };
   }
 
   get computedPickerClassName() {
-    return computeClass({
+    return {
       "nsw-date-picker": true,
       "nsw-date-picker--is-visible": this.pickerVisible
-    });
+    };
+  }
+
+  get computedIsPartInvalidDate() {
+    return this._isPartInvalidDate && this.sfGpsDsIsError;
+  }
+
+  get computedIsPartInvalidMonth() {
+    return this._isPartInvalidMonth && this.sfGpsDsIsError;
+  }
+
+  get computedIsPartInvalidYear() {
+    return this._isPartInvalidYear && this.sfGpsDsIsError;
+  }
+
+  get computedDisabledOrReadOnly() {
+    return this.disabled || this.readOnly;
   }
 
   /* methods */
@@ -565,17 +595,22 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
     if (DEBUG) console.log(CLASS_NAME, "< resetDayValue", this.currentDay);
   }
 
-  toggleCalendar(value = null) {
+  toggleCalendar(eventOrValue = null) {
     if (DEBUG)
-      console.log(CLASS_NAME, "> toggleCalendar", value, this.pickerVisible);
+      console.log(
+        CLASS_NAME,
+        "> toggleCalendar",
+        eventOrValue,
+        this.pickerVisible
+      );
 
-    if (!this.pickerVisible && value !== false) {
+    if (!this.pickerVisible && eventOrValue !== false) {
       this.resetCalendar();
       this.placeCalendar();
     }
 
-    if (value != null) {
-      this.pickerVisible = value;
+    if (eventOrValue != null) {
+      this.pickerVisible = !!eventOrValue;
     } else {
       this.pickerVisible = !this.pickerVisible;
     }
@@ -586,7 +621,7 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
   showCalendar(event) {
     if (DEBUG) console.log(CLASS_NAME, "> showCalendar");
 
-    if (!this.readOnly) this.toggleCalendar(true, event);
+    if (!this.readOnly) this.toggleCalendar(event);
 
     if (DEBUG) console.log(CLASS_NAME, "< showCalendar");
   }
@@ -671,6 +706,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
       ? this._parsedValue?.toDate()
       : null;
 
+    if (DEBUG) console.log(CLASS_NAME, "= resetCalendar", currentDate);
+
     this.currentDay = this.getCurrentDay(currentDate);
     this.currentMonth = this.getCurrentMonth(currentDate);
     this.currentYear = this.getCurrentYear(currentDate);
@@ -679,7 +716,14 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
     this.selectedMonth = currentDate ? this.currentMonth : false;
     this.selectedYear = currentDate ? this.currentYear : false;
 
-    if (DEBUG) console.log(CLASS_NAME, "< resetCalendar");
+    if (DEBUG)
+      console.log(
+        CLASS_NAME,
+        "< resetCalendar",
+        this.selectedDay,
+        this.selectedMonth,
+        this.selectedYear
+      );
   }
 
   /**
@@ -766,14 +810,24 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
    * @param {string} outputFormat
    * @returns the formatted date
    */
+
   formatValue(date, outputFormat = true) {
+    if (DEBUG)
+      console.log(CLASS_NAME, "> formatValue", date, typeof date, outputFormat);
+
+    let rv = null;
+
+    if (DEBUG) console.log(CLASS_NAME, "= formatValue", isValidDate(date));
+
     if (isValidDate(date)) {
-      return this.outputType === "string"
-        ? dayjs(date).format(outputFormat ? this.outputFormat : this.format)
-        : date;
+      rv =
+        this.outputType === "string"
+          ? dayjs(date).format(outputFormat ? this.outputFormat : this.format)
+          : date;
     }
 
-    return null;
+    if (DEBUG) console.log(CLASS_NAME, "< formatValue", rv);
+    return rv;
   }
 
   /**
@@ -795,10 +849,7 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
       if (isDate(value) || value instanceof Number) {
         rv = new Date(value);
       } else if (value.match(ISO8601_PATTERN)) {
-        let rvtmp = parseIso8601(value);
-        if (rvtmp.toISOString() === value) {
-          rv = rvtmp;
-        }
+        rv = parseIso8601(value);
       }
 
       if (rv == null) {
@@ -987,7 +1038,13 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
    */
 
   handlePickerKeydown(event) {
-    if (DEBUG) console.log(CLASS_NAME, "> handlePickerKeydown", event.key);
+    if (DEBUG)
+      console.log(
+        CLASS_NAME,
+        "> handlePickerKeydown",
+        event.key,
+        this.pickerVisible
+      );
 
     if (event.key?.toLowerCase() === "escape" && this.pickerVisible) {
       event.stopPropagation();
@@ -1010,6 +1067,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
   handleInputKeydown(event) {
     if (DEBUG) console.log(CLASS_NAME, "> handleInputKeydown", event.key);
 
+    this.isError = false;
+
     if (event.key?.toLowerCase() === "enter") {
       event.stopPropagation();
       this._displayValue = this.refs.input.value;
@@ -1018,6 +1077,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
     } else if (event.key?.toLowerCase() === "arrowdown" && this.pickerVisible) {
       event.stopPropagation();
       this.refs.body.querySelector("button[tabindex='0']")?.focus();
+    } else {
+      this._displayValue = this.refs.input.value;
     }
 
     if (DEBUG) console.log(CLASS_NAME, "< handleInputKeydown");
@@ -1025,13 +1086,7 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
 
   // eslint-disable-next-line no-unused-vars
   handleInputChange(event) {
-    if (DEBUG)
-      console.log(
-        CLASS_NAME,
-        "> handleInputChange x",
-        event.target,
-        event.target.value
-      );
+    if (DEBUG) console.log(CLASS_NAME, "> handleInputChange");
 
     if (this.multipleInput) {
       event.stopPropagation();
@@ -1046,47 +1101,56 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
       const month = mV ? Number(mV) : NaN;
       const year = yV ? Number(yV) : NaN;
 
-      if (
-        day &&
-        !Number.isNaN(day) &&
-        !Number.isNaN(month) &&
-        !Number.isNaN(year)
-      ) {
-        this.setAndDispatchValue(new Date(year, month - 1, day));
+      if (!Number.isNaN(day) && !Number.isNaN(month) && !Number.isNaN(year)) {
+        const newDate = new Date(year, month - 1, day);
+        const isSame =
+          newDate.getFullYear() === year &&
+          newDate.getMonth() === month - 1 &&
+          newDate.getDate() === day;
+
+        this.setAndDispatchValue(
+          isSame ? new Date(year, month - 1, day) : null
+        );
       } else {
         this.setAndDispatchValue(null);
       }
     } else {
+      event.stopPropagation();
+
       this._displayValue = this.refs.input?.value;
-
-      if (pubsub) {
-        pubsub.fire(this.name, "valuechange", {
-          name: this.name,
-          value: this._value
-        });
-      }
-
-      this.dispatchEvent(
-        new CustomEvent("change", {
-          bubbles: true,
-          composed: true
-        })
-      );
+      this.setAndDispatchValue(this.refs.input?.value);
     }
+
+    this.showHelpMessageIfInvalid();
 
     if (DEBUG) console.log(CLASS_NAME, "< handleInputChange");
   }
 
-  handleFocus() {
+  handleFocusIn() {
     if (DEBUG) console.log(CLASS_NAME, "> handleFocus");
     this._hasFocus = true;
     if (DEBUG) console.log(CLASS_NAME, "< handleFocus");
   }
 
-  handleBlur() {
+  handleFocusOut(event) {
     if (DEBUG) console.log(CLASS_NAME, "> handleBlur");
-    this._hasFocus = false;
+
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      this._hasFocus = false;
+
+      if (this.pickerVisible) {
+        this.hideCalendar();
+      }
+    }
+
     if (DEBUG) console.log(CLASS_NAME, "< handleBlur");
+  }
+
+  handleInputFocus(event) {
+    /* do not show calendarif coming from picker */
+    if (!this.refs.datePicker.contains(event.relatedTarget)) {
+      this.showCalendar();
+    }
   }
 
   stopPropagation(event) {
@@ -1099,8 +1163,6 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
   render() {
     return this.multipleInput ? tmplMulti : tmpl;
   }
-
-  /* var: onClickOutside */
 
   _onClickOutside;
   _rendered = false;
@@ -1160,43 +1222,135 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
   /* api: _constraint */
 
   _constraintApi;
+  _isPartInvalidDate;
+  _isPartInvalidMonth;
+  _isPartInvalidYear;
 
-  @api get _constraint() {
+  @api
+  get _constraint() {
     if (!this._constraintApi) {
       const overrides = {
         badInput: () => {
-          if (DEBUG) console.log(CLASS_NAME, "badInput", this._value);
+          if (DEBUG)
+            console.log(CLASS_NAME, "> _constraint.badInput", this._value);
 
           let rv = true;
 
-          if (this._displayValue == null || this._displayValue === "") {
-            rv = false;
+          if (this._multipleInput) {
+            const dV = (this._displayDayValue = this.refs.dateInput?.value);
+            const mV = (this._displayMonthValue = this.refs.monthInput?.value);
+            const yV = (this._displayYearValue = this.refs.yearInput?.value);
+
+            if (dV === "" || mV === "" || yV === "") {
+              rv = false;
+            } else {
+              const day = Number(dV);
+              const month = Number(mV);
+              const year = Number(yV);
+
+              this._isPartInvalidDate = Number.isNaN(day);
+              this._isPartInvalidMonth = Number.isNaN(month);
+              this._isPartInvalidYear = Number.isNaN(year);
+              rv =
+                this._isPartInvalidDate ||
+                this._isPartInvalidMonth ||
+                this._isPartInvalidYear;
+
+              if (!rv) {
+                const newDate = new Date(year, month - 1, day);
+                this._isPartInvalidDate = newDate.getDate() !== day;
+                this._isPartInvalidMonth =
+                  !this._isPartInvalidDate && newDate.getMonth() !== month - 1;
+                this._isPartInvalidYear =
+                  !this._isPartInvalidDate &&
+                  !this._isPartInvalidMonth &&
+                  newDate.getFullYear() !== year;
+
+                rv =
+                  this._isPartInvalidDate ||
+                  this._isPartInvalidMonth ||
+                  this._isPartInvalidYear;
+              }
+            }
           } else {
-            rv = !isValidDate(this.parseInput(this._displayValue));
+            if (this._displayValue == null || this._displayValue === "") {
+              rv = false;
+            } else {
+              rv = !isValidDate(this.parseInput(this._displayValue));
+            }
           }
 
-          if (DEBUG) console.log(CLASS_NAME, "badInput", rv);
+          if (DEBUG) console.log(CLASS_NAME, "< _constraint.badInput", rv);
 
           return rv;
         },
         patternMismatch: () => false,
         rangeOverflow: () => {
-          return (
-            this.maxDate && this.max && this._parsedValue?.isAfter(this.maxDate)
-          );
+          const rv =
+            this.maxDate &&
+            this.max &&
+            this._parsedValue?.isAfter(this.maxDate);
+
+          if (rv) {
+            this._isPartInvalidDate = true;
+            this._isPartInvalidMonth = true;
+            this._isPartInvalidYear = true;
+          }
+
+          return rv;
         },
         rangeUnderflow: () => {
-          return (
+          const rv =
             this.minDate &&
             this.min &&
-            this._parsedValue?.isBefore(this.minDate)
-          );
+            this._parsedValue?.isBefore(this.minDate);
+
+          if (rv) {
+            this._isPartInvalidDate = true;
+            this._isPartInvalidMonth = true;
+            this._isPartInvalidYear = true;
+          }
+
+          return rv;
         },
         stepMismatch: () => false,
         tooShort: () => false,
         tooLong: () => false,
         typeMismatch: () => false,
-        valueMissing: () => this.required && !this._parsedValue
+        valueMissing: () => {
+          if (DEBUG)
+            console.log(CLASS_NAME, "> _constraint.valueMissing", this._value);
+
+          let rv = false;
+
+          if (this._multipleInput) {
+            const dV = (this._displayDayValue = this.refs.dateInput?.value);
+            const mV = (this._displayMonthValue = this.refs.monthInput?.value);
+            const yV = (this._displayYearValue = this.refs.yearInput?.value);
+
+            rv = this.required && (dV === "" || mV === "" || yV === "");
+
+            if (rv) {
+              this._isPartInvalidDate = true;
+              this._isPartInvalidMonth = true;
+              this._isPartInvalidYear = true;
+            }
+          } else {
+            rv =
+              this.required &&
+              (!this._parsedValue || !this._parsedValue.isValid());
+          }
+
+          if (DEBUG)
+            console.log(
+              CLASS_NAME,
+              "< _constraint.valueMissing",
+              rv,
+              this.required
+            );
+
+          return rv;
+        }
       };
 
       this._constraintApi = new WrapperComponentConstraints(
@@ -1209,7 +1363,8 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
     return this._constraintApi;
   }
 
-  @api get validity() {
+  @api
+  get validity() {
     if (!this || !this._constraint) return null;
 
     if (DEBUG) console.log(CLASS_NAME, "> validity");
@@ -1242,6 +1397,7 @@ export default class extends SfGpsDsAuNswStatusHelperMixin(
     const rv = !this._connected || this._constraint.checkValidity();
 
     if (DEBUG) console.log(CLASS_NAME, "< checkValidity", rv);
+    return rv;
   }
 
   @api setCustomValidity(e) {

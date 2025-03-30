@@ -8,8 +8,18 @@
 import SfGpsDsFormNumberOsN from "c/sfGpsDsFormNumberOsN";
 import tmpl from "./sfGpsDsAuNswFormNumberOsN.html";
 
-export default class SfGpsDsAuNswFormNumberOsN extends SfGpsDsFormNumberOsN {
+export default class extends SfGpsDsFormNumberOsN {
+  /* lifecycle */
+
   render() {
     return tmpl;
+  }
+
+  connectedCallback() {
+    if (super.connectedCallback) {
+      super.connectedCallback();
+    }
+
+    this._readOnlyClass = "sfgpsdsaunsw-read-only";
   }
 }

@@ -1,3 +1,4 @@
+<!-- sldsValidatorIgnore -->
 <template>
   <!-- TODO image group not supported-->
   <c-sf-gps-ds-au-nsw-checkbox-group-os-n
@@ -16,6 +17,7 @@
     data-refresh={refresh}
     data-omni-input
     onchange={handleChange}
+    read-only={_propSetMap.readOnly}
   >
     <template lwc:if={_propSetMap.repeat}>
       <span slot="label" class={_styleClasses.repeatContainer} role="group">

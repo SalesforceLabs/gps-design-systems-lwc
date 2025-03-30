@@ -1,3 +1,4 @@
+<!-- sldsValidatorIgnore -->
 <template>
   <div class={computedFormGroupClassName}>
     <div class={errorClass}>
@@ -24,7 +25,7 @@
           aria-readonly={readOnly}
           required={required}
           placeholder={placeholder}
-          disabled={disabled}
+          disabled={computedDisabledOrReadOnly}
           data-id="date-picker-slds-input"
           name={name}
           autocomplete="off"

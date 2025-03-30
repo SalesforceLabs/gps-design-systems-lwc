@@ -1,0 +1,7 @@
+@import "c/sfGpsDsAuVic2FormCssOsN";
+@import "c/sfGpsDsAuVic2PredictiveCssOsN";
+
+.sfgpsds-label__group_action {
+  flex-grow: 0;
+  flex-shrink: 0;
+}

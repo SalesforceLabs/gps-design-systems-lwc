@@ -1,6 +1,14 @@
+<!-- sldsValidatorIgnore -->
 <template>
   <template lwc:if={jsonDef.bAccordionActive}>
-    <h2 class="nsw-h2 slds-m-top_medium os-step-label">{mergedLabel}</h2>
+    <h2
+      lwc:if={mergedLabel}
+      class="nsw-h2 slds-m-top_medium os-step-label"
+      aria-live="polite"
+      tabindex="-1"
+    >
+      {mergedLabel}
+    </h2>
     <!-- slds-p-horizontal_medium  -->
 
     <div class="vlc-separator slds-m-top_medium slds-m-bottom_medium"></div>
@@ -12,7 +20,7 @@
         <slot class="slds-grid slds-wrap slds-size_1-of-1"> </slot>
       </div>
 
-      <hr class="sepbutton" />
+      <hr lwc:if={computedShowSep} class="sepbutton" />
 
       <div class="form-actions">
         <!-- add replacement buttons here -->

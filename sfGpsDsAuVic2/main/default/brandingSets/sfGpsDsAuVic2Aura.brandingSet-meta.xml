@@ -43,7 +43,7 @@
 
   <brandingSetProperty>
     <propertyName>LoginBackgroundColor</propertyName>
-    <propertyValue>#F4F4F4</propertyValue>
+    <propertyValue>#F5F5F5</propertyValue>
   </brandingSetProperty>
   <brandingSetProperty>
     <propertyName>CardBackgroundColor</propertyName>
@@ -66,11 +66,11 @@
 
   <brandingSetProperty>
     <propertyName>PrimaryFont</propertyName>
-    <propertyValue>VIC-Regular</propertyValue>  
+    <propertyValue>VIC</propertyValue>  
   </brandingSetProperty>
   <brandingSetProperty>
     <propertyName>HeaderFonts</propertyName>
-    <propertyValue>VIC-Bold</propertyValue>
+    <propertyValue>VIC</propertyValue>
   </brandingSetProperty>
   <brandingSetProperty>
     <propertyName>TextTransformStyle</propertyName>

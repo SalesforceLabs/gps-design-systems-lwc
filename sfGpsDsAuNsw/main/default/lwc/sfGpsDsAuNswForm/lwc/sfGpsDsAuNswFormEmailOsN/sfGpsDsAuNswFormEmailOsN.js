@@ -8,8 +8,18 @@
 import SfGpsDsFormEmailOsN from "c/sfGpsDsFormEmailOsN";
 import tmpl from "./sfGpsDsAuNswFormEmailOsN.html";
 
-export default class SfGpsDsAuNswFormEmailOsN extends SfGpsDsFormEmailOsN {
+export default class extends SfGpsDsFormEmailOsN {
+  /* lifecycle */
+
   render() {
     return tmpl;
+  }
+
+  connectedCallback() {
+    if (super.connectedCallback) {
+      super.connectedCallback();
+    }
+
+    this._readOnlyClass = "sfgpsdsaunsw-read-only";
   }
 }

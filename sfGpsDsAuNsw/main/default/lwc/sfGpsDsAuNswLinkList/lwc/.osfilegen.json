@@ -5,7 +5,8 @@
       "target": "!Os.html",
       "c-sf-gps-ds-au-nsw-link-list": "c-sf-gps-ds-au-nsw-link-list-os",
       "c-sf-gps-ds-empty": "c-sf-gps-ds-empty-os",
-      "c-sf-gps-ds-configuration-error": "c-sf-gps-ds-configuration-error-os"
+      "c-sf-gps-ds-configuration-error": "c-sf-gps-ds-configuration-error-os",
+      "c-sf-gps-ds-au-nsw-loader": "c-sf-gps-ds-au-nsw-loader-os"
     },
     "!.js": {
       "target": "!Os.js",
@@ -14,7 +15,8 @@
     "!.js-meta.xml": {
       "target": "!Os.js-meta.xml",
       "<isExposed>(.|\\n)*Bundle>": "<isExposed>true</isExposed>\n  <runtimeNamespace>omnistudio</runtimeNamespace>\n</LightningComponentBundle>"
-    }
+    },
+    "demoCollection.js": { "target": "demoCollection.js" }
   },
   "sfGpsDsAuNswLinkList": {
     "target": "!Os",

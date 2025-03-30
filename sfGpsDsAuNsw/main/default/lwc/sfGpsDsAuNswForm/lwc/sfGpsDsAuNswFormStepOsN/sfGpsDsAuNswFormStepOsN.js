@@ -12,7 +12,13 @@
 import SfGpsDsFormStepOsN from "c/sfGpsDsFormStepOsN";
 import tmpl from "./sfGpsDsAuNswFormStepOsN.html";
 
-export default class SfGpsDsAuNswFormStepOsN extends SfGpsDsFormStepOsN {
+export default class extends SfGpsDsFormStepOsN {
+  get computedShowSep() {
+    return this.showPrev || this.showNext || this.showSave;
+  }
+
+  /* lifecycle */
+
   render() {
     return tmpl;
   }

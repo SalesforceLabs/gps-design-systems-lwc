@@ -8,8 +8,18 @@
 import SfGpsDsFormMultiselectOsN from "c/sfGpsDsFormMultiselectOsN";
 import tmpl from "./sfGpsDsAuNswFormMultiselectOsN.html";
 
-export default class SfGpsDsAuNswFormMultiselectOsN extends SfGpsDsFormMultiselectOsN {
+export default class extends SfGpsDsFormMultiselectOsN {
+  /* lifecycle */
+
   render() {
     return tmpl;
+  }
+
+  connectedCallback() {
+    if (super.connectedCallback) {
+      super.connectedCallback();
+    }
+
+    this._readOnlyClass = "sfgpsdsaunsw-read-only";
   }
 }

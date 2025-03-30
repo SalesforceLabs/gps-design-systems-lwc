@@ -1,10 +1,11 @@
+<!-- sldsValidatorIgnore -->
 <template>
   <div class="nsw-form__group">
     <fieldset
       class="nsw-form__fieldset"
       role="radiogroup"
       aria-required={required}
-      aria-labelledby="sfgpsdds-aunsw-radio-group-legend"
+      aria-labelledby="sfgpsds-aunsw-radio-group-legend"
       aria-describedby={computedAriaDescribedBy}
       aria-invalid={computedAriaInvalid}
     >
@@ -15,7 +16,9 @@
         </span>
         <slot name="label"> </slot>
 
-        <span id="helper" class="nsw-form__helper">{fieldLevelHelp}</span>
+        <span lwc:if={fieldLevelHelp} id="helper" class="nsw-form__helper"
+          >{fieldLevelHelp}</span
+        >
 
         <span
           lwc:if={sfGpsDsIsError}
@@ -48,7 +51,7 @@
             type="radio"
             tabindex={tabIndex}
             required={required}
-            disabled={disabled}
+            disabled={computedDisabledOrReadOnly}
             id={option.id}
             name={option.name}
             aria-invalid={computedAriaInvalid}

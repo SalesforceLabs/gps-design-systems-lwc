@@ -8,8 +8,18 @@
 import SfGpsDsFormCurrencyOsN from "c/sfGpsDsFormCurrencyOsN";
 import tmpl from "./sfGpsDsAuNswFormCurrencyOsN.html";
 
-export default class SfGpsDsAuNswFormCurrencyOsN extends SfGpsDsFormCurrencyOsN {
+export default class extends SfGpsDsFormCurrencyOsN {
+  /* lifecycle */
+
   render() {
     return tmpl;
+  }
+
+  connectedCallback() {
+    if (super.connectedCallback) {
+      super.connectedCallback();
+    }
+
+    this._readOnlyClass = "sfgpsdsaunsw-read-only";
   }
 }

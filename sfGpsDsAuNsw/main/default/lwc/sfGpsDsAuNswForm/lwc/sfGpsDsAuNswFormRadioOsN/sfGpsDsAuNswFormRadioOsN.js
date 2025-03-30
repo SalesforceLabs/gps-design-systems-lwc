@@ -8,8 +8,18 @@
 import SfGpsDsFormRadioOsN from "c/sfGpsDsFormRadioOsN";
 import tmpl from "./sfGpsDsAuNswFormRadioOsN.html";
 
-export default class SfGpsDsAuNswFormRadioOsN extends SfGpsDsFormRadioOsN {
+export default class extends SfGpsDsFormRadioOsN {
+  /* lifecycle */
+
   render() {
     return tmpl;
+  }
+
+  connectedCallback() {
+    if (super.connectedCallback) {
+      super.connectedCallback();
+    }
+
+    this._readOnlyClass = "sfgpsdsaunsw-read-only";
   }
 }

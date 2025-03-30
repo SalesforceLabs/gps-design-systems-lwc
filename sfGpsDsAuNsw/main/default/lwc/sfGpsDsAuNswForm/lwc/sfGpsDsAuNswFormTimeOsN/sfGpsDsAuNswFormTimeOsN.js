@@ -8,8 +8,18 @@
 import SfGpsDsFormTimeOsN from "c/sfGpsDsFormTimeOsN";
 import tmpl from "./sfGpsDsAuNswFormTimeOsN.html";
 
-export default class SfGpsDsAuNswFormTimeOsN extends SfGpsDsFormTimeOsN {
+export default class extends SfGpsDsFormTimeOsN {
+  /* lifecycle */
+
   render() {
     return tmpl;
+  }
+
+  connectedCallback() {
+    if (super.connectedCallback) {
+      super.connectedCallback();
+    }
+
+    this._readOnlyClass = "sfgpsdsaunsw-read-only";
   }
 }

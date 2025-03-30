@@ -1,11 +1,18 @@
 import { api } from "lwc";
 import SfGpsDsNavigation from "c/sfGpsDsNavigation";
+import { isObject } from "c/sfGpsDsHelpers";
 import { NavigationMixin } from "lightning/navigation";
 
 /**
  * @slot UserAction
  */
 export default class extends NavigationMixin(SfGpsDsNavigation) {
+  @api showSearch;
+  @api showQuickExit;
+  @api className;
+
+  /* api: mode */
+
   @api
   get mode() {
     return super.mode;
@@ -38,6 +45,8 @@ export default class extends NavigationMixin(SfGpsDsNavigation) {
     }
   }
 
+  /* api: navigationDevName */
+
   @api
   get navigationDevName() {
     return super.navigationDevName;
@@ -46,6 +55,8 @@ export default class extends NavigationMixin(SfGpsDsNavigation) {
   set navigationDevName(value) {
     super.navigationDevName = value;
   }
+
+  /* api: ipName */
 
   @api
   get ipName() {
@@ -56,6 +67,8 @@ export default class extends NavigationMixin(SfGpsDsNavigation) {
     super.ipName = value;
   }
 
+  /* api: inputJSON */
+
   @api
   get inputJSON() {
     return super.inputJSON;
@@ -64,6 +77,8 @@ export default class extends NavigationMixin(SfGpsDsNavigation) {
   set inputJSON(value) {
     super.inputJSON = value;
   }
+
+  /* api: optionsJSON */
 
   @api
   get optionsJSON() {
@@ -76,15 +91,21 @@ export default class extends NavigationMixin(SfGpsDsNavigation) {
 
   /* api: primaryLogo */
 
-  _primaryLogoOriginal;
   _primaryLogo;
+  _primaryLogoOriginal;
 
-  @api get primaryLogo() {
+  @api
+  get primaryLogo() {
     return this._primaryLogoOriginal;
   }
 
   set primaryLogo(value) {
     this._primaryLogoOriginal = value;
+
+    if (!value) {
+      this._primaryLogo = null;
+      return;
+    }
 
     try {
       value = JSON.parse(value);
@@ -93,7 +114,7 @@ export default class extends NavigationMixin(SfGpsDsNavigation) {
       return;
     }
 
-    if ("object" !== typeof value) {
+    if (!isObject(value)) {
       this._primaryLogo = null;
       this.addError("PL-JO", "Primary logo must be a valid JSON object.");
       return;
@@ -104,15 +125,21 @@ export default class extends NavigationMixin(SfGpsDsNavigation) {
 
   /* api: primaryLogo */
 
-  _secondaryLogoOriginal;
   _secondaryLogo;
+  _secondaryLogoOriginal;
 
-  @api get secondaryLogo() {
+  @api
+  get secondaryLogo() {
     return this._secondaryLogoOriginal;
   }
 
   set secondaryLogo(value) {
     this._secondaryLogoOriginal = value;
+
+    if (!value) {
+      this._secondaryLogo = null;
+      return;
+    }
 
     try {
       value = JSON.parse(value);
@@ -121,7 +148,7 @@ export default class extends NavigationMixin(SfGpsDsNavigation) {
       return;
     }
 
-    if ("object" !== typeof value) {
+    if (!isObject(value)) {
       this._secondaryLogo = null;
       this.addError("SL-JO", "Secondary logo must be a valid JSON object.");
       return;
@@ -130,13 +157,13 @@ export default class extends NavigationMixin(SfGpsDsNavigation) {
     this._secondaryLogo = { ...value };
   }
 
-  @api showSearch;
-  @api showQuickExit;
-  @api className;
+  /* computed */
 
   get decoratedItems() {
     return this.decoratedItemsMapper(this._items, "menu-");
   }
+
+  /* methods */
 
   decoratedItemsMapper(items, parentIndex) {
     /* Transform exp cloud nav format into what's expected by Rpl Primary Nav */
@@ -170,8 +197,6 @@ export default class extends NavigationMixin(SfGpsDsNavigation) {
       }
     });
   }
-
-  /* event management */
 
   handleNavigate(event) {
     event.stopPropagation();
