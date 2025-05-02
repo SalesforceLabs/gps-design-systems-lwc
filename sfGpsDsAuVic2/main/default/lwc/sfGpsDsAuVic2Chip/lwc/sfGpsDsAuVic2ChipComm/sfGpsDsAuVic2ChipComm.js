@@ -2,32 +2,30 @@ import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
 import mdEngine from "c/sfGpsDsMarkdown";
 
-export default class SfGpsDsAuVic2ChipComm extends SfGpsDsLwc {
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuVic2ChipComm";
+
+export default class extends SfGpsDsLwc {
   @api variant;
   @api className;
 
-  /*
-   * links
-   */
+  /* api: links */
 
   _links;
-  _originalLinks;
+  _linksOriginal;
 
-  @api get links() {
-    return this._originalLinks;
+  @api
+  get links() {
+    return this._linksOriginal;
   }
 
   set links(markdown) {
-    this._originalLinks = markdown;
-
     try {
-      if (markdown) {
-        this._links = mdEngine.extractLinks(markdown);
-      } else {
-        this._links = null;
-      }
+      this._linksOriginal = markdown;
+      this._links = markdown ? mdEngine.extractLinks(markdown) : null;
     } catch (e) {
       this.addError("LI-MD", "Issue when parsing Links markdown");
+      if (DEBUG) console.debug(CLASS_NAME, "set links", e);
     }
   }
 

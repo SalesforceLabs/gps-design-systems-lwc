@@ -7,12 +7,19 @@
 
 import { api } from "lwc";
 import SfGpsDsMarkdownElement from "c/sfGpsDsMarkdownElement";
+import { HtmlSanitizer } from "c/sfGpsDsHelpers";
+import defaultPlugIns from "c/sfGpsDsAuVic2HtmlPlugIns";
 import tmpl from "./sfGpsDsAuVic2MarkdownElementComm.html";
 
-export default class SfGpsDsAuVic2MarkdownElementComm extends SfGpsDsMarkdownElement {
+HtmlSanitizer.options.plugIns = defaultPlugIns;
+
+export default class extends SfGpsDsMarkdownElement {
   static renderMode = "shadow";
 
-  @api get content() {
+  /* api: content */
+
+  @api
+  get content() {
     return super.content;
   }
 
@@ -20,12 +27,21 @@ export default class SfGpsDsAuVic2MarkdownElementComm extends SfGpsDsMarkdownEle
     super.content = markdown;
   }
 
-  @api get className() {
+  /* api: className */
+
+  @api
+  get className() {
     return super.className;
   }
 
   set className(value) {
     super.className = value;
+  }
+
+  /* computed */
+
+  get sanitizer() {
+    return HtmlSanitizer;
   }
 
   /* lifecycle */

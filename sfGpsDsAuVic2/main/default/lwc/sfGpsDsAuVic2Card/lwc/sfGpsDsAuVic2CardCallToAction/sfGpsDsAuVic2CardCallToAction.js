@@ -1,32 +1,43 @@
 import { LightningElement, api } from "lwc";
-import { computeClass } from "c/sfGpsDsHelpers";
+import {
+  isString,
+  isObject,
+  computeClass,
+  normaliseBoolean
+} from "c/sfGpsDsHelpers";
+import useAccessibleContainer from "c/sfGpsDsAuVic2AccessibleContainer";
 
-export default class SfGpsDsAuVic2CardCallToAction extends LightningElement {
+const PREVENTDEFAULT_DEFAULT = false;
+
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuVic2CardCallToAction";
+
+export default class extends LightningElement {
   @api el;
   @api title;
   @api url;
   @api variant = "filled";
   @api ctaText = "Call to action";
-  @api preventDefault;
   @api className;
 
   /* api: image */
 
-  _imageOriginal;
   _image;
+  _imageOriginal;
 
-  @api get image() {
+  @api
+  get image() {
     return this._imageOriginal;
   }
 
   set image(value) {
     this._imageOriginal = value;
 
-    if (typeof value === "string") {
+    if (isString(value)) {
       value = JSON.parse(value);
     }
 
-    if (typeof value !== "object") {
+    if (!isObject(value)) {
       value = {};
     }
 
@@ -40,6 +51,24 @@ export default class SfGpsDsAuVic2CardCallToAction extends LightningElement {
       },
       sizes: "xs:768px"
     };
+  }
+
+  /* api: preventDefault */
+
+  _preventDefault = PREVENTDEFAULT_DEFAULT;
+  _preventDefaultOriginal = PREVENTDEFAULT_DEFAULT;
+
+  @api
+  get preventDefault() {
+    return this._preventDefaultOriginal;
+  }
+
+  set preventDefault(value) {
+    this._preventDefaultOriginal = value;
+    this._preventDefault = normaliseBoolean(value, {
+      acceptString: true,
+      fallbackValue: PREVENTDEFAULT_DEFAULT
+    });
   }
 
   /* computed */
@@ -58,8 +87,13 @@ export default class SfGpsDsAuVic2CardCallToAction extends LightningElement {
   /* event management */
 
   handleClick(event) {
-    if (this.preventDefault) {
+    if (DEBUG) console.debug(CLASS_NAME, "> handleClick", this._preventDefault);
+
+    if (this._preventDefault) {
       event.preventDefault();
+    } else {
+      // This bit to cater to useAccessibleContainer simulating a click, as the browser does not automatically navigate to the url
+      window.location.href = this.url;
     }
 
     this.dispatchEvent(
@@ -73,5 +107,20 @@ export default class SfGpsDsAuVic2CardCallToAction extends LightningElement {
         }
       })
     );
+
+    if (DEBUG) console.debug(CLASS_NAME, "< handleClick");
+  }
+
+  /* lifecycle */
+
+  _accessibleContainer;
+
+  renderedCallback() {
+    if (!this._accessibleContainer) {
+      this._accessibleContainer = new useAccessibleContainer(
+        this.refs.container,
+        this.refs.trigger
+      );
+    }
   }
 }

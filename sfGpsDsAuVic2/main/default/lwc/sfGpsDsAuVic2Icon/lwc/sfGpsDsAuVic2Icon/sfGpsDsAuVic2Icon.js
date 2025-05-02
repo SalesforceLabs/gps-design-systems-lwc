@@ -1,16 +1,23 @@
-import { LightningElement, api } from "lwc";
-import { computeClass } from "c/sfGpsDsHelpers";
+import { LightningElement, api, track } from "lwc";
 import { RplIconNames } from "c/sfGpsDsAuVic2IconConstants";
-import { normaliseString, normaliseBoolean } from "c/sfGpsDsHelpers";
+import {
+  normaliseString,
+  normaliseBoolean,
+  isString,
+  isObject
+} from "c/sfGpsDsHelpers";
 import { RplColorThemes, RplIconSizes } from "c/sfGpsDsAuVic2UiCoreConstants";
 
 import STATIC_RESOURCE from "@salesforce/resourceUrl/sfGpsDsAuVic2";
 
 const SIZE_DEFAULT = "s";
 const COLOUR_DEFAULT = null;
+const PADDED_DEFAULT = false;
+
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuVic2Icon";
 
 /* eslint-disable @lwc/lwc/no-api-reassignments */
-
 export default class extends LightningElement {
   @api title;
   @api className;
@@ -20,14 +27,15 @@ export default class extends LightningElement {
   _iconOriginal;
   _error;
 
-  @api get icon() {
+  @api
+  get icon() {
     return this._iconOriginal;
   }
 
   set icon(value) {
     this._iconOriginal = value;
 
-    if (typeof value === "string") {
+    if (isString(value)) {
       try {
         value = JSON.parse(value);
         this._error = null;
@@ -37,7 +45,7 @@ export default class extends LightningElement {
       }
     }
 
-    if (typeof value === "object") {
+    if (isObject(value)) {
       this.padded = value.padded;
       this.colour = value.colour;
       this.size = value.size;
@@ -56,8 +64,8 @@ export default class extends LightningElement {
 
   /* api: padded */
 
-  _paddedOriginal = false;
-  _padded = false;
+  _padded = PADDED_DEFAULT;
+  _paddedOriginal = PADDED_DEFAULT;
 
   @api
   get padded() {
@@ -65,17 +73,21 @@ export default class extends LightningElement {
   }
 
   set padded(value) {
+    if (DEBUG) console.debug(CLASS_NAME, "> set padded", value);
+
     this._paddedOriginal = value;
     this._padded = normaliseBoolean(value, {
       acceptString: true,
-      fallbackValue: false
+      fallbackValue: PADDED_DEFAULT
     });
+
+    if (DEBUG) console.debug(CLASS_NAME, "< set padded", this._padded);
   }
 
   /* api: colour */
 
-  _colourOriginal = COLOUR_DEFAULT;
   _colour = COLOUR_DEFAULT;
+  _colourOriginal = COLOUR_DEFAULT;
 
   @api
   get colour() {
@@ -83,17 +95,21 @@ export default class extends LightningElement {
   }
 
   set colour(value) {
+    if (DEBUG) console.debug(CLASS_NAME, "> set colour", value);
+
     this._colourOriginal = value;
     this._colour = normaliseString(value, {
       validValues: RplColorThemes,
       fallbackValue: COLOUR_DEFAULT
     });
+
+    if (DEBUG) console.debug(CLASS_NAME, "< set colour", this._colour);
   }
 
   /* api: size */
 
-  _sizeOriginal = SIZE_DEFAULT;
   _size = SIZE_DEFAULT;
+  _sizeOriginal = SIZE_DEFAULT;
 
   @api
   get size() {
@@ -101,17 +117,21 @@ export default class extends LightningElement {
   }
 
   set size(value) {
+    if (DEBUG) console.debug(CLASS_NAME, "> set size", value);
+
     this._sizeOriginal = value;
     this._size = normaliseString(value, {
       validValues: RplIconSizes,
       fallbackValue: SIZE_DEFAULT
     });
+
+    if (DEBUG) console.debug(CLASS_NAME, "< set size", this._size);
   }
 
   /* api: name */
 
-  _nameOriginal;
   _name;
+  _nameOriginal;
 
   @api
   get name() {
@@ -119,31 +139,50 @@ export default class extends LightningElement {
   }
 
   set name(value) {
+    if (DEBUG) console.debug(CLASS_NAME, "> set name", value);
+
     this._nameOriginal = value;
     this._name = normaliseString(value, {
       validValues: RplIconNames,
       fallbackValue: null
     });
+
+    if (DEBUG) console.debug(CLASS_NAME, "< set name", this._name);
   }
 
   /* getters */
 
   get computedClassName() {
-    return computeClass({
+    if (DEBUG) console.debug(CLASS_NAME, "> computedClassName");
+
+    const rv = {
       "rpl-icon": true,
       [`rpl-icon--size-${this._size}`]: this._size,
       [`rpl-icon--${this._name}`]: this._name,
       [`rpl-icon--colour-${this._colour}`]: this._colour,
       "rpl-icon--padded": this._padded,
       [this.className]: this.className
-    });
+    };
+
+    if (DEBUG) console.debug(CLASS_NAME, "< computedClassName", rv);
+    return rv;
   }
 
   get computedRole() {
     return this.title ? null : "presentation";
   }
 
+  @track staticResourceHref = STATIC_RESOURCE;
+
   get computedHref() {
-    return `${STATIC_RESOURCE}/assets/icons/${this._name}.svg#icon`;
+    if (DEBUG) console.debug(CLASS_NAME, "> computedHref", this._name);
+
+    const rv =
+      this.staticResourceHref != null
+        ? `${this.staticResourceHref}/assets/icons/${this._name}.svg#icon`
+        : null;
+
+    if (DEBUG) console.debug(CLASS_NAME, "< computedHref", rv);
+    return rv;
   }
 }

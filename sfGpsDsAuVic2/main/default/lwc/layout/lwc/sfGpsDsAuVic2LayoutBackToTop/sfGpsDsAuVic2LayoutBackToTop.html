@@ -1,0 +1,16 @@
+<template>
+  <div lwc:ref="containerRef" class={computedClassName}>
+    <div class="rpl-back-to-top__inner rpl-container">
+      <c-sf-gps-ds-au-vic2-button
+        el="a"
+        variant="elevated"
+        icon-name="icon-arrow-up"
+        url={computedUrl}
+        class="rpl-back-to-top__button"
+        aria-label={label}
+      >
+        {label}
+      </c-sf-gps-ds-au-vic2-button>
+    </div>
+  </div>
+</template>

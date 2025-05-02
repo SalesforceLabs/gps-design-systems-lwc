@@ -1,7 +1,11 @@
 import { api, track } from "lwc";
+import { isArray } from "c/sfGpsDsHelpers";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
 
-export default class SfGpsDsAuNswResultsBarComm extends SfGpsDsLwc {
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuNswResultsBarComm";
+
+export default class extends SfGpsDsLwc {
   @api from = 1;
   @api to = 10;
   @api total = 5917;
@@ -9,11 +13,18 @@ export default class SfGpsDsAuNswResultsBarComm extends SfGpsDsLwc {
 
   @track _value;
 
-  _originalSortOptions;
-  @track _sortOptions;
+  /* api: sortOptions */
 
-  @api set sortOptions(value) {
-    this._originalSortOptions = value;
+  _sortOptions;
+  _sortOptionsOriginal;
+
+  @api
+  get sortOptions() {
+    return this._sortOptionsOriginal;
+  }
+
+  set sortOptions(value) {
+    this._sortOptionsOriginal = value;
 
     if (value == null || value === "") {
       this._sortOptions = null;
@@ -31,15 +42,19 @@ export default class SfGpsDsAuNswResultsBarComm extends SfGpsDsLwc {
           value: option,
           label: option
         }));
+
+      if (DEBUG) console.debug(CLASS_NAME, "sortOptions", e);
     }
 
-    if (Array.isArray(this._sortOptions)) {
+    if (isArray(this._sortOptions)) {
       this._value = this._sortOptions[0]?.value;
     }
   }
 
-  get sortOptions() {
-    return this._originalSortOptions;
+  /* event management */
+
+  handleChange(event) {
+    this._value = event.detail;
   }
 
   /* lifecycle */
@@ -47,11 +62,5 @@ export default class SfGpsDsAuNswResultsBarComm extends SfGpsDsLwc {
   connectedCallback() {
     super.connectedCallback();
     this.classList.add("nsw-scope");
-  }
-
-  /* events */
-
-  handleChange(event) {
-    this._value = event.detail;
   }
 }

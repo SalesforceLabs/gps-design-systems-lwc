@@ -3,10 +3,13 @@ import SfGpsDsLwc from "c/sfGpsDsLwc";
 import mdEngine from "c/sfGpsDsMarkdown";
 import { parseIso8601, replaceInnerHtml } from "c/sfGpsDsHelpers";
 
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuVic2FileComm";
+
 /**
  * @slot Caption
  */
-export default class SfGpsDsAuVic2FileComm extends SfGpsDsLwc {
+export default class extends SfGpsDsLwc {
   @api extension;
   @api size;
   @api updated;
@@ -14,42 +17,46 @@ export default class SfGpsDsAuVic2FileComm extends SfGpsDsLwc {
 
   /* api: name, string in link markdown format */
 
-  _nameOriginal;
   _name = {};
+  _nameOriginal;
 
-  @api get name() {
+  @api
+  get name() {
     return this._nameOriginal;
   }
 
   set name(markdown) {
-    this._linkOriginal = markdown;
-
     try {
+      this._linkOriginal = markdown;
       this._name = markdown ? mdEngine.extractFirstLink(markdown) : null;
     } catch (e) {
       this.addError("HL-MD", "Issue when parsing Name markdown");
       this._name = {};
+      if (DEBUG) console.debug(CLASS_NAME, "set name", e);
     }
   }
 
   /* api: caption */
 
-  _captionOriginal;
   _captionHtml;
+  _captionOriginal;
 
-  @api get caption() {
+  @api
+  get caption() {
     return this._captionOriginal;
   }
 
   set caption(markdown) {
-    this._captionOriginal = markdown;
-
     try {
+      this._captionOriginal = markdown;
       this._captionHtml = mdEngine.renderEscaped(markdown);
     } catch (e) {
       this.addError("CO-MD", "Issue when parsing Caption markdown");
+      if (DEBUG) console.debug(CLASS_NAME, "set caption", e);
     }
   }
+
+  /* computed */
 
   get computedName() {
     return this._name?.text;
@@ -59,7 +66,7 @@ export default class SfGpsDsAuVic2FileComm extends SfGpsDsLwc {
     return this._name?.url;
   }
 
-  get parsedUpdated() {
+  get computedUpdated() {
     return this.updated ? parseIso8601(this.updated) : null;
   }
 

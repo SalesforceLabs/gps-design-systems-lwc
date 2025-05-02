@@ -1,4 +1,6 @@
 import { LightningElement, api } from "lwc";
+import { isString, isObject } from "c/sfGpsDsHelpers";
+import useAccessibleContainer from "c/sfGpsDsAuVic2AccessibleContainer";
 
 export default class extends LightningElement {
   @api el = "div";
@@ -9,21 +11,22 @@ export default class extends LightningElement {
 
   /* api: image */
 
-  _imageOriginal;
   _image;
+  _imageOriginal;
 
-  @api get image() {
+  @api
+  get image() {
     return this._imageOriginal;
   }
 
   set image(value) {
     this._imageOriginal = value;
 
-    if (typeof value === "string") {
+    if (isString(value)) {
       value = JSON.parse(value);
     }
 
-    if (typeof value !== "object") {
+    if (!isObject(value)) {
       value = {};
     }
 
@@ -55,5 +58,22 @@ export default class extends LightningElement {
         }
       })
     );
+
+    if (!this.preventDefault) {
+      window.location.href = this.url;
+    }
+  }
+
+  /* lifecycle */
+
+  _accessibleContainer;
+
+  renderedCallback() {
+    if (!this._accessibleContainer) {
+      this._accessibleContainer = new useAccessibleContainer(
+        this.refs.container,
+        this.refs.trigger
+      );
+    }
   }
 }

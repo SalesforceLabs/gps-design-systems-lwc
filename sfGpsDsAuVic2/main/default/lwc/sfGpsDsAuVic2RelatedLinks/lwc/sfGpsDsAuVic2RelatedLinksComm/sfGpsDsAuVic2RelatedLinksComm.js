@@ -2,16 +2,22 @@ import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
 import mdEngine from "c/sfGpsDsMarkdown";
 
-export default class SfGpsDsAuVic2RelatedLinksComm extends SfGpsDsLwc {
+const ITEMS_DEFAULT = [];
+
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuVic2RelatedLinksComm";
+
+export default class extends SfGpsDsLwc {
   @api title = "Related Links";
   @api className;
 
   /* api: items */
 
+  _items = ITEMS_DEFAULT;
   _itemsOriginal;
-  _items = [];
 
-  @api get items() {
+  @api
+  get items() {
     return this._itemsOriginal;
   }
 
@@ -22,7 +28,8 @@ export default class SfGpsDsAuVic2RelatedLinksComm extends SfGpsDsLwc {
       this._items = mdEngine.extractLinks(markdown);
     } catch (e) {
       this.addError("IT-MD", "Issue when parsing Links markdown");
-      this._items = [];
+      this._items = ITEMS_DEFAULT;
+      if (DEBUG) console.debug(CLASS_NAME, "set items", e);
     }
   }
 

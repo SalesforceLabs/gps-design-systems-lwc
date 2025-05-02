@@ -52,16 +52,14 @@
     <flexiPageRegions>
         <appendable>enabled</appendable>
         <itemInstances>
-          <componentInstance>
-            <componentInstanceProperties>
-                <name>richTextValue</name>
-                <value
-          >&lt;p&gt;Use this HTML Editor to add your own markup.&lt;/p&gt;</value>
-            </componentInstanceProperties>
-            <componentName>forceCommunity:htmlBlock</componentName>
-            <identifier>forceCommunity_htmlBlock8</identifier>
-        </componentInstance>
-
+            <componentInstance>
+                <componentName>sfGpsDsAuVic2HeroHeaderComm</componentName>
+                <identifier>sfGpsDsAuVic2HeroHeaderComm</identifier>
+                <componentInstanceProperties>
+                    <name>behindNav</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+            </componentInstance>
         </itemInstances>
         <name>56ba4e9c-34c6-4159-90ba-abdc1bccd718</name>
         <prependable>enabled</prependable>
@@ -93,13 +91,13 @@
         <appendable>enabled</appendable>
         <itemInstances>
             <componentInstance>
+                <componentName>sfGpsDsAuVic2ContentComm</componentName>
+                <identifier>sfGpsDsAuVic2ContentComm</identifier>
                 <componentInstanceProperties>
-                    <name>richTextValue</name>
+                    <name>markup</name>
                     <value
           >&lt;p&gt;Use this HTML Editor to add your own markup.&lt;/p&gt;</value>
                 </componentInstanceProperties>
-                <componentName>forceCommunity:htmlBlock</componentName>
-                <identifier>forceCommunity_htmlBlock9</identifier>
             </componentInstance>
         </itemInstances>
         <name>718b010f-49ce-437f-aaa9-bbf4e17ac36d</name>

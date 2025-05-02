@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from "lwc";
-import { computeClass } from "c/sfGpsDsHelpersOs";
+import { computeClass, isArray, isString } from "c/sfGpsDsHelpersOs";
 import OmniscriptPubSub from "omnistudio/pubsub";
 import OmniscriptSalesforceUtils from "omnistudio/salesforceUtils";
 
@@ -44,9 +44,9 @@ export default class SfGpsDsFrGovSelect extends LightningElement {
           case "string":
             if (val.indexOf("]") !== -1) {
               let parsedValue = JSON.parse(val);
-              if (Array.isArray(parsedValue)) {
+              if (isArray(parsedValue)) {
                 parsedValue.map((item) => {
-                  return typeof item === "string" ? item : String(item);
+                  return isString(item) ? item : String(item);
                 });
               } else {
                 return parsedValue;
@@ -62,7 +62,8 @@ export default class SfGpsDsFrGovSelect extends LightningElement {
           default:
             return null;
         }
-      } catch (exc) {
+        // eslint-disable-next-line no-unused-vars
+      } catch (e) {
         return null;
       }
     };
@@ -75,9 +76,9 @@ export default class SfGpsDsFrGovSelect extends LightningElement {
       ) {
         this._value = t(value);
       } else {
-        if (Array.isArray(value)) {
-          this._value = value.map((e) => {
-            return typeof e === "string" ? e : String(e);
+        if (isArray(value)) {
+          this._value = value.map((item) => {
+            return isString(item) ? item : String(item);
           });
         } else {
           this._value = [...value];
@@ -110,14 +111,15 @@ export default class SfGpsDsFrGovSelect extends LightningElement {
     const safeParse = (val) => {
       try {
         return JSON.parse(val);
-      } catch (exc) {
+        // eslint-disable-next-line no-unused-vars
+      } catch (e) {
         return [];
       }
     };
 
     this._options =
       options && options.length
-        ? typeof options === "string"
+        ? isString(options)
           ? safeParse(options)
           : options
         : [];
@@ -173,11 +175,11 @@ export default class SfGpsDsFrGovSelect extends LightningElement {
   /* computed */
 
   get computedFormGroupClassName() {
-    return computeClass({
+    return {
       "fr-select-group": true,
       "fr-select-group--disabled": this.disabled || this.readOnly,
       "fr-select-group--error": this.isError
-    });
+    };
   }
 
   get computedDisabled() {
@@ -214,11 +216,11 @@ export default class SfGpsDsFrGovSelect extends LightningElement {
     let sortedOptions = this._options
       .sort((a, b) => {
         const valA =
-          this.sortField && typeof this.sortField === "string"
+          this.sortField && isString(this.sortField)
             ? a[this.sortField]
             : a.label;
         const valB =
-          this.sortField && typeof this.sortField === "string"
+          this.sortField && isString(this.sortField)
             ? b[this.sortField]
             : b.label;
 

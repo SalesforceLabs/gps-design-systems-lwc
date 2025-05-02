@@ -1,9 +1,12 @@
-import { api, track } from "lwc";
+import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
 import mdEngine from "c/sfGpsDsMarkdown";
 import { replaceInnerHtml } from "c/sfGpsDsHelpers";
 
-export default class SfGpsDsAuNswDialogComm extends SfGpsDsLwc {
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuNswDialogComm";
+
+export default class extends SfGpsDsLwc {
   @api title;
   @api primaryButtonText;
   @api secondaryButtonText;
@@ -11,30 +14,42 @@ export default class SfGpsDsAuNswDialogComm extends SfGpsDsLwc {
   @api isDismissible = false;
   @api className;
 
-  @track _isOpen = false;
+  _isOpen = false;
 
-  /*
-   * content
-   */
+  /* api: content */
 
-  _content;
   _contentHtml;
+  _contentOriginal;
 
-  @api get content() {
-    return this._content;
+  @api
+  get content() {
+    return this._contentOriginal;
   }
 
   set content(markdown) {
-    this._content = markdown;
     try {
+      this._contentOriginal = markdown;
       this._contentHtml = markdown ? mdEngine.renderEscaped(markdown) : "";
     } catch (e) {
       this.addError("IN-MD", "Issue when parsing Content markdown");
+      if (DEBUG) console.debug(CLASS_NAME, "set content", e);
     }
   }
 
+  /* computed */
+
   get computedButtonLabel() {
     return `Open ${this.title}`;
+  }
+
+  /* event management */
+
+  handleClick() {
+    this._isOpen = true;
+  }
+
+  handleDismissed() {
+    this._isOpen = false;
   }
 
   /* lifecycle */
@@ -45,18 +60,8 @@ export default class SfGpsDsAuNswDialogComm extends SfGpsDsLwc {
   }
 
   renderedCallback() {
-    if (this.content) {
+    if (this._contentOriginal) {
       replaceInnerHtml(this.refs.markdown, this._contentHtml);
     }
-  }
-
-  /* events */
-
-  handleClick() {
-    this._isOpen = true;
-  }
-
-  handleDismissed() {
-    this._isOpen = false;
   }
 }

@@ -9,16 +9,20 @@ import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
 import mdEngine from "c/sfGpsDsMarkdown";
 
-export default class SfGpsDsAuVic2AccordionComm extends SfGpsDsLwc {
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuVic2AccordionComm";
+
+export default class extends SfGpsDsLwc {
   @api numbered;
   @api className;
 
-  /* api: content */
+  /* api: items */
 
+  _items = [];
   _itemsOriginal;
-  computedH1s = [];
 
-  @api get items() {
+  @api
+  get items() {
     return this._itemsOriginal;
   }
 
@@ -26,12 +30,16 @@ export default class SfGpsDsAuVic2AccordionComm extends SfGpsDsLwc {
     this._itemsOriginal = markdown;
 
     try {
-      let h1s = mdEngine.extractH1s(markdown.replaceAll("\\n", "\n"));
-      this.computedH1s = h1s.map((h1) => ({ ...h1, active: false }));
+      this._items = mdEngine
+        .extractH1s(markdown.replaceAll("\\n", "\n"))
+        .map((h1) => ({ ...h1, active: false }));
     } catch (e) {
       this.addError("CO-MD", "Issue when parsing Content markdown");
+      if (DEBUG) console.debug(CLASS_NAME, "set items", e);
     }
   }
+
+  /* lifecycle */
 
   connectedCallback() {
     super.connectedCallback();

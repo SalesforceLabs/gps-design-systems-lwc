@@ -7,7 +7,7 @@ export default class extends LightningElement {
   _indexOriginal;
   _index;
 
-  @api 
+  @api
   get index() {
     return this._indexOriginal;
   }
@@ -26,12 +26,13 @@ export default class extends LightningElement {
   }
 
   handleToggle() {
-    this.dispatchEvent(new CustomEvent("toggle", {
-      detail: {
-        index: this._index,
-        active: !this.active
-      }
-    }));
+    this.dispatchEvent(
+      new CustomEvent("toggle", {
+        detail: {
+          index: this._index,
+          active: !this.active
+        }
+      })
+    );
   }
-
 }

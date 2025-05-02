@@ -2,6 +2,8 @@ import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
 import mdEngine from "c/sfGpsDsMarkdown";
 
+const LINKS_DEFAULT = [];
+
 /**
  * @slot Intro
  * @slot Content
@@ -13,20 +15,21 @@ export default class extends SfGpsDsLwc {
   /* api: links */
 
   _linksOriginal;
-  _links = [];
+  _links = LINKS_DEFAULT;
 
-  @api get links() {
+  @api
+  get links() {
     return this._linksOriginal;
   }
 
   set links(markdown) {
-    this._linksOriginal = markdown;
-
     try {
+      this._linksOriginal = markdown;
       this._links = mdEngine.extractLinks(markdown);
+      // eslint-disable-next-line no-unused-vars
     } catch (e) {
       this.addError("LI-MD", "Issue when parsing Links markdown");
-      this._links = [];
+      this._links = LINKS_DEFAULT;
     }
   }
 

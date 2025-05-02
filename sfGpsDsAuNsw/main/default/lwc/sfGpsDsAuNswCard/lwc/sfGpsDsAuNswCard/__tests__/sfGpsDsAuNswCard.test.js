@@ -1,4 +1,3 @@
-/* eslint-disable @lwc/lwc/no-inner-html */
 import { createElement } from "lwc";
 import SfGpsDsAuNswCard from "c/sfGpsDsAuNswCard";
 
@@ -30,8 +29,10 @@ describe("c-sf-gps-ds-au-nsw-card", () => {
       is: SfGpsDsAuNswCard
     });
 
+    const headline = "Headline";
+
     element.cstyle = "light";
-    element.headline = "Headline";
+    element.headline = headline;
 
     document.body.appendChild(element);
 
@@ -40,22 +41,23 @@ describe("c-sf-gps-ds-au-nsw-card", () => {
     expect(div.className).not.toContain("--dark");
     expect(div.className).toContain("--light");
     expect(div.className).toContain("--headline");
+
+    let title = element.querySelector(".nsw-card__title");
+    expect(title.textContent).toBe(headline);
   });
 
-  /* TODO: find out why this is hanging -- Commented out top level // it("is accessible", async () => { */
+  it("is accessible", async () => {
+    const element = createElement(tag, {
+      is: SfGpsDsAuNswCard
+    });
 
-  //   const element = createElement(tag, {
-  //     is: SfGpsDsAuNswCard
-  //   });
+    element.cstyle = "light";
+    element.headline = "Headline";
+    element.image = "./someimage";
+    element.imageAlt = "Alt text";
 
-  //   element.cstyle = "light";
-  //   element.headline = "Headline";
-  //   element.image =
-  //     "./someimage";
-  //   element.imageAlt = "Alt text";
+    document.body.appendChild(element);
 
-  //   document.body.appendChild(element);
-
-  //   await expect(element).toBeAccessible();
-  // });
+    await expect(element).toBeAccessible();
+  });
 });

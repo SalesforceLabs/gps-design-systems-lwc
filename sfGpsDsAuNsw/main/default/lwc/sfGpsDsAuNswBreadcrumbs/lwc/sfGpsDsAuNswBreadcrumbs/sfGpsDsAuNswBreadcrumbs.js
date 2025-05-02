@@ -5,21 +5,50 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { LightningElement, api } from "lwc";
-import { computeClass } from "c/sfGpsDsHelpers";
+import { LightningElement, api, track } from "lwc";
+import { isArray } from "c/sfGpsDsHelpers";
 
-export default class SfGpsDsAuNswBreadcrumbs extends LightningElement {
+export default class extends LightningElement {
   static renderMode = "light";
 
   @api label = "breadcrumbs";
+  @api items = [];
   @api containerClassName = "nsw-p-bottom-xs nsw-m-bottom-sm";
   @api className = "";
-  @api items = [];
+
+  @track _showMore = false;
+  _moreToggle = "more-toggle";
+
+  /* computed */
 
   get computedClassName() {
-    return computeClass({
+    return {
       "nsw-breadcrumbs": true,
       [this.className]: this.className
-    });
+    };
+  }
+
+  get computedOlClassName() {
+    return {
+      "nsw-breadcrumbs__show-all": this._showMore
+    };
+  }
+
+  get decoratedItems() {
+    if (!isArray(this.items)) {
+      return [];
+    }
+
+    const length = this.items.length;
+    return this.items.map((item, index) => ({
+      ...item,
+      isSecond: index === 1 && length > 3
+    }));
+  }
+
+  /* event management */
+
+  handleMoreToggle() {
+    this._showMore = true;
   }
 }

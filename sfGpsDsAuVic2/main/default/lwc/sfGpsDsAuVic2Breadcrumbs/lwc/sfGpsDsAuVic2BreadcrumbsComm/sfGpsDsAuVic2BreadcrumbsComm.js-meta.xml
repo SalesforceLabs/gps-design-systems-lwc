@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-  <apiVersion>60.0</apiVersion>
+  <apiVersion>62.0</apiVersion>
   <isExposed>true</isExposed>
   <masterLabel>VIC2 DS Breadcrumbs</masterLabel>
   <targets>
@@ -15,6 +15,31 @@
         label="Items"
         description="Links to parent and current pages in Markdown format."
         default="[Home](#)[Parent](#)[Current page]()"
+      />
+      <property
+        name="besideQuickExit"
+        type="Boolean"
+        label="Beside Quick Exit"
+        default="false"
+      />
+      <property
+        name="collapse"
+        type="Boolean"
+        label="Collapse"
+        default="false"
+      />
+      <property
+        name="displayBeforeCollapse"
+        type="Integer"
+        label="Display before collapse"
+        default="3"
+      />
+      <property name="currentDir" type="String" label="Current direction" />
+      <property
+        name="currentClassName"
+        type="String"
+        label="Current item’s class name"
+        description="Additional CSS class to be applied to the current item."
       />
       <property
         name="className"

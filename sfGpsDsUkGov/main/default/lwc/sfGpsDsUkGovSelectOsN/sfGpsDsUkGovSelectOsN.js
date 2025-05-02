@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from "lwc";
-import { computeClass } from "c/sfGpsDsHelpersOs";
+import { computeClass, isArray, isString } from "c/sfGpsDsHelpersOs";
 import OmniscriptPubSub from "omnistudio/pubsub";
 import OmniscriptSalesforceUtils from "omnistudio/salesforceUtils";
 
@@ -7,7 +7,7 @@ const I18N = {};
 const NONE = "none";
 const INPUT_SELECTOR = "[data-sfgpsds-input]";
 
-export default class SfGpsDsUkGovSelect extends LightningElement {
+export default class extends LightningElement {
   @api label;
   @api name;
   @api required;
@@ -44,9 +44,9 @@ export default class SfGpsDsUkGovSelect extends LightningElement {
           case "string":
             if (val.indexOf("]") !== -1) {
               let parsedValue = JSON.parse(val);
-              if (Array.isArray(parsedValue)) {
+              if (isArray(parsedValue)) {
                 parsedValue.map((item) => {
-                  return typeof item === "string" ? item : String(item);
+                  return isString(item) ? item : String(item);
                 });
               } else {
                 return parsedValue;
@@ -62,7 +62,8 @@ export default class SfGpsDsUkGovSelect extends LightningElement {
           default:
             return null;
         }
-      } catch (exc) {
+        // eslint-disable-next-line no-unused-vars
+      } catch (e) {
         return null;
       }
     };
@@ -75,9 +76,9 @@ export default class SfGpsDsUkGovSelect extends LightningElement {
       ) {
         this._value = t(value);
       } else {
-        if (Array.isArray(value)) {
-          this._value = value.map((e) => {
-            return typeof e === "string" ? e : String(e);
+        if (isArray(value)) {
+          this._value = value.map((item) => {
+            return isString(item) ? item : String(item);
           });
         } else {
           this._value = [...value];
@@ -110,14 +111,15 @@ export default class SfGpsDsUkGovSelect extends LightningElement {
     const safeParse = (val) => {
       try {
         return JSON.parse(val);
-      } catch (exc) {
+        // eslint-disable-next-line no-unused-vars
+      } catch (e) {
         return [];
       }
     };
 
     this._options =
       options && options.length
-        ? typeof options === "string"
+        ? isString(options)
           ? safeParse(options)
           : options
         : [];
@@ -173,17 +175,17 @@ export default class SfGpsDsUkGovSelect extends LightningElement {
   /* computed */
 
   get computedFormGroupClassName() {
-    return computeClass({
+    return {
       "govuk-form-group": true,
       "govuk-form-group--error": this.isError
-    });
+    };
   }
 
   get computedSelectClassName() {
-    return computeClass({
+    return {
       "govuk-select": true,
       "govuk-select--error": this.isError
-    });
+    };
   }
 
   get computedDisabled() {
@@ -305,7 +307,8 @@ export default class SfGpsDsUkGovSelect extends LightningElement {
     this.setValidity(true);
   }
 
-  @api get validationMessage() {
+  @api
+  get validationMessage() {
     return this.isError ? this.errorMessage : "";
   }
 

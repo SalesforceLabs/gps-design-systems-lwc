@@ -11,97 +11,13 @@
 
 import { track } from "lwc";
 import OmniscriptStep from "c/sfGpsDsFormStepOsN";
-import { computeClass } from "c/sfGpsDsHelpersOs";
 import tmpl from "./sfGpsDsUkGovFormStepOsN.html";
 
 const DEBUG = false;
 const CLASS_NAME = "SfGpsDsUkGovFormStepOsN";
 
 export default class SfGpsDsUkGovFormStepOsN extends OmniscriptStep {
-  render() {
-    return tmpl;
-  }
-
-  handleBack(e) {
-    e.preventDefault(); // avoid default behaviour with the href on anchor
-    super.handleBack(e);
-  }
-
-  handleNext(e) {
-    if (DEBUG) console.log(CLASS_NAME, "handleNext");
-
-    /* Prepare snapshot captures errors so that they can be kept until the next time the user does next */
-    this.reportValidity();
-    this.prepareSnapshot();
-
-    super.handleNext(e);
-  }
-
-  handleErrorClick(e) {
-    e.preventDefault();
-    this.focusInvalidInput(e.currentTarget.dataset.errorkey);
-  }
-
-  getCurrentMessages() {
-    if (DEBUG) console.log(CLASS_NAME, "> getCurrentMessages");
-
-    let errorMessages = [];
-
-    Object.keys(this.invalidElements).forEach((key) => {
-      const element = this.invalidElements[key];
-      const hasCustomValidation =
-        element.sfGpsDsHasCustomValidation &&
-        element.sfGpsDsHasCustomValidation();
-
-      if (DEBUG)
-        console.log(
-          CLASS_NAME,
-          "getCurrentMessages",
-          "Element with error",
-          "key: " + key,
-          "vm: " + element.validationMessage,
-          "has func sfGpsDsHasCustomValidation: " +
-            element.sfGpsDsHasCustomValidation !=
-            null,
-          hasCustomValidation
-        );
-
-      if (element.validationMessage) {
-        errorMessages.push({
-          key,
-          href: "#error-" + key,
-          message: element.validationMessage,
-          custom: hasCustomValidation
-        });
-      }
-    });
-
-    if (DEBUG)
-      console.log(
-        CLASS_NAME,
-        "< getCurrentMessages",
-        JSON.stringify(errorMessages, null, 2)
-      );
-    return errorMessages;
-  }
-
-  @track _sfGpsDsErrorSnapshot = [];
-
-  prepareSnapshot() {
-    this._sfGpsDsErrorSnapshot = this.getCurrentMessages()
-      .filter((item) => item.custom === false)
-      .map((item) => ({ ...item }));
-    if (DEBUG)
-      console.log(
-        CLASS_NAME,
-        "prepareSnapshot",
-        JSON.stringify(this._sfGpsDsErrorSnapshot, null, 2)
-      );
-  }
-
-  clearSnapshot() {
-    this._sfGpsDsErrorSnapshot = [];
-  }
+  /* computed */
 
   get sfGpsDsErrorMessages() {
     /**
@@ -154,7 +70,7 @@ export default class SfGpsDsUkGovFormStepOsN extends OmniscriptStep {
     let ls = this._propSetMap.labelSize;
     let h = this._propSetMap.isHeading;
 
-    return computeClass({
+    return {
       "govuk-heading-xl":
         ls === "xl" ||
         ls === "x-large" ||
@@ -164,26 +80,26 @@ export default class SfGpsDsUkGovFormStepOsN extends OmniscriptStep {
       "govuk-heading-m":
         ls === "m" || ls === "medium" || (ls == null && (h === 3 || h === "3")),
       "govuk-heading-s": ls === "s" || ls === "small"
-    });
+    };
   }
 
   get computedLabelClassName() {
     let ls = this._propSetMap.labelSize;
 
-    return computeClass({
+    return {
       "govuk-label": true,
       "govuk-label--xl": ls === "xl" || ls === "x-large",
       "govuk-label--l": ls === "l" || ls === "large",
       "govuk-label--m": ls === "m" || ls === "medium",
       "govuk-label--s": ls === "s" || ls === "small"
-    });
+    };
   }
 
   get computedCaptionClassName() {
     let ls = this._propSetMap.captionSize || this._propSetMap.labelSize;
     let h = this._propSetMap.isHeading;
 
-    return computeClass({
+    return {
       "govuk-caption--xl":
         ls === "xl" ||
         ls === "x-large" ||
@@ -193,6 +109,96 @@ export default class SfGpsDsUkGovFormStepOsN extends OmniscriptStep {
       "govuk-caption--m":
         ls === "m" || ls === "medium" || (ls == null && (h === 3 || h === "3")),
       "govuk-caption--s": ls === "s" || ls === "small"
+    };
+  }
+
+  /* methods */
+
+  getCurrentMessages() {
+    if (DEBUG) console.log(CLASS_NAME, "> getCurrentMessages");
+
+    let errorMessages = [];
+
+    Object.keys(this.invalidElements).forEach((key) => {
+      const element = this.invalidElements[key];
+      const hasCustomValidation =
+        element.sfGpsDsHasCustomValidation &&
+        element.sfGpsDsHasCustomValidation();
+
+      if (DEBUG)
+        console.log(
+          CLASS_NAME,
+          "getCurrentMessages",
+          "Element with error",
+          "key: " + key,
+          "vm: " + element.validationMessage,
+          "has func sfGpsDsHasCustomValidation: " +
+            (element.sfGpsDsHasCustomValidation !== null),
+          hasCustomValidation
+        );
+
+      if (element.validationMessage) {
+        errorMessages.push({
+          key,
+          href: "#error-" + key,
+          message: element.validationMessage,
+          custom: hasCustomValidation
+        });
+      }
     });
+
+    if (DEBUG)
+      console.log(
+        CLASS_NAME,
+        "< getCurrentMessages",
+        JSON.stringify(errorMessages, null, 2)
+      );
+    return errorMessages;
+  }
+
+  @track _sfGpsDsErrorSnapshot = [];
+
+  prepareSnapshot() {
+    this._sfGpsDsErrorSnapshot = this.getCurrentMessages()
+      .filter((item) => item.custom === false)
+      .map((item) => ({ ...item }));
+    if (DEBUG)
+      console.log(
+        CLASS_NAME,
+        "prepareSnapshot",
+        JSON.stringify(this._sfGpsDsErrorSnapshot, null, 2)
+      );
+  }
+
+  clearSnapshot() {
+    this._sfGpsDsErrorSnapshot = [];
+  }
+
+  /* event management */
+
+  handleBack(e) {
+    e.preventDefault(); // avoid default behaviour with the href on anchor
+    super.handleBack(e);
+  }
+
+  handleNext(e) {
+    if (DEBUG) console.log(CLASS_NAME, "handleNext");
+
+    /* Prepare snapshot captures errors so that they can be kept until the next time the user does next */
+    this.reportValidity();
+    this.prepareSnapshot();
+
+    super.handleNext(e);
+  }
+
+  handleErrorClick(e) {
+    e.preventDefault();
+    this.focusInvalidInput(e.currentTarget.dataset.errorkey);
+  }
+
+  /* lifecycle */
+
+  render() {
+    return tmpl;
   }
 }

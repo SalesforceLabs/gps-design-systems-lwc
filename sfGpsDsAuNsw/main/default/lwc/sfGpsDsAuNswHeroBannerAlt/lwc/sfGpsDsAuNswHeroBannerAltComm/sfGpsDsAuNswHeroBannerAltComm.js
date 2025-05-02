@@ -1,59 +1,58 @@
-import { api, track } from "lwc";
+import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
 import mdEngine from "c/sfGpsDsMarkdown";
 import { replaceInnerHtml } from "c/sfGpsDsHelpers";
 
-export default class SfGpsDsAuNswHeroBannerAltComm extends SfGpsDsLwc {
-  // ---- titleLink: String in Markdown format
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuNswHeroBannerAltComm";
 
-  _titleLink;
-  @track _titleLabel;
-  @track _titleUrl;
+export default class extends SfGpsDsLwc {
+  @api imageSrc;
+  @api imageAlt;
+  @api className;
 
-  @api set titleLink(markdown) {
-    this._titleLink = markdown;
+  /* api: titleLink: String in Markdown format */
 
+  _titleLabel;
+  _titleUrl;
+  _titleLinkOriginal;
+
+  @api
+  get titleLink() {
+    return this._titleLinkOriginal;
+  }
+
+  set titleLink(markdown) {
     try {
+      this._titleLinkOriginal = markdown;
       const { url, text } = mdEngine.extractFirstLink(markdown);
       this._titleUrl = url;
       this._titleLabel = text;
     } catch (e) {
       this.addError("TL-MD", "Issue when parsing titleLink markdown");
+      if (DEBUG) console.debug(CLASS_NAME, "set titleLink", e);
     }
   }
 
-  get titleLink() {
-    return this._titleLink;
+  /* api: content, String in Markdown format */
+
+  _contentHtml;
+  _contentOriginal;
+
+  @api
+  get content() {
+    return this._contentOriginal;
   }
 
-  // ---- imageSrc: String
-  // ---- imageAlt: String
-
-  @api imageSrc;
-  @api imageAlt;
-
-  // ---- content: String in Markdown format
-
-  _content;
-  _contentHtml;
-
-  @api set content(markdown) {
-    this._content = markdown;
-
+  set content(markdown) {
     try {
+      this._contentOriginal = markdown;
       this._contentHtml = mdEngine.renderEscaped(markdown);
     } catch (e) {
       this.addError("CO-MD", "Issue when parsing Content markdown");
+      if (DEBUG) console.debug(CLASS_NAME, "set content", e);
     }
   }
-
-  get content() {
-    return this._content;
-  }
-
-  // ---- className: String
-
-  @api className;
 
   /* lifecycle */
 
@@ -63,16 +62,15 @@ export default class SfGpsDsAuNswHeroBannerAltComm extends SfGpsDsLwc {
   }
 
   renderedCallback() {
-    if (this.content) {
+    if (this._contentOriginal) {
       /*
        * We have to add an empty span if there is a title to trigger the appropriate css for *+p and similar
        * as the react component would have one for the title in the same scope,
        * but here our containment hierarchy is a bit different.
        */
 
-      let span = this._titleLabel ? `<span></span>` : "";
-      let markup = (this._titleLabel ? span : "") + (this._contentHtml || "");
-
+      const markup =
+        (this._titleLabel ? "<span></span>" : "") + (this._contentHtml || "");
       replaceInnerHtml(this.refs.content, markup);
     }
   }

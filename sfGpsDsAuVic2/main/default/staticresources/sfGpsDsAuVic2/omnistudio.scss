@@ -1,0 +1,46 @@
+.omniscript-sfl-actions,
+.omniscript-button-position,
+.omniscript-btn-next,
+.omniscript-btn-previous,
+.omniscript-btn-save-for-later {
+  display: none !important;
+}
+
+.omniscript-article.slds-card {
+  border: none;
+  webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.slds-omniscript_stepform {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.omniscript-side-content {
+  margin-top: 0;
+}
+
+.omniscript-body {
+  padding: 0 !important;
+  border: 0 !important;
+  margin-top: 0;
+
+  &[data-stepborder=left] {
+    padding-left: var(--rpl-sp-6) !important;
+  }
+
+  &[data-stepborder=right] {
+    padding-right: var(--rpl-sp-6) !important;
+  }
+}
+
+/* inline-block for visible omnistudio form elements */
+.sfgpsdsauvic2-os-show {
+  display: inline-block;
+}
+
+/* no display for non-visible omnistudio form elements */
+.sfgpsdsauvic2-os-hide {
+  display: none;
+}

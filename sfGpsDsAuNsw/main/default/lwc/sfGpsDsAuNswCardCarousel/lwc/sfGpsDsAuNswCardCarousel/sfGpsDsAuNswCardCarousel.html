@@ -1,3 +1,4 @@
+<!-- sldsValidatorIgnore -->
 <template>
   <div class="nsw-carousel-container">
     <div
@@ -14,6 +15,7 @@
       <div lwc:ref="wrapper" class="nsw-carousel__wrapper js-carousel__wrapper">
         <ol
           lwc:ref="list"
+          id="nsw-carousel__list"
           class={computedListClassName}
           style={computedListStyle}
           ontransitionend={handleListTransitionEnd}

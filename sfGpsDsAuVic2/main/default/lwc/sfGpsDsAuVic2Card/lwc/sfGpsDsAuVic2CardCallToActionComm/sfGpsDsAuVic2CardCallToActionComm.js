@@ -7,10 +7,13 @@ const TITLE_DEFAULT = { text: "Call to Action", url: "#" };
 const CTA_TEXT_DEFAULT = "Read more";
 const VARIANT_DEFAULT = "filled";
 
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuVic2CardCallToActionComm";
+
 /**
  * @slot Content
  */
-export default class SfGpsDsAuVic2CardCallToActionComm extends SfGpsDsLwc {
+export default class extends SfGpsDsLwc {
   @api image;
   @api variant = VARIANT_DEFAULT;
   @api ctaText = CTA_TEXT_DEFAULT;
@@ -18,40 +21,42 @@ export default class SfGpsDsAuVic2CardCallToActionComm extends SfGpsDsLwc {
 
   /* api: title, string in link markdown format */
 
-  _titleOriginal;
   _title = TITLE_DEFAULT;
+  _titleOriginal = JSON.stringify(TITLE_DEFAULT);
 
-  @api get title() {
+  @api
+  get title() {
     return this._titleOriginal;
   }
 
   set title(markdown) {
-    this._titleOriginal = markdown;
-
     try {
+      this._titleOriginal = markdown;
       this._title = markdown ? mdEngine.extractFirstLink(markdown) : null;
     } catch (e) {
       this.addError("HL-MD", "Issue when parsing Name markdown");
       this._title = TITLE_DEFAULT;
+      if (DEBUG) console.debug(CLASS_NAME, "set title", e);
     }
   }
 
   /* api: content */
 
-  _contentOriginal;
   _contentHtml;
+  _contentOriginal;
 
-  @api get content() {
+  @api
+  get content() {
     return this._contentOriginal;
   }
 
   set content(markdown) {
-    this._contentOriginal = markdown;
-
     try {
+      this._contentOriginal = markdown;
       this._contentHtml = mdEngine.renderEscaped(markdown);
     } catch (e) {
       this.addError("CO-MD", "Issue when parsing Content markdown");
+      if (DEBUG) console.debug(CLASS_NAME, "set content", e);
     }
   }
 

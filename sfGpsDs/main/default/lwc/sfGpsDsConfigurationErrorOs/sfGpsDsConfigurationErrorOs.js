@@ -7,6 +7,6 @@
 
 import { LightningElement, api } from "lwc";
 
-export default class SfGpsDsConfigurationErrorOs extends LightningElement {
+export default class extends LightningElement {
   @api errors;
 }

@@ -3,11 +3,14 @@ import SfGpsDsLwc from "c/sfGpsDsLwc";
 import mdEngine from "c/sfGpsDsMarkdown";
 import { replaceInnerHtml } from "c/sfGpsDsHelpers";
 
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuNswMediaComm";
+
 /**
  * @slot Caption
  */
-export default class SfGpsDsAuNswMediaComm extends SfGpsDsLwc {
-  @api cstyle = "none";
+export default class extends SfGpsDsLwc {
+  @api cstyle = "default";
   @api image;
   @api imageAlt;
   @api video;
@@ -15,21 +18,20 @@ export default class SfGpsDsAuNswMediaComm extends SfGpsDsLwc {
   @api position;
   @api className;
 
-  /*
-   * caption
-   */
+  /* api: caption */
 
-  _captionOriginal;
   _captionHtml;
+  _captionOriginal;
 
-  @api get caption() {
+  @api
+  get caption() {
     return this._captionOriginal;
   }
 
   set caption(markdown) {
-    this._captionOriginal = markdown;
-
     try {
+      this._captionOriginal = markdown;
+
       if (markdown) {
         this._captionHtml = mdEngine.renderEscaped(markdown);
       } else {
@@ -37,6 +39,7 @@ export default class SfGpsDsAuNswMediaComm extends SfGpsDsLwc {
       }
     } catch (e) {
       this.addError("CO-MD", "Issue when parsing Caption markdown");
+      if (DEBUG) console.debug(CLASS_NAME, "set caption", e);
     }
   }
 
@@ -48,7 +51,7 @@ export default class SfGpsDsAuNswMediaComm extends SfGpsDsLwc {
   }
 
   renderedCallback() {
-    if (this.caption) {
+    if (this._captionOriginal) {
       replaceInnerHtml(this.refs.caption, this._captionHtml);
     }
   }

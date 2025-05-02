@@ -1,7 +1,11 @@
 import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
+import { isString, isArray } from "c/sfGpsDsHelpers";
 
-export default class SfGpsDsAuVic2ContactUsComm extends SfGpsDsLwc {
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuVic2ContactUsComm";
+
+export default class extends SfGpsDsLwc {
   @api title;
   @api name;
   @api department;
@@ -10,25 +14,27 @@ export default class SfGpsDsAuVic2ContactUsComm extends SfGpsDsLwc {
 
   /* api: items */
 
-  _itemsOriginal;
   _items;
+  _itemsOriginal;
 
-  @api get items() {
+  @api
+  get items() {
     return this._itemsOriginal;
   }
 
   set items(value) {
     this._itemsOriginal = value;
 
-    if (typeof value === "string") {
+    if (isString(value)) {
       try {
         value = JSON.parse(value);
       } catch (e) {
         this.addError("CU-JP", "Issue when parsing items JSON value");
+        if (DEBUG) console.debug(CLASS_NAME, "set items", e);
       }
     }
 
-    if (Array.isArray(value)) {
+    if (isArray(value)) {
       this._items = value;
     } else {
       this._items = null;

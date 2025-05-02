@@ -1,23 +1,31 @@
 import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
+import { isString, isArray } from "c/sfGpsDsHelpers";
 
-export default class SfGpsDsAuVic2InPageNavigationComm extends SfGpsDsLwc {
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuVic2InPageNavigationComm";
+
+export default class extends SfGpsDsLwc {
   @api title = "On this page";
   @api className;
 
-  _itemsOriginal;
-  _items;
+  /* api: items */
 
-  @api get items() {
+  _items;
+  _itemsOriginal;
+
+  @api
+  get items() {
     return this._itemsOriginal;
   }
 
   set items(value) {
-    if (typeof value === "string") {
+    if (isString(value)) {
       try {
         value = JSON.parse(value);
       } catch (e) {
         this.addError("IT-PA", "JSON for items is malformed.");
+        if (DEBUG) console.debug(CLASS_NAME, "set items", e);
       }
     }
 
@@ -31,9 +39,7 @@ export default class SfGpsDsAuVic2InPageNavigationComm extends SfGpsDsLwc {
       return [];
     }
 
-    //console.log("mapItems", JSON.parse(JSON.stringify(value)));
-
-    if (!Array.isArray(value)) {
+    if (!isArray(value)) {
       this.addError("IT-AR", "JSON for items should be an array.");
       return [];
     }

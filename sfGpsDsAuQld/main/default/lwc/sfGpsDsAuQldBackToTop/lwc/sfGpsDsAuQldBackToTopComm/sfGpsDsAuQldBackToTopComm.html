@@ -1,0 +1,18 @@
+<template>
+  <c-sf-gps-ds-configuration-error
+    lwc:if={_sfGpsDsErrors}
+    errors={_sfGpsDsErrors}
+  >
+  </c-sf-gps-ds-configuration-error>
+
+  <template lwc:else>
+    <a
+      lwc:ref="containerRef"
+      href="#"
+      class={computedClassName}
+      onclick={handleClick}
+    >
+      <span>{label}</span>
+    </a>
+  </template>
+</template>

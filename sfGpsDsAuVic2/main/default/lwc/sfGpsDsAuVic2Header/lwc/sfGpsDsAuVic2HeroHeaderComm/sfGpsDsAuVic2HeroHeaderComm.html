@@ -2,6 +2,7 @@
   <c-sf-gps-ds-au-vic2-header
     class-name={computedClassName}
     full-width={fullWidth}
+    limit-content={computedImageCta}
   >
     <template lwc:if={computedHasBehindSlot}>
       <span slot="behind">
@@ -27,30 +28,30 @@
 
     <template lwc:if={logo}>
       <c-sf-gps-ds-au-vic2-image
-        lwc:if={logo.src}
+        lwc:if={computedLogoHasSrc}
         slot="upper"
-        class-name="rpl-header__logo"
-        image={logo}
+        image={computedLogo}
       >
       </c-sf-gps-ds-au-vic2-image>
     </template>
 
     <h1 slot="title" class={computedTitleClassName}>{title}</h1>
 
-    <p class={computedContentClasses}>
-      <template lwc:if={content}>
+    <template lwc:if={content}>
+      <p class={computedContentClasses}>
         <span lwc:ref="content" lwc:dom="manual"></span>
-      </template>
-      <template lwc:else>
-        <slot name="heroContent" onslotchange={handleSlotChange}></slot>
-      </template>
-    </p>
+      </p>
+    </template>
+    <template lwc:else>
+      <slot name="heroContent" onslotchange={handleSlotChange}></slot>
+    </template>
 
     <template lwc:if={computedShowHeaderActions}>
       <c-sf-gps-ds-au-vic2-header-actions
         slot="lower"
         primary={_primaryAction}
         secondary={decoratedSecondaryAction}
+        variant={computedActionsVariant}
         onitemclick={handleItemClick}
       >
       </c-sf-gps-ds-au-vic2-header-actions>

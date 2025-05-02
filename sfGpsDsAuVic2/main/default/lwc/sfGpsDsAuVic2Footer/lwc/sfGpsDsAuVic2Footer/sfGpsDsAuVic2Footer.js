@@ -1,12 +1,15 @@
 import { LightningElement, api } from "lwc";
-import { computeClass } from "c/sfGpsDsHelpers";
+import { isArray, normaliseString, normaliseBoolean } from "c/sfGpsDsHelpers";
 import { BreakpointsMixin } from "c/sfGpsDsAuVic2BreakpointsMixin";
 import STATIC_RESOURCE from "@salesforce/resourceUrl/sfGpsDsAuVic2";
 
-export default class SfGpsDsAuVic2Footer extends BreakpointsMixin(
-  LightningElement
-) {
-  @api variant = "default"; // default, neutral
+const VARIANT_DEFAULT = "default";
+const VARIANT_NEUTRAL = "neutral";
+const VARIANT_VALUES = [VARIANT_DEFAULT, VARIANT_NEUTRAL];
+
+const DISABLEFOOTERLOGO_DEFAULT = false;
+
+export default class extends BreakpointsMixin(LightningElement) {
   @api nav;
   @api links;
   @api logos;
@@ -15,6 +18,42 @@ export default class SfGpsDsAuVic2Footer extends BreakpointsMixin(
   @api copyright = "© Copyright State Government of Victoria";
   @api className;
 
+  /* api: variant */
+
+  _variant = VARIANT_DEFAULT;
+  _variantOriginal = VARIANT_DEFAULT;
+
+  @api
+  get variant() {
+    return this._variant;
+  }
+
+  set variant(value) {
+    this._variantOriginal = value;
+    this._variant = normaliseString(value, {
+      validValues: VARIANT_VALUES,
+      fallbackValue: VARIANT_DEFAULT
+    });
+  }
+
+  /* api: disableFooterLogo */
+
+  _disableFooterLogo = DISABLEFOOTERLOGO_DEFAULT;
+  _disableFooterLogoOriginal;
+
+  @api
+  get disableFooterLogo() {
+    return this._disableFooterLogoOriginal;
+  }
+
+  set disableFooterLogo(value) {
+    this._disableFooterLogoOriginal = value;
+    this._disableFooterLogo = normaliseBoolean(value, {
+      acceptString: true,
+      fallbackValue: DISABLEFOOTERLOGO_DEFAULT
+    });
+  }
+
   /* computed */
 
   get computedHasOneColumnOrLess() {
@@ -22,13 +61,13 @@ export default class SfGpsDsAuVic2Footer extends BreakpointsMixin(
   }
 
   get computedClassName() {
-    return computeClass({
+    return {
       "rpl-footer": true,
-      "rpl-footer--default": this.variant !== "neutral",
-      "rpl-footer--neutral": this.variant === "neutral",
+      "rpl-footer--default": this.variant === VARIANT_DEFAULT,
+      "rpl-footer--neutral": this.variant === VARIANT_NEUTRAL,
       "rpl-u-screen-only": true,
       [this.className]: this.className
-    });
+    };
   }
 
   get columns() {
@@ -60,12 +99,16 @@ export default class SfGpsDsAuVic2Footer extends BreakpointsMixin(
   }
 
   get decoratedLogos() {
-    return !this.logos || !Array.isArray(this.logos)
+    return !this.logos || !isArray(this.logos)
       ? []
       : this.logos.map((logoLink, index) => ({
           ...logoLink,
           index: `logo-${index + 1}`
         }));
+  }
+
+  get computedShowFooterLogo() {
+    return !this._disableFooterLogo;
   }
 
   /* methods */

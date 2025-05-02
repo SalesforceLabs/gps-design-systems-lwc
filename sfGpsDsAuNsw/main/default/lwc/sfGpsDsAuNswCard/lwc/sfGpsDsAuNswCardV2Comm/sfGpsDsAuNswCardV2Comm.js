@@ -10,11 +10,14 @@ import { parseIso8601, replaceInnerHtml } from "c/sfGpsDsHelpers";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
 import mdEngine from "c/sfGpsDsMarkdown";
 
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuNswCardV2Comm";
+
 /**
  * @slot Card-Copy
  * @slot Card-Footer
  */
-export default class SfGpsDsAuNswCardV2Comm extends SfGpsDsLwc {
+export default class extends SfGpsDsLwc {
   @api cstyle = "white"; // PropTypes.oneOf(['dark', 'light', 'white']),
   @api orientation = "vertical"; // oneOf 'vertical' 'horizontal'
   @api dateStyle = "medium"; // oneOf short medium long full
@@ -22,9 +25,8 @@ export default class SfGpsDsAuNswCardV2Comm extends SfGpsDsLwc {
   @api tag;
   @api image;
   @api imageAlt;
-  @api className;
-
   @api preventDefault = false;
+  @api className;
 
   // This is not exposed in Experience Builder and is used by cardCollectionComm
   @api useMarkup = false;
@@ -32,24 +34,23 @@ export default class SfGpsDsAuNswCardV2Comm extends SfGpsDsLwc {
   @track copySlotted = false;
   @track footerSlotted = false;
 
-  /*
-   * title and link
-   */
+  /* api: title and link, String */
 
   _title; // combined link into headline
-  _originalTitle;
+  _titleOriginal;
 
-  @api get title() {
-    return this._originalTitle;
+  @api
+  get title() {
+    return this._titleOriginal;
   }
 
   set title(markdown) {
-    this._originalTitle = markdown;
-
     try {
+      this._titleOriginal = markdown;
       this._title = markdown ? mdEngine.extractFirstLink(markdown) : null;
     } catch (e) {
       this.addError("HL-MD", "Issue when parsing Title markdown");
+      if (DEBUG) console.debug(CLASS_NAME, "set title", e);
     }
   }
 
@@ -61,41 +62,40 @@ export default class SfGpsDsAuNswCardV2Comm extends SfGpsDsLwc {
     return this._title?.url;
   }
 
-  /*
-   * date
-   */
+  /* api: date */
 
-  @track _date;
-  _originalDate;
+  _date;
+  _dateOriginal;
 
-  @api get date() {
-    return this._originalDate;
+  @api
+  get date() {
+    return this._dateOriginal;
   }
 
-  set date(date) {
-    this._originalDate = date;
+  set date(value) {
+    this._dateOriginal = value;
 
-    if (date instanceof Date) {
-      this._date = date;
+    if (value instanceof Date) {
+      this._date = value;
     } else {
-      this._date = date ? parseIso8601(date.toString()) : null;
+      this._date = value ? parseIso8601(value.toString()) : null;
     }
   }
 
-  /*
-   * copy
-   */
+  /* api: copy */
 
-  _copy;
   _copyHtml;
+  _copyOriginal;
 
-  @api get copy() {
-    return this._copy;
+  @api
+  get copy() {
+    return this._copyOriginal;
   }
 
   set copy(markdown) {
-    this._copy = markdown;
     try {
+      this._copyOriginal = markdown;
+
       if (markdown) {
         this._copyHtml = this.useMarkup
           ? markdown
@@ -105,19 +105,24 @@ export default class SfGpsDsAuNswCardV2Comm extends SfGpsDsLwc {
       }
     } catch (e) {
       this.addError("CO-MD", "Issue when parsing Copy markdown");
+      if (DEBUG) console.debug(CLASS_NAME, "set copy", e);
     }
   }
 
-  _footer;
-  _footerHtml;
+  /* api: footer */
 
-  @api get footer() {
-    return this._footer;
+  _footerHtml;
+  _footerOriginal;
+
+  @api
+  get footer() {
+    return this._footerOriginal;
   }
 
   set footer(markdown) {
-    this._footer = markdown;
     try {
+      this._footerOriginal = markdown;
+
       if (markdown) {
         this._footerHtml = this.useMarkup
           ? markdown
@@ -127,11 +132,12 @@ export default class SfGpsDsAuNswCardV2Comm extends SfGpsDsLwc {
       }
     } catch (e) {
       this.addError("FO-MD", "Issue when parsing Footer markdown");
+      if (DEBUG) console.debug(CLASS_NAME, "set footer", e);
     }
   }
 
   get highlight() {
-    return this.cstyle === "highlight";
+    return this._cstyle === "highlight";
   }
 
   get computedCopyClassName() {
@@ -140,14 +146,6 @@ export default class SfGpsDsAuNswCardV2Comm extends SfGpsDsLwc {
 
   get computedFooterClassName() {
     return this.copySlotted ? "nsw-card__footer" : null;
-  }
-
-  get hasImage() {
-    return this.image;
-  }
-
-  get hasFooter() {
-    return this.footer || this.footerSlotted;
   }
 
   /* methods */
@@ -202,11 +200,11 @@ export default class SfGpsDsAuNswCardV2Comm extends SfGpsDsLwc {
   }
 
   renderedCallback() {
-    if (this.copy) {
+    if (this._copyOriginal) {
       replaceInnerHtml(this.refs.copy, this._copyHtml);
     }
 
-    if (this.footer) {
+    if (this._footerOriginal) {
       replaceInnerHtml(this.refs.footer, this._footerHtml);
     }
   }
