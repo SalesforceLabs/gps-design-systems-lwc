@@ -25,6 +25,32 @@ export default class extends SfGpsDsFormStepOsN {
     );
   }
 
+  get computedHasButtons() {
+    return this.showPrev || this.showNext || this.showSave;
+  }
+
+  /* event management */
+
+  handleSubmit(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  handlePrevious(event) {
+    event.preventDefault();
+    super.handlePrevious(event);
+  }
+
+  handleNext(event) {
+    event.preventDefault();
+    super.handleNext(event);
+  }
+
+  handleSave(event) {
+    event.preventDefault();
+    super.handleSave(event);
+  }
+
   /* lifecycle */
 
   render() {

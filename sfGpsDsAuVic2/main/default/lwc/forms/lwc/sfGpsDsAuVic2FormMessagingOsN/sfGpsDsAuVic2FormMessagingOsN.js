@@ -6,15 +6,17 @@
  */
 
 import SfGpsDsFormMessagingOsN from "c/sfGpsDsFormMessagingOsN";
+import SfGpsDsAuVic2FormElementMixinOsN from "c/sfGpsDsAuVic2FormElementMixinOsN";
 import { omniGetMergedField } from "c/sfGpsDsOmniHelpersOsN";
 import { computeClass, replaceInnerHtml } from "c/sfGpsDsHelpersOs";
 import mdEngine from "c/sfGpsDsMarkdownOs";
 
 import tmpl from "./sfGpsDsAuVic2FormMessagingOsN.html";
 
-const MARKDOWN_SELECTOR = "[data-sfgpsds-markdown]";
-
-export default class extends SfGpsDsFormMessagingOsN {
+export default class extends SfGpsDsAuVic2FormElementMixinOsN(
+  SfGpsDsFormMessagingOsN,
+  false
+) {
   render() {
     return tmpl;
   }
@@ -42,6 +44,7 @@ export default class extends SfGpsDsFormMessagingOsN {
         return this.isCompact
           ? mdEngine.renderEscapedUnpackFirstP(mmt)
           : mdEngine.renderEscaped(mmt);
+        // eslint-disable-next-line no-unused-vars
       } catch (e) {
         return "<p>IN-MD Issue when parsing Text markdown</p>";
       }
@@ -54,13 +57,21 @@ export default class extends SfGpsDsFormMessagingOsN {
     return this.messageText.split("\\n").length <= 2;
   }
 
-  get computedAlertBaseClassName() {
+  get computedClassName() {
+    return {
+      "rpl-form-alert": true,
+      "rpl-form-alert--information": this.isComment,
+      "rpl-form-alert--warning": this.isWarning,
+      "rpl-form-alert--error": this.isRequirement,
+      "rpl-form-alert--success": this.isSuccess
+    };
+  }
+
+  get computedIconName() {
     return computeClass({
-      "rpl-alert-base": true,
-      "rpl-alert-base--color-primary": this.isComment,
-      "rpl-alert-base--color-warning": this.isWarning,
-      "rpl-alert-base--color-danger": this.isRequirement,
-      "rpl-alert-base--color-success": this.isSuccess
+      "icon-information-circle-filled": this.isComment,
+      "icon-exclamation-circle-filled": this.isWarning || this.isRequirement,
+      "icon-check-circle-filled": this.isSuccess
     });
   }
 
@@ -69,13 +80,17 @@ export default class extends SfGpsDsFormMessagingOsN {
   renderedCallback() {
     super.renderedCallback();
 
-    let element;
+    let element = this.refs.markdown;
     let mth = this._messageTextHtml;
 
-    if (mth) {
-      if ((element = this.template.querySelector(MARKDOWN_SELECTOR))) {
-        replaceInnerHtml(element, mth);
-      }
+    if (mth && element) {
+      replaceInnerHtml(element, mth);
+    }
+
+    if (this.messageText) {
+      this.classList.add("rpl-form__outer");
+    } else {
+      this.classList.remove("rpl-form__outer");
     }
   }
 }

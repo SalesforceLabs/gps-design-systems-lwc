@@ -11,18 +11,19 @@ import tmpl from "./sfGpsDsAuVic2DatetimePickerOsN.html";
 import { computeClass } from "c/sfGpsDsHelpersOs";
 
 export default class extends OmnistudioDatetimePicker {
+  get computedAriaDescribedBy() {
+    return computeClass({
+      helper: this.fieldLevelHelp
+    });
+  }
+
+  /* lifecycle */
+
   render() {
     return tmpl;
   }
 
-  get computedFormGroupClassName() {
-    return computeClass({
-      "form-group": true,
-      invalid: this.sfGpsDsIsError,
-      valid: !this.sfGpsDsIsError,
-      required: this.required
-    });
-  }
+  /* validation */
 
   @api setCustomValidation(message) {
     super.setCustomValidation(message);

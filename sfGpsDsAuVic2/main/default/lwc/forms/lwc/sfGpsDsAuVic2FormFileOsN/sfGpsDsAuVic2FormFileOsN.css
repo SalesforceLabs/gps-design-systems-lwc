@@ -17,34 +17,6 @@
   letter-spacing: var(--rpl-type-ls-1);
 }
 
-/*
-.omni-file-input .slds-file-selector__dropzone {
-  border-radius: var(--rpl-border-radius-2);
-  background: var(--rpl-clr-neutral-100);
-  display: block;
-}
-
-.omni-file-input .slds-file-selector__dropzone slot {
-  display: block;
-  padding: var(--rpl-sp-3);
-}
-
-.omni-file-input .slds-button:hover {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.omni-file-input .slds-file-selector__body {
-  display: flex;
-  gap: var(--rpl-sp-3);
-  align-items: center;
-}
-
-.omni-file-input .slds-file-selector__button {
-  font-weight: var(--rpl-type-weight-bold);
-}
-  */
-
 .omni-file-input {
   order: 2;
 }
@@ -55,4 +27,19 @@
 
 .sfgpsds-file-list {
   order: 4;
+}
+
+.omni-file > li > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: var(--rpl-sp-2);
+}
+
+.remove-file-icon {
+  color: var(--rpl-clr-primary);
+}
+
+.remove-file-icon:hover {
+  color: var(--rpl-clr-primary-alt);
 }

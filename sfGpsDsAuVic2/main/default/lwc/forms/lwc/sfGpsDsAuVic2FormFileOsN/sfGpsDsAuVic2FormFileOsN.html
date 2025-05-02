@@ -10,9 +10,12 @@
     </omnistudio-spinner>
   </template>
 
-  <div class={_containerClasses} aria-labelledby="fileUpload">
+  <div
+    class={_containerClasses}
+    aria-labelledby="fileUpload"
+    data-invalid={_showValidation}
+  >
     <fieldset class="rpl-form__fieldset">
-
       <label
         lwc:if={_propSetMap.label}
         id="fileUpload"
@@ -22,15 +25,19 @@
         <span
           lwc:if={_propSetMap.required}
           class="rpl-form-label__required rpl-type-label-small"
-          >({requiredLabel})
-          </span>
+          >({_propSetMap.required})
+        </span>
         <slot name="label"> </slot>
       </label>
-    
-      <div lwc:if={_propSetMap.help} id="helper" class="rpl-content rpl-form-help">
+
+      <div
+        lwc:if={_propSetMap.help}
+        id="helper"
+        class="rpl-content rpl-form-help"
+      >
         {mergedHelpText}
       </div>
-    
+
       <span
         lwc:if={_showValidation}
         class="rpl-form-validation-error rpl-type-p rpl-type-weight-bold"
@@ -38,7 +45,10 @@
         role="alert"
         id="errorMessageBlock"
       >
-        <c-sf-gps-ds-au-vic2-icon-os size="s" name="icon-exclamation-circle-filled">
+        <c-sf-gps-ds-au-vic2-icon-os
+          size="s"
+          name="icon-exclamation-circle-filled"
+        >
         </c-sf-gps-ds-au-vic2-icon-os>
         <span>{errorMessage}</span>
       </span>
@@ -64,44 +74,40 @@
         <span id="upload-status" class="slds-assistive-text">
           {ariaLiveStatusText}
         </span>
-        <div
-          aria-labelledby="upload-status"
-          aria-live={ariaLiveStatus}
-        ></div>
-        <div class="rpl-grid">
-          <ul
-            class="omni-file"
-          >
-            <template for:each={_value} for:item="item" for:index="index">
-              <li key={item.data} class="">
-                <div class="">
-                  <span
-                    class=""
+        <div aria-labelledby="upload-status" aria-live={ariaLiveStatus}></div>
+        <div class="rpl-grid rpl-u-padding-t-2">
+          <ul class="omni-file rpl-col-12">
+            <template
+              for:each={_decoratedValue}
+              for:item="item"
+              for:index="index"
+            >
+              <li key={item.data} class="rpl-type-p">
+                <div>
+                  <c-sf-gps-ds-au-vic2-file-os
+                    name={item.filename}
+                    size={item._sizeText}
+                    extension={item._fileExt}
+                    data-index={index}
+                    data-id={item.data}
+                    ondownload={deleteFile}
                   >
-                    {item.filename}
-                  </span>
-                  <span
-                    class="remove-file-icon"
-                  >
+                  </c-sf-gps-ds-au-vic2-file-os>
+                  <span class="remove-file-icon">
                     <button
-                      class=""
                       title={item.deleteLabel}
                       data-index={index}
                       data-id={item.data}
                       onclick={deleteFile}
                     >
-                      <omnistudio-icon
-                        theme={_theme}
-                        extraclass="slds-button__icon"
-                        iconposition="left"
-                        icon-name="action:delete"
-                        color="brand"
-                        alternative-text={item.deleteLabel}
-                        size="x-small"
+                      <c-sf-gps-ds-au-vic2-icon-os
+                        name="icon-cancel-circle-filled"
+                        size="xs"
+                        title={item.deleteLabel}
                         data-index={index}
                         data-id={item.data}
                       >
-                      </omnistudio-icon>
+                      </c-sf-gps-ds-au-vic2-icon-os>
                     </button>
                   </span>
                 </div>

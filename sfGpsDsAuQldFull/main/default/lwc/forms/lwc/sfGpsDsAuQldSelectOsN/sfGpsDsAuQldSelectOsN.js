@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2024-2025, Emmanuel Schweitzer and salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+
 import { LightningElement, api, track } from "lwc";
 import { isArray } from "c/sfGpsDsHelpersOs";
 import OmniscriptPubSub from "omnistudio/pubsub";
@@ -63,7 +70,8 @@ export default class extends StatusHelperMixin(LightningElement) {
           default:
             return null;
         }
-      } catch (exc) {
+        // eslint-disable-next-line no-unused-vars
+      } catch (e) {
         return null;
       }
     };
@@ -111,7 +119,8 @@ export default class extends StatusHelperMixin(LightningElement) {
     const safeParse = (val) => {
       try {
         return JSON.parse(val);
-      } catch (exc) {
+        // eslint-disable-next-line no-unused-vars
+      } catch (e) {
         return [];
       }
     };

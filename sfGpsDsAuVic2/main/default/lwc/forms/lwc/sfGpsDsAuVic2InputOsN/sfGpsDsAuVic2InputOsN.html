@@ -54,9 +54,8 @@
     data-sfgpsds-input
   >
     <slot slot="label" name="label"> </slot>
+    <slot slot="sublabel" name="sublabel"> </slot>
   </c-sf-gps-ds-au-vic2-time-picker-os-n>
-
-  <!--
   <c-sf-gps-ds-au-vic2-datetime-picker-os-n
     lwc:elseif={isDateTime}
     name={name}
@@ -101,7 +100,6 @@
   >
     <slot slot="label" name="label"> </slot>
   </c-sf-gps-ds-au-vic2-datetime-picker-os-n>
-  -->
   <template lwc:else>
     <label
       lwc:if={labelVisible}
@@ -110,11 +108,13 @@
       data-label="true"
     >
       <span class="rpl-form-label__inner">{label}</span>
-      <span
-        lwc:if={required}
-        class="rpl-form-label__required rpl-type-label-small"
-        >({requiredLabel})</span
-      >
+      <template if:false={_hideRequired}>
+        <span
+          lwc:if={required}
+          class="rpl-form-label__required rpl-type-label-small"
+          >({requiredLabel})</span
+        >
+      </template>
       <slot name="label"> </slot>
     </label>
 
@@ -181,6 +181,14 @@
               </c-sf-gps-ds-au-vic2-icon-os>
             </span>
             <span class="rpl-form-option__label-text rpl-type-p">{label}</span>
+
+            <template if:false={_hideRequired}>
+              <span
+                lwc:if={required}
+                class="rpl-form-label__required rpl-type-label-small"
+                >({requiredLabel})</span
+              >
+            </template>
 
             <slot name="label"></slot>
           </label>

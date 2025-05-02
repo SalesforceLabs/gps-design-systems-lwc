@@ -7,10 +7,17 @@
 
 import { track } from "lwc";
 import SfGpsDsFormFileOsN from "c/sfGpsDsFormFileOsN";
+import SfGpsDsAuVic2FormElementMixinOsN from "c/sfGpsDsAuVic2FormElementMixinOsN";
 import { computeClass } from "c/sfGpsDsHelpersOs";
 import tmpl from "./sfGpsDsAuVic2FormFileOsN.html";
 
-export default class extends SfGpsDsFormFileOsN {
+export default class extends SfGpsDsAuVic2FormElementMixinOsN(
+  SfGpsDsFormFileOsN
+) {
+  @track computedAriaDescribedBy;
+
+  /* computed */
+
   get computedFormGroupClassName() {
     return computeClass({
       "form-group": true,
@@ -20,7 +27,28 @@ export default class extends SfGpsDsFormFileOsN {
     });
   }
 
-  @track computedAriaDescribedBy;
+  get _decoratedValue() {
+    if (this._value == null) return [];
+
+    return this._value.map((item) => ({
+      ...item,
+      _sizeText: this.formatBytes(item.size, 1),
+      _fileExt: item.filename ? item.filename.split(".").pop() : null
+    }));
+  }
+
+  /* methods */
+
+  formatBytes(bytes, decimals = 2) {
+    if (!+bytes) return "0 Bytes";
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ["bytes", "kb", "mb", "gb", "tb", "pb", "eb", "zb", "yb"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+  }
 
   /* lifecycle */
 
@@ -37,15 +65,5 @@ export default class extends SfGpsDsFormFileOsN {
     ]
       .filter((item) => item)
       .join(" ");
-  }
-
-  connectedCallback() {
-    if (super.connectedCallback) {
-      super.connectedCallback();
-    }
-
-    this._readOnlyClass = "sfgpsdsauvic2-read-only";
-    this.classList.add("rpl-form__outer");
-    this.hostElement.style.display = "block";
   }
 }

@@ -4,6 +4,11 @@ const postcss = require("postcss");
 const postcssCustomMedia = require("postcss-custom-media");
 const sass = require("sass");
 const toolbox = require("node-sass-magic-importer/dist/toolbox");
+const config = require("./cssgen.config");
+
+function ignored(dir) {
+  return config.ignoreDirectories?.includes(dir.name);
+}
 
 function genFile(filename) {
   const loadPaths = ["./", "node_modules", "node_modules/@gouvfr/dsfr"];
@@ -39,7 +44,7 @@ function genFile(filename) {
 async function* walk(dir) {
   for await (const d of await fs.opendir(dir)) {
     const entry = path.join(dir, d.name);
-    if (d.isDirectory()) yield* walk(entry);
+    if (d.isDirectory() && !ignored(d)) yield* walk(entry);
     else if (d.isFile() && d.name === ".cssgen.json") yield entry;
   }
 }
@@ -59,11 +64,13 @@ async function main() {
         for (const directory in config) {
           console.log(`Looking at directory ${directory}`);
           let hasStar = directory.endsWith("*");
+          let hasCssExt =
+            directory.endsWith(".css") || directory.endsWith(".css*");
           let file = hasStar ? directory.slice(0, -1) : directory; // scss and css file will be named just like their containing folder
           let fileInDirectory = directory.indexOf("/") >= 0;
 
           const targetDir = fileInDirectory ? dot : dot + "/" + directory;
-          const targetFile = `${targetDir}/${file}.scss`;
+          let targetFile = `${targetDir}/${file}${hasCssExt ? "" : ".scss"}`;
 
           let content = genFile(targetFile).css;
           let genFileExtension = "css";
@@ -75,6 +82,12 @@ async function main() {
               // special case if the object has the extension attribute it's about setting the file extension
               // and not a replacement directive
               genFileExtension = replacement.extension;
+              continue;
+            } else if (replacement.target) {
+              // special case if the object has the extension attribute it's about setting the file extension
+              // and not a replacement directive
+              file = replacement.target;
+              fileInDirectory = true;
               continue;
             }
 
