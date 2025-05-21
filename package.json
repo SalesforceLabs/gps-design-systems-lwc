@@ -58,7 +58,7 @@
     "@govtechsg/sgds": "^2.3.6",
     "@lwc/eslint-plugin-lwc": "^3.0.0",
     "@prettier/plugin-xml": "^3.4.1",
-    "@qhealth-design-system/core": "1.8.5",
+    "@qhealth-design-system/core": "1.14.0",
     "@sa11y/jest": "^7.0.0",
     "@salesforce/eslint-config-lwc": "^4.0.0",
     "@salesforce/eslint-plugin-lightning": "^2.0.0",
