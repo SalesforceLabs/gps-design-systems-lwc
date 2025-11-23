@@ -1,3 +1,7 @@
-const xml = { amp: "&", apos: "'", gt: ">", lt: "<", quot: '"' };
-
-export default xml;
+export default {
+    amp: "&",
+    apos: "'",
+    gt: ">",
+    lt: "<",
+    quot: '"'
+};

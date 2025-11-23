@@ -1,9 +1,11 @@
-import { LightningElement, api } from "lwc";
-
+import { api } from "lwc";
+import SfGpsDsElement from "c/sfGpsDsElement";
 /**
  * @slot pageHeader
  * @slot main
  */
-export default class extends LightningElement {
-  @api contentClassName = "docs-content";
+export default class default_1 extends SfGpsDsElement {
+    // @ts-ignore
+    @api
+    contentClassName = "docs-content";
 }

@@ -1,105 +1,81 @@
-import { LightningElement, api } from "lwc";
-import { normaliseString, normaliseBoolean, uniqueId } from "c/sfGpsDsHelpers";
-
+/*
+ * Copyright (c) 2024-2025, Emmanuel Schweitzer and salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import { api } from "lwc";
+import { uniqueId } from "c/sfGpsDsHelpers";
+import SfGpsDsElement from "c/sfGpsDsElement";
 const BSTYLE_DEFAULT = "dark";
 const BSTYLE_VALUES = {
-  dark: "nsw-button--dark",
-  danger: "nsw-button--danger"
+    dark: "nsw-button--dark",
+    danger: "nsw-button--danger"
 };
-
 const ISDISMISSIBLE_DEFAULT = false;
-
-export default class extends LightningElement {
-  static renderMode = "light";
-
-  @api title;
-  @api primaryButtonText;
-  @api secondaryButtonText;
-  @api isOpen = false;
-  @api className;
-
-  /* api: bstyle */
-
-  _bstyle = BSTYLE_VALUES[BSTYLE_DEFAULT];
-  _bstyleOriginal = BSTYLE_DEFAULT;
-
-  @api
-  get bstyle() {
-    return this._bstylOriginal;
-  }
-
-  set bstyle(value) {
-    this._bstyleOriginal = value;
-    this._bstyle = normaliseString(value, {
-      validValues: BSTYLE_VALUES,
-      fallbackValue: BSTYLE_DEFAULT,
-      returnObjectValue: true
+export default class SfGpsDsAuNswDialog extends SfGpsDsElement {
+    static renderMode = "light";
+    // @ts-ignore
+    @api
+    title = "";
+    // @ts-ignore
+    @api
+    primaryButtonText;
+    // @ts-ignore
+    @api
+    secondaryButtonText;
+    // @ts-ignore
+    @api
+    isOpen = false;
+    // @ts-ignore
+    @api
+    className;
+    // @ts-ignore
+    @api
+    bstyle;
+    _bstyle = this.defineEnumObjectProperty("bstyle", {
+        validValues: BSTYLE_VALUES,
+        defaultValue: BSTYLE_DEFAULT
     });
-  }
-
-  /* api: isDismissible */
-
-  _isDismissible = ISDISMISSIBLE_DEFAULT;
-  _isDismissibleOriginal = ISDISMISSIBLE_DEFAULT;
-
-  @api
-  get isDismissible() {
-    return this._isDismissibleOriginal;
-  }
-
-  set isDismissible(value) {
-    this._isDismissibleOriginal = value;
-    this._isDismissible = normaliseBoolean(value, {
-      acceptString: true,
-      fallbackValue: ISDISMISSIBLE_DEFAULT
+    // @ts-ignore
+    @api
+    isDismissible;
+    _isDismissible = this.defineBooleanProperty("isDismissible", {
+        defaultValue: ISDISMISSIBLE_DEFAULT
     });
-  }
-
-  /* computed */
-
-  get computedClassName() {
-    return {
-      "nsw-dialog": true,
-      "nsw-dialog--single-action": !this.secondaryButtonText,
-      active: this.isOpen,
-      [this.className]: this.className
-    };
-  }
-
-  get computedPrimaryButtonClassName() {
-    return {
-      "nsw-button": true,
-      [this._bstyle]: this._bstyle
-    };
-  }
-
-  _labelledById;
-
-  get computedAriaLabelledById() {
-    if (this._labelledById === undefined) {
-      this._labelledById = uniqueId("sf-gps-ds-au-nsw-dialog");
+    /* computed */
+    get computedClassName() {
+        return {
+            "nsw-dialog": true,
+            "nsw-dialog--single-action": !this.secondaryButtonText,
+            active: this.isOpen,
+            [this.className || ""]: !!this.className
+        };
     }
-
-    return this._labelledById;
-  }
-
-  /* event management */
-
-  handlePrimaryClick(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.dispatchEvent(new CustomEvent("primaryclick"));
-  }
-
-  handleSecondaryClick(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.dispatchEvent(new CustomEvent("secondaryclick"));
-  }
-
-  handleCloseClick(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.dispatchEvent(new CustomEvent("close"));
-  }
+    get computedPrimaryButtonClassName() {
+        return {
+            "nsw-button": true,
+            [this._bstyle.value]: this._bstyle.value
+        };
+    }
+    _labelledById;
+    get computedAriaLabelledById() {
+        if (this._labelledById === undefined) {
+            this._labelledById = uniqueId("sf-gps-ds-au-nsw-dialog");
+        }
+        return this._labelledById;
+    }
+    /* event management */
+    // eslint-disable-next-line no-unused-vars
+    handlePrimaryClick(_event) {
+        this.dispatchEvent(new CustomEvent("primaryclick"));
+    }
+    // eslint-disable-next-line no-unused-vars
+    handleSecondaryClick(_event) {
+        this.dispatchEvent(new CustomEvent("secondaryclick"));
+    }
+    // eslint-disable-next-line no-unused-vars
+    handleCloseClick(_event) {
+        this.dispatchEvent(new CustomEvent("close"));
+    }
 }

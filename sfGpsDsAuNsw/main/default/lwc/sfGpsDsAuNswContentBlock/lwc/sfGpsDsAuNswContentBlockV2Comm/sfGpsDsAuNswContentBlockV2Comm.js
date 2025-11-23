@@ -1,10 +1,9 @@
 /*
- * Copyright (c) 2022, Emmanuel Schweitzer and salesforce.com, inc.
+ * Copyright (c) 2022-2025, Emmanuel Schweitzer and salesforce.com, inc.
  * All rights reserved.
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-
 /*
  * TODO/THOUGHTS:
  *
@@ -17,107 +16,63 @@
  * In the meantime we tweaked the original markup to display a 96px Material icon.
  *
  */
-
 import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
-import mdEngine from "c/sfGpsDsMarkdown";
 import { replaceInnerHtml } from "c/sfGpsDsHelpers";
-
+// eslint-disable-next-line no-unused-vars
 const DEBUG = false;
+// eslint-disable-next-line no-unused-vars
 const CLASS_NAME = "sfGpsDsAuNswContentBlockV2Comm";
-
-export default class extends SfGpsDsLwc {
-  @api title;
-  @api image;
-  @api imageAlt;
-  @api icon;
-  @api className;
-
-  // This is not exposed in Experience Builder and is used by contentBlockCollectionComm
-  @api useMarkup = false;
-
-  /* api: links */
-
-  _links;
-  _linksOriginal;
-
-  @api
-  get links() {
-    return this._linksOriginal;
-  }
-
-  set links(markdown) {
-    this._linksOriginal = markdown;
-
-    try {
-      if (markdown) {
-        this._links = mdEngine.extractLinks(markdown);
-      } else {
-        this._links = null;
-      }
-    } catch (e) {
-      this.addError("LI-MD", "Issue when parsing Links markdown");
-      if (DEBUG) console.debug(CLASS_NAME, "set links", e);
+export default class SfGpsDsAuNswContentBlockV2Comm extends SfGpsDsLwc {
+    // @ts-ignore
+    @api
+    title = "";
+    // @ts-ignore
+    @api
+    image;
+    // @ts-ignore
+    @api
+    imageAlt;
+    // @ts-ignore
+    @api
+    icon;
+    // @ts-ignore
+    @api
+    className;
+    // This is not exposed in Experience Builder and is used by contentBlockCollectionComm
+    // @ts-ignore
+    @api
+    useMarkup = false;
+    // @ts-ignore
+    @api
+    links;
+    _links = this.defineMarkdownLinksProperty("links", {
+        errorCode: "LI-MD",
+        errorText: "Issue when parsing Links markdown"
+    });
+    // @ts-ignore
+    @api
+    copy;
+    _copyHtml = this.defineMarkdownContentProperty("copy", {
+        errorCode: "CO-MD",
+        errorText: "Issue when parsing Copy markdown"
+    });
+    // @ts-ignore
+    @api
+    mainLink;
+    _mainLink = this.defineMarkdownFirstLinkProperty("mainLink", {
+        errorCode: "ML-MD",
+        errorText: "Issue when parsing MainLink markdown"
+    });
+    /* lifecycle */
+    connectedCallback() {
+        super.connectedCallback?.();
+        this.classList.add("nsw-scope");
     }
-  }
-
-  /* copy */
-
-  _copyOriginal;
-  _copyHtml;
-
-  @api
-  get copy() {
-    return this._copyOriginal;
-  }
-
-  set copy(markdown) {
-    this._copyOriginal = markdown;
-
-    try {
-      if (markdown) {
-        this._copyHtml = this.useMarkup
-          ? markdown
-          : mdEngine.renderEscaped(markdown);
-      } else {
-        this._copyHtml = null;
-      }
-    } catch (e) {
-      this.addError("CO-MD", "Issue when parsing Copy markdown");
-      if (DEBUG) console.debug(CLASS_NAME, "set copy", e);
+    renderedCallback() {
+        super.renderedCallback?.();
+        if (this._copyHtml.value && this.refs.markdown) {
+            replaceInnerHtml(this.refs.markdown, this._copyHtml.value);
+        }
     }
-  }
-
-  /* api: mainLink */
-
-  _mainLink;
-  _mainLinkOriginal;
-
-  @api
-  get mainLink() {
-    return this._mainLinkOriginal;
-  }
-
-  set mainLink(markdown) {
-    try {
-      this._mainLinkOriginal = markdown;
-      this._mainLink = markdown ? mdEngine.extractFirstLink(markdown) : null;
-    } catch (e) {
-      this.addError("ML-MD", "Issue when parsing MainLink markdown");
-      if (DEBUG) console.debug(CLASS_NAME, "set mainLink", e);
-    }
-  }
-
-  /* lifecycle */
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.classList.add("nsw-scope");
-  }
-
-  renderedCallback() {
-    if (this._copyOriginal) {
-      replaceInnerHtml(this.refs.markdown, this._copyHtml);
-    }
-  }
 }

@@ -1,16 +1,4 @@
-import {
-  arrow as arrowCore,
-  autoPlacement as autoPlacementCore,
-  detectOverflow as detectOverflowCore,
-  flip as flipCore,
-  hide as hideCore,
-  inline as inlineCore,
-  limitShift as limitShiftCore,
-  offset as offsetCore,
-  shift as shiftCore,
-  size as sizeCore
-} from "./floating-ui-core";
-
+import { arrow as arrowCore, autoPlacement as autoPlacementCore, detectOverflow as detectOverflowCore, flip as flipCore, hide as hideCore, inline as inlineCore, limitShift as limitShiftCore, offset as offsetCore, shift as shiftCore, size as sizeCore } from "./floating-ui-core";
 /**
  * Resolves with an object of overflow side offsets that determine how much the
  * element is overflowing a given clipping boundary on each side.
@@ -20,7 +8,6 @@ import {
  * @see https://floating-ui.com/docs/detectOverflow
  */
 export const detectOverflow = detectOverflowCore;
-
 /**
  * Modifies the placement by translating the floating element along the
  * specified axes.
@@ -29,7 +16,6 @@ export const detectOverflow = detectOverflowCore;
  * @see https://floating-ui.com/docs/offset
  */
 export const offset = offsetCore;
-
 /**
  * Optimizes the visibility of the floating element by choosing the placement
  * that has the most space available automatically, without needing to specify a
@@ -37,14 +23,12 @@ export const offset = offsetCore;
  * @see https://floating-ui.com/docs/autoPlacement
  */
 export const autoPlacement = autoPlacementCore;
-
 /**
  * Optimizes the visibility of the floating element by shifting it in order to
  * keep it in view when it will overflow the clipping boundary.
  * @see https://floating-ui.com/docs/shift
  */
 export const shift = shiftCore;
-
 /**
  * Optimizes the visibility of the floating element by flipping the `placement`
  * in order to keep it in view when the preferred placement(s) will overflow the
@@ -52,7 +36,6 @@ export const shift = shiftCore;
  * @see https://floating-ui.com/docs/flip
  */
 export const flip = flipCore;
-
 /**
  * Provides data that allows you to change the size of the floating element —
  * for instance, prevent it from overflowing the clipping boundary or match the
@@ -60,28 +43,24 @@ export const flip = flipCore;
  * @see https://floating-ui.com/docs/size
  */
 export const size = sizeCore;
-
 /**
  * Provides data to hide the floating element in applicable situations, such as
  * when it is not in the same clipping context as the reference element.
  * @see https://floating-ui.com/docs/hide
  */
 export const hide = hideCore;
-
 /**
  * Provides data to position an inner element of the floating element so that it
  * appears centered to the reference element.
  * @see https://floating-ui.com/docs/arrow
  */
 export const arrow = arrowCore;
-
 /**
  * Provides improved positioning for inline reference elements that can span
  * over multiple lines, such as hyperlinks or range selections.
  * @see https://floating-ui.com/docs/inline
  */
 export const inline = inlineCore;
-
 /**
  * Built-in `limiter` that will stop `shift()` at a certain point.
  */

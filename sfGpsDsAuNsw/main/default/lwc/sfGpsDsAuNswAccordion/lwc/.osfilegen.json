@@ -6,7 +6,8 @@
     },
     "!.js": {
       "target": "!Os.js",
-      "sfGpsDsHelpers": "sfGpsDsHelpersOs"
+      "sfGpsDsHelpers": "sfGpsDsHelpersOs",
+      "sfGpsDsElement": "sfGpsDsElementOs"
     },
     "!.js-meta.xml": {
       "target": "!Os.js-meta.xml",
@@ -40,13 +41,15 @@
     "!.html": {
       "target": "!Os.html",
       "c-sf-gps-ds-au-nsw-accordion-comm": "c-sf-gps-ds-au-nsw-accordion-comm-os",
-      "c-sf-gps-ds-configuration-error": "c-sf-gps-ds-configuration-error-os"
+      "c-sf-gps-ds-configuration-error": "c-sf-gps-ds-configuration-error-os",
+      "c-sf-gps-ds-au-nsw-accordion-group-head": "c-sf-gps-ds-au-nsw-accordion-group-head-os"
     },
     "!.js": {
       "target": "!Os.js",
       "sfGpsDsHelpers": "sfGpsDsHelpersOs",
       "sfGpsDsLwc": "sfGpsDsLwcOsN",
-      "c/sfGpsDsMarkdown": "c/sfGpsDsMarkdownOs"
+      "c/sfGpsDsMarkdown": "c/sfGpsDsMarkdownOs",
+      "sfGpsDsElement": "sfGpsDsElementOs"
     },
     "!.js-meta.xml": {
       "target": "!Os.js-meta.xml",
@@ -57,11 +60,13 @@
     "target": "!Os",
     "!.html": {
       "target": "!Os.html",
-      "c-sf-gps-ds-au-nsw-accordion-group": "c-sf-gps-ds-au-nsw-accordion-group-os"
+      "c-sf-gps-ds-au-nsw-accordion-group": "c-sf-gps-ds-au-nsw-accordion-group-os",
+      "c-sf-gps-ds-au-nsw-accordion-comm": "c-sf-gps-ds-au-nsw-accordion-comm-os"
     },
     "!.js": {
       "target": "!Os.js",
-      "sfGpsDsLwc": "sfGpsDsLwcOsN"
+      "sfGpsDsLwc": "sfGpsDsLwcOsN",
+      "sfGpsDsMarkdown": "sfGpsDsMarkdownOs"
     },
     "!.js-meta.xml": {
       "target": "!Os.js-meta.xml",
@@ -75,6 +80,25 @@
     },
     "!.css": {
       "target": "!Os.css"
+    },
+    "!.js-meta.xml": {
+      "target": "!Os.js-meta.xml",
+      "<isExposed>(.|\\n)*Bundle>": "<isExposed>true</isExposed>\n  <runtimeNamespace>omnistudio</runtimeNamespace>\n</LightningComponentBundle>"
+    }
+  },
+  "sfGpsDsAuNswAccordionGroupHead": {
+    "target": "!Os",
+    "!.css": {
+      "target": "!Os.css",
+      "sfGpsDsAuNswCore": "sfGpsDsAuNswCoreOs",
+      "sfGpsDsAuNswAccordionGroupCss": "sfGpsDsAuNswAccordionGroupCssOs"
+    },
+    "!.html": {
+      "target": "!Os.html"
+    },
+    "!.js": {
+      "target": "!Os.js",
+      "sfGpsDsElement": "sfGpsDsElementOs"
     },
     "!.js-meta.xml": {
       "target": "!Os.js-meta.xml",

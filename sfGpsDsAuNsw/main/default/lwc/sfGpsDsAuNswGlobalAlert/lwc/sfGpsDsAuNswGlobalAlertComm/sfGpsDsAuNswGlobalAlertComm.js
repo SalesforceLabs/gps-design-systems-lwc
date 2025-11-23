@@ -4,48 +4,37 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-
 import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
-import mdEngine from "c/sfGpsDsMarkdown";
-
 const CTA_DEFAULT = {};
-
 const DEBUG = false;
 const CLASS_NAME = "sfGpsDsAuNswGlobalAlertComm";
-
-export default class extends SfGpsDsLwc {
-  @api title;
-  @api copy;
-  @api as = "default";
-  @api ctaStyle = "link";
-  @api className;
-
-  /* api: cta */
-
-  _cta = CTA_DEFAULT;
-  _ctaOriginal;
-
-  @api
-  get cta() {
-    return this._ctaOriginal;
-  }
-
-  set cta(markdown) {
-    try {
-      this._ctaOriginal = markdown;
-      this._cta = markdown ? mdEngine.extractFirstLink(markdown) : {};
-    } catch (e) {
-      this.addError("CTA-MD", "Issue when parsing cta markdown");
-      this._cta = CTA_DEFAULT;
-      if (DEBUG) console.debug(CLASS_NAME, "set cta", e);
+export default class SfGpsDsAuNswGlobalAlertComm extends SfGpsDsLwc {
+    // @ts-ignore
+    @api
+    title = "";
+    // @ts-ignore
+    @api
+    copy;
+    // @ts-ignore
+    @api
+    as = "default";
+    // @ts-ignore
+    @api
+    ctaStyle = "link";
+    // @ts-ignore
+    @api
+    className;
+    // @ts-ignore
+    @api
+    cta;
+    _cta = this.defineMarkdownFirstLinkProperty("cta", {
+        errorCode: "CT-MD",
+        errorText: "Error while parsin Call to action markdown."
+    });
+    /* lifecycle */
+    connectedCallback() {
+        super.connectedCallback?.();
+        this.classList.add("nsw-scope");
     }
-  }
-
-  /* lifecycle */
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.classList.add("nsw-scope");
-  }
 }

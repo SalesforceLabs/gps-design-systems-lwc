@@ -4,89 +4,79 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-
 const DATE_STYLE_DEFAULT = "medium";
-
 import { api } from "lwc";
 import { NavigationMixin } from "lightning/navigation";
 import { isArray } from "c/sfGpsDsHelpers";
 import SfGpsDsIpLwc from "c/sfGpsDsIpLwc";
-
-export default class extends NavigationMixin(SfGpsDsIpLwc) {
-  @api dateStyle = DATE_STYLE_DEFAULT;
-  @api isRelative = false;
-  @api isBlock = false;
-  @api isReversed = false;
-  @api showLink = false;
-  @api className;
-
-  /* api: ipName, String */
-
-  @api
-  get ipName() {
-    return super.ipName;
-  }
-
-  set ipName(value) {
-    super.ipName = value;
-  }
-
-  /* api: inputJSON, String */
-
-  @api
-  get inputJSON() {
-    return super.inputJSON;
-  }
-
-  set inputJSON(value) {
-    super.inputJSON = value;
-  }
-
-  /* api: optionsJSON, String */
-
-  @api
-  get optionsJSON() {
-    return super.optionsJSON;
-  }
-
-  set optionsJSON(value) {
-    super.optionsJSON = value;
-  }
-
-  /* computed */
-
-  get _isEmpty() {
-    return (
-      this._didLoadOnce && (this._items == null || this._items.length === 0)
-    );
-  }
-
-  /* methods */
-
-  mapIpData(data) {
-    if (!data) {
-      return null;
+export default class SfGpsDsAuNswListItemCollectionComm extends NavigationMixin(SfGpsDsIpLwc) {
+    // @ts-ignore
+    @api
+    dateStyle = DATE_STYLE_DEFAULT;
+    // @ts-ignore
+    @api
+    isRelative = false;
+    // @ts-ignore
+    @api
+    isBlock = false;
+    // @ts-ignore
+    @api
+    isReversed = false;
+    // @ts-ignore
+    @api
+    showLink = false;
+    // @ts-ignore
+    @api
+    className;
+    /* api: ipName, String */
+    // @ts-ignore
+    @api
+    get ipName() {
+        return super.ipName;
     }
-
-    if (!isArray(data)) {
-      data = [data];
+    set ipName(value) {
+        super.ipName = value;
     }
-
-    return data.map((item, index) => ({
-      ...item,
-      headline:
-        item.headline ||
-        `[${item.title}](${this.isRelative ? this.communityBasePath : ""}${
-          item.link
-        })`,
-      key: item.key || `item-${index + 1}`
-    }));
-  }
-
-  /* lifecycle */
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.classList.add("nsw-scope");
-  }
+    /* api: inputJSON, String */
+    // @ts-ignore
+    @api
+    get inputJSON() {
+        return super.inputJSON;
+    }
+    set inputJSON(value) {
+        super.inputJSON = value;
+    }
+    /* api: optionsJSON, String */
+    // @ts-ignore
+    @api
+    get optionsJSON() {
+        return super.optionsJSON;
+    }
+    set optionsJSON(value) {
+        super.optionsJSON = value;
+    }
+    /* computed */
+    get _isEmpty() {
+        return (this._didLoadOnce && (this._items == null || this._items.length === 0));
+    }
+    /* methods */
+    mapIpData(data) {
+        if (!data) {
+            return [];
+        }
+        if (!isArray(data)) {
+            data = [data];
+        }
+        return data.map((item, index) => ({
+            ...item,
+            headline: item.headline ||
+                `[${item.title}](${this.isRelative ? this.communityBasePath : ""}${item.link})`,
+            key: `item-${index + 1}`
+        }));
+    }
+    /* lifecycle */
+    connectedCallback() {
+        super.connectedCallback?.();
+        this.classList.add("nsw-scope");
+    }
 }

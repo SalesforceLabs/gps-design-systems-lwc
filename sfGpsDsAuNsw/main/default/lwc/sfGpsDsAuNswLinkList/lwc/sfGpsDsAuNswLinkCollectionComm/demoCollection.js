@@ -1,26 +1,27 @@
-export default [
-  {
-    actionType: "ExternalLink",
-    actionValue: "https://www.nsw.gov.au/accessibility-statement",
-    imageUrl: null,
-    label: "Accessibility statement",
-    subMenu: [],
-    target: "CurrentWindow"
-  },
-  {
-    actionType: "ExternalLink",
-    actionValue: "https://www.nsw.gov.au/nsw-government/copyright",
-    imageUrl: null,
-    label: "Copyright",
-    subMenu: [],
-    target: "CurrentWindow"
-  },
-  {
-    actionType: "ExternalLink",
-    actionValue: "https://www.nsw.gov.au/nsw-government/disclaimer",
-    imageUrl: null,
-    label: "Disclaimer",
-    subMenu: [],
-    target: "CurrentWindow"
-  }
+const collection = [
+    {
+        actionType: "ExternalLink",
+        actionValue: "https://www.nsw.gov.au/accessibility-statement",
+        imageUrl: undefined,
+        label: "Accessibility statement",
+        subMenu: [],
+        target: "CurrentWindow"
+    },
+    {
+        actionType: "ExternalLink",
+        actionValue: "https://www.nsw.gov.au/nsw-government/copyright",
+        imageUrl: undefined,
+        label: "Copyright",
+        subMenu: [],
+        target: "CurrentWindow"
+    },
+    {
+        actionType: "ExternalLink",
+        actionValue: "https://www.nsw.gov.au/nsw-government/disclaimer",
+        imageUrl: undefined,
+        label: "Disclaimer",
+        subMenu: [],
+        target: "CurrentWindow"
+    }
 ];
+export default collection;

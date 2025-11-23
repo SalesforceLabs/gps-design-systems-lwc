@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-  <apiVersion>62.0</apiVersion>
+  <apiVersion>64.0</apiVersion>
   <isExposed>true</isExposed>
   <masterLabel>QLD DS Main Nav</masterLabel>
   <targets>
@@ -52,6 +52,21 @@
         label="Mega menu"
         description="Enable mega-menu"
         default="false"
+      />
+      <property
+        name="cstyle"
+        type="String"
+        label="Colour style"
+        description="Colour style."
+        default="dark"
+        datasource="light,dark"
+      />
+      <property
+        name="preHeaderStyle"
+        type="String"
+        label="Pre-header style"
+        description="Pre-header style."
+        datasource="default,dark,dark-alternate"
       />
       <property
         name="className"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-  <apiVersion>62.0</apiVersion>
+  <apiVersion>64.0</apiVersion>
   <isExposed>true</isExposed>
   <masterLabel>QLD DS Header</masterLabel>
   <targets>
@@ -30,7 +30,7 @@
         type="String"
         label="Pre-header logo"
         description="URL of the image for the pre-header logo with Alternative Text in Markdown URL format."
-        default="[Queensland Government](/sfsites/c/resource/sfGpsDsAuQld/assets/img/header-logo-qgov--light.svg)"
+        default="[Queensland Government logo](/sfsites/c/resource/sfGpsDsAuQld/assets/img/header-logo-qgov--light.svg)"
       />
       <property
         name="ctaOneLink"
@@ -44,7 +44,7 @@
         type="String"
         label="Icon name for Call to Action link one"
         description="Font Awesome css classes to be applied."
-        default="fa-solid fa-phone"
+        default="phone"
       />
       <property
         name="ctaTwoLink"

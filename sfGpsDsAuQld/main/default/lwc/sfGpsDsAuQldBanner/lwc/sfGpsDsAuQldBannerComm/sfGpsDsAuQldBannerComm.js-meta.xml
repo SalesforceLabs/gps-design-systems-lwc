@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-  <apiVersion>62.0</apiVersion>
+  <apiVersion>64.0</apiVersion>
   <isExposed>true</isExposed>
   <masterLabel>QLD DS Banner</masterLabel>
   <targets>
@@ -97,7 +97,7 @@
         label="Background colour style"
         description="Colour theme style used for the background."
         default="default"
-        datasource="default,alternate,dark,dark-alternate"
+        datasource="default,light,alternate,dark,dark-alternate"
       />
       <property
         name="backgroundImageSm"

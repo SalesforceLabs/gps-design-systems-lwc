@@ -1,105 +1,84 @@
 /*
- * Copyright (c) 2022, Emmanuel Schweitzer and salesforce.com, inc.
+ * Copyright (c) 2022-2025, Emmanuel Schweitzer and salesforce.com, inc.
  * All rights reserved.
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-
 import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
-import mdEngine from "c/sfGpsDsMarkdown";
 import { replaceInnerHtml } from "c/sfGpsDsHelpers";
-
+// eslint-disable-next-line no-unused-vars
 const DEBUG = false;
+// eslint-disable-next-line no-unused-vars
 const CLASS_NAME = "sfGpsDsAuNswHeroBannerComm";
-
-export default class extends SfGpsDsLwc {
-  @api title;
-  @api subtitle;
-  @api cstyle;
-  @api wide;
-  @api featured;
-  @api lines;
-  @api image;
-  @api imageAlt;
-  @api className;
-
-  /* api: cta, String */
-
-  _cta;
-  _ctaOriginal;
-
-  @api
-  get cta() {
-    return this._ctaOriginal;
-  }
-
-  set cta(markdown) {
-    try {
-      this._ctaOriginal = markdown;
-      this._cta = markdown ? mdEngine.extractFirstLink(markdown) : null;
-    } catch (e) {
-      this.addError("CTA-MD", "Issue when parsing Call to action markdown");
-      if (DEBUG) console.debug(CLASS_NAME, "set cta", e);
+export default class sfGpsDsAuNswHeroBannerComm extends SfGpsDsLwc {
+    // @ts-ignore
+    @api
+    title = "";
+    // @ts-ignore
+    @api
+    subtitle;
+    // @ts-ignore
+    @api
+    cstyle;
+    // @ts-ignore
+    @api
+    wide;
+    // @ts-ignore
+    @api
+    featured;
+    // @ts-ignore
+    @api
+    lines;
+    // @ts-ignore
+    @api
+    image;
+    // @ts-ignore
+    @api
+    imageAlt;
+    // @ts-ignore
+    @api
+    className;
+    // @ts-ignore
+    @api
+    cta;
+    _cta = this.defineMarkdownFirstLinkProperty("cta", {
+        errorCode: "CT-MD",
+        errorText: "Issue when parsing Call to action markdown"
+    });
+    // @ts-ignore
+    @api
+    links;
+    _links = this.defineMarkdownLinksProperty("links", {
+        errorCode: "LI-MD",
+        errorText: "Issue when parsing Links markdown"
+    });
+    // @ts-ignore
+    @api
+    intro;
+    _introHtml = this.defineMarkdownContentProperty("intro", {
+        errorCode: "IN-MD",
+        errorText: "Issue when parsing Intro markdown"
+    });
+    /* computed */
+    get computedImage() {
+        return this.image
+            ? {
+                src: this.image,
+                alt: this.imageAlt
+            }
+            : null;
     }
-  }
-
-  /* api: links, String */
-
-  _links;
-  _linksOriginal;
-
-  @api
-  get links() {
-    return this._linksOriginal;
-  }
-
-  set links(markdown) {
-    try {
-      this._linksOriginal = markdown;
-      this._links = markdown ? mdEngine.extractLinks(markdown) : null;
-    } catch (e) {
-      this.addError("LI-MD", "Issue when parsing Links markdown");
-      if (DEBUG) console.debug(CLASS_NAME, "set links", e);
+    /* lifecycle */
+    connectedCallback() {
+        super.connectedCallback?.();
+        this.classList.add("nsw-scope");
     }
-  }
-
-  /* api: intro, String */
-
-  _introHtml;
-  _introOriginal;
-
-  @api
-  get intro() {
-    return this._introOriginal;
-  }
-
-  set intro(markdown) {
-    try {
-      this._introOriginal = markdown;
-      this._introHtml = markdown ? mdEngine.render(markdown) : "";
-    } catch (e) {
-      this.addError("IN-MD", "Issue when parsing Intro markdown");
-      if (DEBUG) console.debug(CLASS_NAME, "set intro", e);
+    renderedCallback() {
+        super.renderedCallback?.();
+        if (this._introHtml.value &&
+            this.refs.markdown) {
+            replaceInnerHtml(this.refs.markdown, this._introHtml.value);
+        }
     }
-  }
-
-  /* computed */
-
-  get computedImage() {
-    return this.image ? { src: this.image, alt: this.imageAlt } : null;
-  }
-
-  /* lifecycle */
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.classList.add("nsw-scope");
-  }
-
-  renderedCallback() {
-    if (this._introOriginal) {
-      replaceInnerHtml(this.refs.markdown, this._introHtml);
-    }
-  }
 }

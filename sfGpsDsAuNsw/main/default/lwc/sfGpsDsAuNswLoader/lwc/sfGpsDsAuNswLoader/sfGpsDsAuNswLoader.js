@@ -1,50 +1,43 @@
-import { LightningElement, api } from "lwc";
-import { normaliseString } from "c/sfGpsDsHelpers";
-
+/*
+ * Copyright (c) 2024-2025, Emmanuel Schweitzer and salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import { api } from "lwc";
+import SfGpsDsElement from "c/sfGpsDsElement";
 const SIZE_DEFAULT = "xl";
 const SIZE_VALUES = {
-  xl: "",
-  lg: "nsw-loader__circle--lg",
-  md: "nsw-loader__circle--md",
-  sm: "nsw-loader__circle--sm"
+    xl: "",
+    lg: "nsw-loader__circle--lg",
+    md: "nsw-loader__circle--md",
+    sm: "nsw-loader__circle--sm"
 };
-
-export default class extends LightningElement {
-  @api label;
-  @api className;
-
-  /* api: size, String */
-
-  _size = SIZE_VALUES[SIZE_DEFAULT];
-  _sizeOriginal = SIZE_DEFAULT;
-
-  @api
-  get size() {
-    return this._sizeOriginal;
-  }
-
-  set size(value) {
-    this._sizeOriginal = value;
-    this._size = normaliseString(value, {
-      validValues: SIZE_VALUES,
-      fallbackValue: SIZE_DEFAULT,
-      returnObjectValue: true
+export default class SfGpsDsAuNswLoader extends SfGpsDsElement {
+    // @ts-ignore
+    @api
+    label;
+    // @ts-ignore
+    @api
+    className;
+    // @ts-ignore
+    @api
+    size;
+    _size = this.defineEnumObjectProperty("size", {
+        validValues: SIZE_VALUES,
+        defaultValue: SIZE_DEFAULT
     });
-  }
-
-  /* computed */
-
-  get computedSpanClassName() {
-    return {
-      "nsw-loader__circle": true,
-      [this._size]: this._size
-    };
-  }
-
-  get computedClassName() {
-    return {
-      "nsw-loader": true,
-      [this.className]: this.className
-    };
-  }
+    /* computed */
+    get computedSpanClassName() {
+        return {
+            "nsw-loader__circle": true,
+            [this._size.value]: this._size.value
+        };
+    }
+    get computedClassName() {
+        return {
+            "nsw-loader": true,
+            [this.className || ""]: !!this.className
+        };
+    }
 }

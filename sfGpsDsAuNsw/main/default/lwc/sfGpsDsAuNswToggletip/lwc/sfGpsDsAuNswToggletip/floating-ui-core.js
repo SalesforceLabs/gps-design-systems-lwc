@@ -9,7 +9,6 @@ export { inline } from "./floating-ui-core-middleware-inline";
 export { offset } from "./floating-ui-core-middleware-offset";
 export { limitShift, shift } from "./floating-ui-core-middleware-shift";
 export { size } from "./floating-ui-core-middleware-size";
-
 // This export exists only for backwards compatibility. It will be removed in
 // the next major version.
 export { rectToClientRect } from "./floating-ui-utils";

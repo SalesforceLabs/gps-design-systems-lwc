@@ -1,171 +1,152 @@
+/*
+ * Copyright (c) 2022-2025, Emmanuel Schweitzer and salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
 import { api } from "lwc";
 import SfGpsDsNavigation from "c/sfGpsDsNavigation";
 import { replaceInnerHtml } from "c/sfGpsDsHelpers";
-import mdEngine from "c/sfGpsDsMarkdown";
-
-export default class extends SfGpsDsNavigation {
-  @api statement;
-  @api linkedInUrl;
-  @api twitterXUrl;
-  @api facebookUrl;
-  @api className;
-
-  /* api: mode, String */
-
-  @api
-  get mode() {
-    return super.mode;
-  }
-
-  set mode(value) {
-    super.mode = value;
-
-    if (value === "Demo") {
-      /* eslint-disable no-unused-vars */
-      let cbp = this.communityBasePath;
-
-      this._items = this.mapIpData([
-        {
-          actionType: "ExternalLink",
-          actionValue: "https://www.nsw.gov.au/accessibility-statement",
-          imageUrl: null,
-          label: "Accessibility statement",
-          subMenu: [],
-          target: "CurrentWindow"
-        },
-        {
-          actionType: "ExternalLink",
-          actionValue: "https://www.nsw.gov.au/nsw-government/copyright",
-          imageUrl: null,
-          label: "Copyright",
-          subMenu: [],
-          target: "CurrentWindow"
-        },
-        {
-          actionType: "ExternalLink",
-          actionValue: "https://www.nsw.gov.au/nsw-government/disclaimer",
-          imageUrl: null,
-          label: "Disclaimer",
-          subMenu: [],
-          target: "CurrentWindow"
+export default class SfGpsDsAuNswLowerFooterIp extends SfGpsDsNavigation {
+    // @ts-ignore
+    @api
+    statement;
+    // @ts-ignore
+    @api
+    linkedInUrl;
+    // @ts-ignore
+    @api
+    twitterXUrl;
+    // @ts-ignore
+    @api
+    facebookUrl;
+    // @ts-ignore
+    @api
+    className;
+    /* api: mode, String */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get mode() {
+        // @ts-ignore
+        return super.mode;
+    }
+    set mode(value) {
+        // @ts-ignore
+        super.mode = value;
+        if (value === "Demo") {
+            /* eslint-disable no-unused-vars */
+            const cbp = this.communityBasePath;
+            this._items = this.mapIpData([
+                {
+                    actionType: "ExternalLink",
+                    actionValue: "https://www.nsw.gov.au/accessibility-statement",
+                    imageUrl: undefined,
+                    label: "Accessibility statement",
+                    subMenu: [],
+                    target: "CurrentWindow"
+                },
+                {
+                    actionType: "ExternalLink",
+                    actionValue: "https://www.nsw.gov.au/nsw-government/copyright",
+                    imageUrl: undefined,
+                    label: "Copyright",
+                    subMenu: [],
+                    target: "CurrentWindow"
+                },
+                {
+                    actionType: "ExternalLink",
+                    actionValue: "https://www.nsw.gov.au/nsw-government/disclaimer",
+                    imageUrl: undefined,
+                    label: "Disclaimer",
+                    subMenu: [],
+                    target: "CurrentWindow"
+                }
+            ]);
         }
-      ]);
     }
-  }
-
-  /* api: navigationDevName, String */
-
-  @api
-  get navigationDevName() {
-    return super.navigationDevName;
-  }
-
-  set navigationDevName(value) {
-    super.navigationDevName = value;
-  }
-
-  /* api: ipName, String */
-
-  @api
-  get ipName() {
-    return super.ipName;
-  }
-
-  set ipName(value) {
-    super.ipName = value;
-  }
-
-  /* api: inputJSON, String */
-
-  @api
-  get inputJSON() {
-    return super.inputJSON;
-  }
-
-  set inputJSON(value) {
-    super.inputJSON = value;
-  }
-
-  /* api: optionsJSON, String */
-
-  @api
-  get optionsJSON() {
-    return super.optionsJSON;
-  }
-
-  set optionsJSON(value) {
-    super.optionsJSON = value;
-  }
-
-  /* api: copyrightMention, String */
-
-  _copyrightMentionHtml;
-  _copyrightMentionOriginal;
-
-  @api
-  get copyrightMention() {
-    return this._copyrightMentionOriginal;
-  }
-
-  set copyrightMention(markdown) {
-    try {
-      this._copyrightMentionOriginal = markdown;
-      this._copyrightMentionHtml = mdEngine.renderEscapedUnpackFirstP(markdown);
-    } catch (e) {
-      this.addError("CM-MD", "Issue when parsing Copyright mention markdown");
+    /* api: navigationDevName, String */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get navigationDevName() {
+        // @ts-ignore
+        return super.navigationDevName;
     }
-  }
-
-  /* api: builtMention */
-
-  _builtMentionHtml;
-  _builtMentionOriginal;
-
-  @api
-  get builtMention() {
-    return this._builtMentionOriginal;
-  }
-
-  set builtMention(markdown) {
-    try {
-      this._builtMentionOriginal = markdown;
-      this._builtMentionHtml = mdEngine.renderEscapedUnpackFirstP(markdown);
-    } catch (e) {
-      this.addError("BM-MD", "Issue when parsing Built mention markdown");
+    set navigationDevName(value) {
+        // @ts-ignore
+        super.navigationDevName = value;
     }
-  }
-
-  /* computed */
-
-  get computedShowSocial() {
-    return this.linkedInUrl || this.twitterXUrl || this.facebookUrl;
-  }
-
-  /* event management */
-
-  handleNavClick(event) {
-    if (this._map && event.detail) {
-      this.refs.navsvc.navigateNavMenu(this._map[event.detail]);
+    /* api: ipName, String */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get ipName() {
+        // @ts-ignore
+        return super.ipName;
     }
-  }
-
-  /* lifecycle */
-
-  renderedCallback() {
-    if (
-      !this._sfGpsDsErrors &&
-      !this._isLoading &&
-      this._copyrightMentionOriginal
-    ) {
-      replaceInnerHtml(this.refs.copyright, this._copyrightMentionHtml);
+    set ipName(value) {
+        // @ts-ignore
+        super.ipName = value;
     }
-
-    if (
-      !this._sfGpsDsErrors &&
-      !this._isLoading &&
-      this._builtMentionOriginal
-    ) {
-      replaceInnerHtml(this.refs.built, this._builtMentionHtml);
+    /* api: inputJSON, String */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get inputJSON() {
+        // @ts-ignore
+        return super.inputJSON;
     }
-  }
+    set inputJSON(value) {
+        // @ts-ignore
+        super.inputJSON = value;
+    }
+    /* api: optionsJSON, String */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get optionsJSON() {
+        // @ts-ignore
+        return super.optionsJSON;
+    }
+    set optionsJSON(value) {
+        // @ts-ignore
+        super.optionsJSON = value;
+    }
+    // @ts-ignore
+    @api
+    copyrightMention;
+    _copyrightMentionHtml = this.defineMarkdownUnpackedFirstPProperty("copyrightMention", {
+        errorCode: "CM-MD",
+        errorText: "Issue when parsing Copyright mention markdown"
+    });
+    // @ts-ignore
+    @api
+    builtMention;
+    _builtMentionHtml = this.defineMarkdownUnpackedFirstPProperty("builtMention", {
+        errorCode: "CM-MD",
+        errorText: "Issue when parsing Built mention markdown"
+    });
+    /* computed */
+    get computedShowSocial() {
+        return !!(this.linkedInUrl || this.twitterXUrl || this.facebookUrl);
+    }
+    /* event management */
+    handleNavClick(event) {
+        if (this._map && event.detail) {
+            this.refs.navsvc.navigateNavMenu(this._map[event.detail]);
+        }
+    }
+    /* lifecycle */
+    renderedCallback() {
+        super.renderedCallback?.();
+        if (this.refs.copyright &&
+            this.copyrightMention) {
+            replaceInnerHtml(this.refs.copyright, this._copyrightMentionHtml.value);
+        }
+        if (this.refs.built &&
+            this.builtMention) {
+            replaceInnerHtml(this.refs.built, this._builtMentionHtml.value);
+        }
+    }
 }

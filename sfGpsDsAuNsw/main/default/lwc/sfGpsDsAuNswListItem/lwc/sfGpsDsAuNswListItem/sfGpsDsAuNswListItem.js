@@ -1,195 +1,136 @@
-import { LightningElement, api } from "lwc";
-import {
-  parseIso8601,
-  getUserLocale,
-  formatDate,
-  normaliseString,
-  normaliseBoolean
-} from "c/sfGpsDsHelpers";
-
+/*
+ * Copyright (c) 2023-2025, Emmanuel Schweitzer and salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import { api } from "lwc";
+import SfGpsDsElement from "c/sfGpsDsElement";
+import { parseIso8601, getUserLocale, formatDate } from "c/sfGpsDsHelpers";
 const DATE_STYLE_SHORT = "short";
 const DATE_STYLE_MEDIUM = "medium";
 const DATE_STYLE_LONG = "long";
 const DATE_STYLE_FULL = "full";
 const DATE_STYLE_VALUES = [
-  DATE_STYLE_FULL,
-  DATE_STYLE_LONG,
-  DATE_STYLE_MEDIUM,
-  DATE_STYLE_SHORT
+    DATE_STYLE_FULL,
+    DATE_STYLE_LONG,
+    DATE_STYLE_MEDIUM,
+    DATE_STYLE_SHORT
 ];
 const DATE_STYLE_DEFAULT = DATE_STYLE_MEDIUM;
-
 const ISBLOCK_DEFAULT = false;
 const ISREVERSED_DEFAULT = false;
 const SHOWLINK_DEFAULT = false;
 const PREVENTDEFAULT_DEFAULT = false;
-
-export default class extends LightningElement {
-  static renderMode = "light";
-
-  @api label;
-  @api link;
-  @api title;
-  @api image;
-  @api imageAlt;
-  @api tags;
-  @api className;
-
-  /* api: isBlock */
-
-  _isBlock = ISBLOCK_DEFAULT;
-  _isBlockOriginal = ISBLOCK_DEFAULT;
-
-  @api
-  get isBlock() {
-    return this._isBlockOriginal;
-  }
-
-  set isBlock(value) {
-    this._preventDefaultOriginal = value;
-    this._preventDefault = normaliseBoolean(value, {
-      acceptString: false,
-      fallbackValue: ISBLOCK_DEFAULT
+export default class SfGpsDsAuNswListItem extends SfGpsDsElement {
+    static renderMode = "light";
+    // @ts-ignore
+    @api
+    label;
+    // @ts-ignore
+    @api
+    link;
+    // @ts-ignore
+    @api
+    title = "";
+    // @ts-ignore
+    @api
+    image;
+    // @ts-ignore
+    @api
+    imageAlt;
+    // @ts-ignore
+    @api
+    tags;
+    // @ts-ignore
+    @api
+    className;
+    // @ts-ignore
+    @api
+    isBlock;
+    _isBlock = this.defineBooleanProperty("isBlock", {
+        defaultValue: ISBLOCK_DEFAULT
     });
-  }
-
-  /* api: isReversed */
-
-  _isReversed = ISREVERSED_DEFAULT;
-  _isReversedOriginal = ISREVERSED_DEFAULT;
-
-  @api
-  get isReversed() {
-    return this._isReversedOriginal;
-  }
-
-  set isReversed(value) {
-    this._isReversedOriginal = value;
-    this._isReversed = normaliseBoolean(value, {
-      acceptString: false,
-      fallbackValue: ISREVERSED_DEFAULT
+    // @ts-ignore
+    @api
+    isReversed;
+    _isReversed = this.defineBooleanProperty("isReversed", {
+        defaultValue: ISREVERSED_DEFAULT
     });
-  }
-
-  /* api: showLink */
-
-  _showLink = SHOWLINK_DEFAULT;
-  _showLinkOriginal = SHOWLINK_DEFAULT;
-
-  @api
-  get showLink() {
-    return this._showLinkOriginal;
-  }
-
-  set showLink(value) {
-    this._showLinkOriginal = value;
-    this._showLink = normaliseBoolean(value, {
-      acceptString: false,
-      fallbackValue: SHOWLINK_DEFAULT
+    // @ts-ignore
+    @api
+    showLink;
+    _showLink = this.defineBooleanProperty("showLink", {
+        defaultValue: SHOWLINK_DEFAULT
     });
-  }
-
-  /* api: preventDefault */
-
-  _preventDefault = PREVENTDEFAULT_DEFAULT;
-  _preventDefaultOriginal = PREVENTDEFAULT_DEFAULT;
-
-  @api
-  get preventDefault() {
-    return this._preventDefaultOriginal;
-  }
-
-  set preventDefault(value) {
-    this._preventDefaultOriginal = value;
-    this._preventDefault = normaliseBoolean(value, {
-      acceptString: false,
-      fallbackValue: PREVENTDEFAULT_DEFAULT
+    // @ts-ignore
+    @api
+    preventDefault;
+    _preventDefault = this.defineBooleanProperty("preventDefault", {
+        defaultValue: PREVENTDEFAULT_DEFAULT
     });
-  }
-
-  /* api: dateStyle */
-
-  _dateStyle;
-  _dateStyleOriginal;
-
-  @api
-  get dateStyle() {
-    return this._dateStyleOriginal;
-  }
-
-  set dateStyle(value) {
-    this._dateStyleOriginal = value;
-    this._dateStyle = normaliseString(value, {
-      validValues: DATE_STYLE_VALUES,
-      fallbackValue: DATE_STYLE_DEFAULT
-    });
-  }
-
-  /* api: date */
-
-  _date;
-  _dateOriginal;
-
-  @api
-  get date() {
-    return this._dateOriginal;
-  }
-
-  set date(value) {
-    this._dateOriginal = value;
-
-    if (value instanceof Date) {
-      this._date = value;
-    } else {
-      this._date = value ? parseIso8601(value.toString()) : null;
+    // Added as we made the mistake of renaming preventClickDefault to preventDefault when migrating to TS
+    // @ts-ignore
+    @api
+    get preventClickDefault() {
+        return this.preventDefault;
     }
-  }
-
-  get _dateISOString() {
-    return this._date ? this._date.toISOString() : null;
-  }
-
-  get _dateLocaleString() {
-    /*
-    return this._date
-      ? this._date.toLocaleDateString(this._userLocale, {
-          dateStyle: this.dateStyle || DATE_STYLE_DEFAULT
-        })
-      : null;
-    */
-    return this._date
-      ? formatDate(
-          this._date,
-          this._dateStyle || DATE_STYLE_DEFAULT,
-          this._userLocale
-        )
-      : null;
-  }
-
-  get computedClassName() {
-    return {
-      "nsw-list-item": true,
-      "nsw-list-item--block": this._isBlock,
-      "nsw-list-item--reversed": this._isReversed,
-      [this.className]: this.className
-    };
-  }
-
-  /* event management */
-
-  handleClick(event) {
-    if (this._preventDefault) {
-      event.preventDefault();
+    set preventClickDefault(value) {
+        this.preventDefault = value;
     }
-
-    this.dispatchEvent(new CustomEvent("navigate", { detail: this.link }));
-  }
-
-  /* lifecycle */
-
-  _userLocale;
-
-  connectedCallback() {
-    this._userLocale = getUserLocale();
-  }
+    // @ts-ignore
+    @api
+    dateStyle;
+    _dateStyle = this.defineEnumProperty("dateStyle", {
+        validValues: DATE_STYLE_VALUES,
+        defaultValue: DATE_STYLE_DEFAULT
+    });
+    /* api: date */
+    _date;
+    _dateOriginal;
+    // @ts-ignore
+    @api
+    get date() {
+        return this._dateOriginal;
+    }
+    set date(value) {
+        this._dateOriginal = value;
+        if (value instanceof Date) {
+            this._date = value;
+        }
+        else {
+            this._date = value ? parseIso8601(value.toString()) : undefined;
+        }
+    }
+    get _dateISOString() {
+        return this._date
+            ? this._date.toISOString()
+            : undefined;
+    }
+    get _dateLocaleString() {
+        return this._date
+            ? formatDate(this._date, this._dateStyle.value || DATE_STYLE_DEFAULT, this._userLocale)
+            : undefined;
+    }
+    get computedClassName() {
+        return {
+            "nsw-list-item": true,
+            "nsw-list-item--block": this._isBlock.value,
+            "nsw-list-item--reversed": this._isReversed.value,
+            [this.className || ""]: !!this.className
+        };
+    }
+    /* event management */
+    handleClick(event) {
+        if (this._preventDefault) {
+            event.preventDefault();
+        }
+        this.dispatchEvent(new CustomEvent("navigate", { detail: this.link }));
+    }
+    /* lifecycle */
+    _userLocale;
+    connectedCallback() {
+        super.connectedCallback?.();
+        this._userLocale = getUserLocale();
+    }
 }

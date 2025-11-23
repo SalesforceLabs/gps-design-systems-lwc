@@ -1,107 +1,104 @@
+/*
+ * Copyright (c) 2023-2025, Emmanuel Schweitzer and salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
 import { api } from "lwc";
 import SfGpsDsNavigation from "c/sfGpsDsNavigation";
-import mdEngine from "c/sfGpsDsMarkdown";
-
+// eslint-disable-next-line no-unused-vars
 const DEBUG = false;
+// eslint-disable-next-line no-unused-vars
 const CLASS_NAME = "sfGpsDsAuNswSideNavComm";
-
-export default class extends SfGpsDsNavigation {
-  @api className;
-
-  /* api: mode, String */
-
-  @api
-  get mode() {
-    return super.mode;
-  }
-
-  set mode(value) {
-    super.mode = value;
-  }
-
-  /* api: navigationDevName, String */
-
-  @api
-  get navigationDevName() {
-    return super.navigationDevName;
-  }
-
-  set navigationDevName(value) {
-    super.navigationDevName = value;
-  }
-
-  /* api: ipName, String */
-
-  @api
-  get ipName() {
-    return super.ipName;
-  }
-
-  set ipName(value) {
-    super.ipName = value;
-  }
-
-  /* api: inputJSON, String */
-
-  @api
-  get inputJSON() {
-    return super.inputJSON;
-  }
-
-  set inputJSON(value) {
-    super.inputJSON = value;
-  }
-
-  /* api: optionsJSON, String */
-
-  @api
-  get optionsJSON() {
-    return super.optionsJSON;
-  }
-
-  set optionsJSON(value) {
-    super.optionsJSON = value;
-  }
-
-  /* api: title and link, String */
-
-  _titleLink; // combined link into title
-  _titleLinkOriginal;
-
-  @api
-  get titleLink() {
-    return this._titleLinkOriginal;
-  }
-
-  set titleLink(markdown) {
-    try {
-      this._titleLinkOriginal = markdown;
-      this._titleLink = markdown ? mdEngine.extractFirstLink(markdown) : null;
-    } catch (e) {
-      this.addError("HL-MD", "Issue when parsing Title Link markdown");
-      if (DEBUG) console.debug(CLASS_NAME, "set titleLink", e);
+export default class sfGpsDsAuNswSideNavComm extends SfGpsDsNavigation {
+    // @ts-ignore
+    @api
+    className;
+    /* api: mode, String */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get mode() {
+        // @ts-ignore
+        return super.mode;
     }
-  }
-
-  get _title() {
-    return this._titleLink?.text;
-  }
-
-  get _url() {
-    return this._titleLink?.url;
-  }
-
-  /* event management */
-
-  handleNavigate(event) {
-    if (this._map && event.detail) {
-      this.refs.navsvc.navigateNavMenu(this._map[event.detail]);
+    set mode(value) {
+        // @ts-ignore
+        super.mode = value;
     }
-  }
-  /* lifecycle */
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.classList.add("nsw-scope");
-  }
+    /* api: navigationDevName, String */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get navigationDevName() {
+        // @ts-ignore
+        return super.navigationDevName;
+    }
+    set navigationDevName(value) {
+        // @ts-ignore
+        super.navigationDevName = value;
+    }
+    /* api: ipName, String */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get ipName() {
+        // @ts-ignore
+        return super.ipName;
+    }
+    set ipName(value) {
+        // @ts-ignore
+        super.ipName = value;
+    }
+    /* api: inputJSON, String */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get inputJSON() {
+        // @ts-ignore
+        return super.inputJSON;
+    }
+    set inputJSON(value) {
+        // @ts-ignore
+        super.inputJSON = value;
+    }
+    /* api: optionsJSON, String */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get optionsJSON() {
+        // @ts-ignore
+        return super.optionsJSON;
+    }
+    set optionsJSON(value) {
+        // @ts-ignore
+        super.optionsJSON = value;
+    }
+    // @ts-ignore
+    @api
+    titleLink;
+    _titleLink = this.defineMarkdownFirstLinkProperty("titleLink", {
+        errorCode: "HL-MD",
+        errorText: "Issue when parsing Title Link markdown"
+    });
+    get _title() {
+        return this._titleLink.value?.text;
+    }
+    get _url() {
+        return this._titleLink.value?.url;
+    }
+    get navSvc() {
+        return this.refs.navsvc;
+    }
+    /* event management */
+    handleNavigate(event) {
+        if (this._map && event.detail) {
+            this.navSvc.navigateNavMenu(this._map[event.detail]);
+        }
+    }
+    /* lifecycle */
+    connectedCallback() {
+        super.connectedCallback?.();
+        this.classList.add("nsw-scope");
+    }
 }

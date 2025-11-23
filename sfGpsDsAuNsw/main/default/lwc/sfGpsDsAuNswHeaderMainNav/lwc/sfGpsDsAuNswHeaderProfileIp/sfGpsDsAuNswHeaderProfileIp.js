@@ -1,60 +1,81 @@
 import { api } from "lwc";
 import SfGpsDsNavigation from "c/sfGpsDsNavigation";
-
-export default class extends SfGpsDsNavigation {
-  @api isGuest;
-  @api userAlias;
-  @api className;
-
-  /* api: ipName, String */
-
-  @api
-  get ipName() {
-    return super.ipName;
-  }
-
-  set ipName(value) {
-    super.ipName = value;
-  }
-
-  /* api: inputJSON, String */
-
-  @api
-  get inputJSON() {
-    return super.inputJSON;
-  }
-
-  set inputJSON(value) {
-    super.inputJSON = value;
-  }
-
-  /* api: optionsJSON, String */
-
-  @api
-  get optionsJSON() {
-    return super.optionsJSON;
-  }
-
-  set optionsJSON(value) {
-    super.optionsJSON = value;
-  }
-
-  /* event management  */
-
-  handleNavigate(event) {
-    if (this._map && event.detail) {
-      this.refs.navsvc.navigateNavMenu(this._map[event.detail]);
+export default class SfGpsDsAuNswHeaderProfileIp extends SfGpsDsNavigation {
+    // @ts-ignore
+    @api
+    isGuest;
+    // @ts-ignore
+    @api
+    userAlias;
+    // @ts-ignore
+    @api
+    className;
+    /* api: ipName */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get ipName() {
+        // @ts-ignore
+        return super.ipName;
     }
-  }
-
-  handleLogin() {
-    this.refs.navsvc.login();
-  }
-
-  /* lifecycle */
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.classList.add("nsw-scope");
-  }
+    set ipName(value) {
+        // @ts-ignore
+        super.ipName = value;
+    }
+    /* api: inputJSON */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get inputJSON() {
+        // @ts-ignore
+        return super.inputJSON;
+    }
+    set inputJSON(value) {
+        // @ts-ignore
+        super.inputJSON = value;
+    }
+    /* api: optionsJSON */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get optionsJSON() {
+        // @ts-ignore
+        return super.optionsJSON;
+    }
+    set optionsJSON(value) {
+        // @ts-ignore
+        super.optionsJSON = value;
+    }
+    /* api: navigationDevName */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get navigationDevName() {
+        // @ts-ignore
+        return super.navigationDevName;
+    }
+    set navigationDevName(value) {
+        // @ts-ignore
+        super.navigationDevName = value;
+        this.updateExperienceCloudNavigation();
+    }
+    /* getters */
+    get navSvc() {
+        return this.refs.navsvc;
+    }
+    /* event management  */
+    handleNavigate(event) {
+        if (this._map && event.detail) {
+            this.navSvc.navigateNavMenu(this._map[event.detail]);
+        }
+    }
+    // eslint-disable-next-line no-unused-vars
+    handleLogin(_event) {
+        this.navSvc?.login();
+    }
+    /* lifecycle */
+    connectedCallback() {
+        super.connectedCallback?.();
+        this.classList.add("nsw-scope");
+    }
 }

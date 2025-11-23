@@ -1,24 +1,33 @@
-import { LightningElement, api } from "lwc";
-
+import { api } from "lwc";
+import SfGpsDsElement from "c/sfGpsDsElement";
 /**
  * @slot header
+ * @slot NSW-Header
  * @slot footer
+ * @slot NSW-Footer
  */
-export default class extends LightningElement {
-  static renderMode = "light";
-
-  @api containerClassName = "";
-  @api headerClassName = "";
-  @api mainClassName = "";
-  @api footerClassName = "";
-
-  @api containerBackgroundColor;
-
-  /* lifecycle */
-
-  renderedCallback() {
-    if (this.containerBackgroundColor) {
-      this.refs.container.style.backgroundColor = this.containerBackgroundColor;
+export default class sfGpsDsAuNswThemeLayoutLwr extends SfGpsDsElement {
+    static renderMode = "light";
+    // @ts-ignore
+    @api
+    containerClassName = "";
+    // @ts-ignore
+    @api
+    headerClassName = "";
+    // @ts-ignore
+    @api
+    mainClassName = "";
+    // @ts-ignore
+    @api
+    footerClassName = "";
+    // @ts-ignore
+    @api
+    containerBackgroundColor;
+    /* lifecycle */
+    renderedCallback() {
+        super.renderedCallback?.();
+        if (this.containerBackgroundColor) {
+            this.refs.container.style.backgroundColor = this.containerBackgroundColor;
+        }
     }
-  }
 }

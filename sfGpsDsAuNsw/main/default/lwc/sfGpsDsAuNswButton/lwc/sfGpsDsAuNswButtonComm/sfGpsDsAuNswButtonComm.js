@@ -1,67 +1,70 @@
+/*
+ * Copyright (c) 2022-2025, Emmanuel Schweitzer and salesforce.com, inc.
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
 import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
-import mdEngine from "c/sfGpsDsMarkdown";
 import { NavigationMixin } from "lightning/navigation";
-
-const LINK_DEFAULT = { text: null, url: null };
-
+const LINK_DEFAULT = {
+    text: undefined,
+    url: undefined
+};
 const DEBUG = false;
 const CLASS_NAME = "sfGpsDsAuNswButtonComm";
-
-export default class extends NavigationMixin(SfGpsDsLwc) {
-  @api cstyle;
-  @api rendering;
-  @api type;
-  @api disabled = false;
-  @api iconStyle; // one of none, before, after
-  @api iconName;
-  @api mobileFullWidth = false;
-  @api className;
-
-  /* api: link, String */
-
-  _link = LINK_DEFAULT;
-  _linkOriginal;
-
-  @api
-  get link() {
-    return this._linkOriginal;
-  }
-
-  set link(markdown) {
-    try {
-      this._linkOriginal = markdown;
-      this._link = markdown ? mdEngine.extractFirstLink(markdown) : null;
-    } catch (e) {
-      this.addError("ML-MD", "Issue when parsing Link markdown");
-      this._link = LINK_DEFAULT;
-      if (DEBUG) console.debug(CLASS_NAME, "set link", e);
+export default class SfGpsDsAuNswButtonComm extends NavigationMixin(SfGpsDsLwc) {
+    // @ts-ignore
+    @api
+    type;
+    // @ts-ignore
+    @api
+    iconName;
+    // @ts-ignore
+    @api
+    className;
+    // @ts-ignore
+    @api
+    cstyle;
+    // @ts-ignore
+    @api
+    iconStyle;
+    // @ts-ignore
+    @api
+    rendering;
+    // @ts-ignore
+    @api
+    disabled = false;
+    // @ts-ignore
+    @api
+    mobileFullWidth = false;
+    // @ts-ignore
+    @api
+    link;
+    _link = this.defineMarkdownFirstLinkProperty("link", {
+        errorCode: "ML-MD",
+        errorText: "Issue when parsing Link markdown"
+    });
+    /* computed */
+    get computedIsButton() {
+        return this.rendering === "button";
     }
-  }
-
-  /* computed */
-
-  get computedIsButton() {
-    return this.rendering === "button";
-  }
-
-  /* event management */
-
-  handleClick() {
-    if (this._link?.url) {
-      this[NavigationMixin.Navigate]({
-        type: "standard__webPage",
-        attributes: {
-          url: this._link.url
+    /* event management */
+    // eslint-disable-next-line no-unused-vars
+    handleClick(_event) {
+        if (this._link.value?.url) {
+            // @ts-ignore
+            this[NavigationMixin.Navigate]({
+                type: "standard__webPage",
+                attributes: {
+                    url: this._link.value?.url
+                }
+            });
         }
-      });
     }
-  }
-
-  /* lifecycle */
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.classList.add("nsw-scope");
-  }
+    /* lifecycle */
+    connectedCallback() {
+        super.connectedCallback?.();
+        this.classList.add("nsw-scope");
+    }
 }

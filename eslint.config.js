@@ -66,6 +66,8 @@ module.exports = defineConfig([
     "**/aura/**/*.app",
     "**/aura/**/*.map",
     "**/aura/**/*.scss",
+    "**/aura/**/*.gen.css",
+    "sfGpsDs/main/default/lwc/omnistudio-standard-rt-stub/**/*.js",
     "sfGpsDsAuNswFull",
     "sfGpsDsAuQldFull",
     "sfGpsDsAuVic",

@@ -4,68 +4,43 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-
 import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
-import mdEngine from "c/sfGpsDsMarkdown";
-
 const DEPARTMENTS_DEFAULT = [];
 const SUPPORTLOGOS_DEFAULT = [];
-
+// eslint-disable-next-line no-unused-vars
 const DEBUG = false;
+// eslint-disable-next-line no-unused-vars
 const CLASS_NAME = "sfGpsDsAuNswSupportListComm";
-
-export default class extends SfGpsDsLwc {
-  @api header = "Supported by";
-  @api logoPosition = "labels";
-  @api className;
-
-  /* api: departments */
-
-  _departments = DEPARTMENTS_DEFAULT;
-  _departmentsOriginal = DEPARTMENTS_DEFAULT;
-
-  @api
-  get departments() {
-    return this._departmentsOriginal;
-  }
-
-  set departments(markdown) {
-    try {
-      this._departmentsOriginal = markdown;
-      this._departments = markdown ? mdEngine.extractLinks(markdown) : null;
-    } catch (e) {
-      this.addError("LI-MD", "Issue when parsing Departments markdown");
-      this._departments = DEPARTMENTS_DEFAULT;
-      if (DEBUG) console.debug(CLASS_NAME, "set departments", e);
+export default class sfGpsDsAuNswSupportListComm extends SfGpsDsLwc {
+    // @ts-ignore
+    @api
+    header = "Supported by";
+    // @ts-ignore
+    @api
+    logoPosition = "labels";
+    // @ts-ignore
+    @api
+    className;
+    // @ts-ignore
+    @api
+    departments;
+    _departments = this.defineMarkdownLinksProperty("departments", {
+        errorCode: "LI-MD",
+        errorText: "Issue when parsing Departments markdown",
+        defaultValue: DEPARTMENTS_DEFAULT
+    });
+    // @ts-ignore
+    @api
+    supportLogos;
+    _supportLogos = this.defineMarkdownLinksProperty("supportLogos", {
+        errorCode: "LI-MD",
+        errorText: "Issue when parsing Departments markdown",
+        defaultValue: SUPPORTLOGOS_DEFAULT
+    });
+    /* lifecycle */
+    connectedCallback() {
+        super.connectedCallback?.();
+        this.classList.add("nsw-scope");
     }
-  }
-
-  /* api: supportLogos */
-
-  _supportLogos = SUPPORTLOGOS_DEFAULT;
-  _supportLogosOriginal = SUPPORTLOGOS_DEFAULT;
-
-  @api
-  get supportLogos() {
-    return this._supportLogosOriginal;
-  }
-
-  set supportLogos(markdown) {
-    try {
-      this._supportLogosOriginal = markdown;
-      this._supportLogos = markdown ? mdEngine.extractLinks(markdown) : null;
-    } catch (e) {
-      this.addError("LI-MD", "Issue when parsing Support logos markdown");
-      this._supportLogos = SUPPORTLOGOS_DEFAULT;
-      if (DEBUG) console.debug(CLASS_NAME, "set supportLogos", e);
-    }
-  }
-
-  /* lifecycle */
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.classList.add("nsw-scope");
-  }
 }

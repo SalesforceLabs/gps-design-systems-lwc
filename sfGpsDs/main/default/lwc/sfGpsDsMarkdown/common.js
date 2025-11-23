@@ -1,113 +1,87 @@
 "use strict";
-
 /* eslint-disable no-unused-vars */
-
 import encode from "./mdUrlEncode";
 import { decodeHTML } from "./entitiesDecode";
-
-let C_BACKSLASH = 92;
-
-let ENTITY = "&(?:#x[a-f0-9]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,31});";
-
-let TAGNAME = "[A-Za-z][A-Za-z0-9-]*";
-let ATTRIBUTENAME = "[a-zA-Z_:][a-zA-Z0-9:._-]*";
-let UNQUOTEDVALUE = "[^\"'=<>`\\x00-\\x20]+";
-let SINGLEQUOTEDVALUE = "'[^']*'";
-let DOUBLEQUOTEDVALUE = '"[^"]*"';
-let ATTRIBUTEVALUE =
-  "(?:" +
-  UNQUOTEDVALUE +
-  "|" +
-  SINGLEQUOTEDVALUE +
-  "|" +
-  DOUBLEQUOTEDVALUE +
-  ")";
-let ATTRIBUTEVALUESPEC = "(?:\\s*=\\s*" + ATTRIBUTEVALUE + ")";
-let ATTRIBUTE = "(?:\\s+" + ATTRIBUTENAME + ATTRIBUTEVALUESPEC + "?)";
-let OPENTAG = "<" + TAGNAME + ATTRIBUTE + "*\\s*/?>";
-let CLOSETAG = "</" + TAGNAME + "\\s*[>]";
-let HTMLCOMMENT = "<!---->|<!--(?:-?[^>-])(?:-?[^-])*-->";
-let PROCESSINGINSTRUCTION = "[<][?][\\s\\S]*?[?][>]";
-let DECLARATION = "<![A-Z]+\\s+[^>]*>";
-let CDATA = "<!\\[CDATA\\[[\\s\\S]*?\\]\\]>";
-let HTMLTAG =
-  "(?:" +
-  OPENTAG +
-  "|" +
-  CLOSETAG +
-  "|" +
-  HTMLCOMMENT +
-  "|" +
-  PROCESSINGINSTRUCTION +
-  "|" +
-  DECLARATION +
-  "|" +
-  CDATA +
-  ")";
-let reHtmlTag = new RegExp("^" + HTMLTAG);
-
-let reBackslashOrAmp = /[\\&]/;
-
-let ESCAPABLE = "[!\"#$%&'()*+,./:;<=>?@[\\\\\\]^_`{|}~-]";
-
-let reEntityOrEscapedChar = new RegExp("\\\\" + ESCAPABLE + "|" + ENTITY, "gi");
-
-let XMLSPECIAL = '[&<>"]';
-
-let reXmlSpecial = new RegExp(XMLSPECIAL, "g");
-
-let unescapeChar = function (s) {
-  if (s.charCodeAt(0) === C_BACKSLASH) {
-    return s.charAt(1);
-  }
-  return decodeHTML(s);
-};
-
+const C_BACKSLASH = 92;
+export const ENTITY = "&(?:#x[a-f0-9]{1,6}|#[0-9]{1,7}|[a-z][a-z0-9]{1,31});";
+const TAGNAME = "[A-Za-z][A-Za-z0-9-]*";
+const ATTRIBUTENAME = "[a-zA-Z_:][a-zA-Z0-9:._-]*";
+const UNQUOTEDVALUE = "[^\"'=<>`\\x00-\\x20]+";
+const SINGLEQUOTEDVALUE = "'[^']*'";
+const DOUBLEQUOTEDVALUE = '"[^"]*"';
+const ATTRIBUTEVALUE = "(?:" +
+    UNQUOTEDVALUE +
+    "|" +
+    SINGLEQUOTEDVALUE +
+    "|" +
+    DOUBLEQUOTEDVALUE +
+    ")";
+const ATTRIBUTEVALUESPEC = "(?:\\s*=\\s*" + ATTRIBUTEVALUE + ")";
+const ATTRIBUTE = "(?:\\s+" + ATTRIBUTENAME + ATTRIBUTEVALUESPEC + "?)";
+export const OPENTAG = "<" + TAGNAME + ATTRIBUTE + "*\\s*/?>";
+export const CLOSETAG = "</" + TAGNAME + "\\s*[>]";
+const HTMLCOMMENT = "<!---->|<!--(?:-?[^>-])(?:-?[^-])*-->";
+const PROCESSINGINSTRUCTION = "[<][?][\\s\\S]*?[?][>]";
+const DECLARATION = "<![A-Z]+\\s+[^>]*>";
+const CDATA = "<!\\[CDATA\\[[\\s\\S]*?\\]\\]>";
+const HTMLTAG = "(?:" +
+    OPENTAG +
+    "|" +
+    CLOSETAG +
+    "|" +
+    HTMLCOMMENT +
+    "|" +
+    PROCESSINGINSTRUCTION +
+    "|" +
+    DECLARATION +
+    "|" +
+    CDATA +
+    ")";
+export const reHtmlTag = new RegExp("^" + HTMLTAG);
+const reBackslashOrAmp = /[\\&]/;
+export const ESCAPABLE = "[!\"#$%&'()*+,./:;<=>?@[\\\\\\]^_`{|}~-]";
+const reEntityOrEscapedChar = new RegExp("\\\\" + ESCAPABLE + "|" + ENTITY, "gi");
+const XMLSPECIAL = '[&<>"]';
+const reXmlSpecial = new RegExp(XMLSPECIAL, "g");
+function unescapeChar(s) {
+    return s.charCodeAt(0) === C_BACKSLASH
+        ? s.charAt(1)
+        : decodeHTML(s);
+}
+;
 // Replace entities and backslash escapes with literal characters.
-let unescapeString = function (s) {
-  if (reBackslashOrAmp.test(s)) {
-    return s.replace(reEntityOrEscapedChar, unescapeChar);
-  }
-  return s;
+export function unescapeString(s) {
+    return reBackslashOrAmp.test(s)
+        ? s.replace(reEntityOrEscapedChar, unescapeChar)
+        : s;
+}
+;
+export function normalizeURI(uri) {
+    try {
+        return encode(uri);
+    }
+    catch (err) {
+        return uri;
+    }
+}
+;
+const replaceUnsafeChar = (s) => {
+    switch (s) {
+        case "&":
+            return "&amp;";
+        case "<":
+            return "&lt;";
+        case ">":
+            return "&gt;";
+        case '"':
+            return "&quot;";
+        default:
+            return s;
+    }
 };
-
-let normalizeURI = function (uri) {
-  try {
-    return encode(uri);
-  } catch (err) {
-    return uri;
-  }
-};
-
-let replaceUnsafeChar = function (s) {
-  switch (s) {
-    case "&":
-      return "&amp;";
-    case "<":
-      return "&lt;";
-    case ">":
-      return "&gt;";
-    case '"':
-      return "&quot;";
-    default:
-      return s;
-  }
-};
-
-let escapeXml = function (s) {
-  if (reXmlSpecial.test(s)) {
-    return s.replace(reXmlSpecial, replaceUnsafeChar);
-  }
-  return s;
-};
-
-export {
-  unescapeString,
-  normalizeURI,
-  escapeXml,
-  reHtmlTag,
-  OPENTAG,
-  CLOSETAG,
-  ENTITY,
-  ESCAPABLE
-};
+export function escapeXml(s) {
+    return reXmlSpecial.test(s)
+        ? s.replace(reXmlSpecial, replaceUnsafeChar)
+        : s;
+}
+;

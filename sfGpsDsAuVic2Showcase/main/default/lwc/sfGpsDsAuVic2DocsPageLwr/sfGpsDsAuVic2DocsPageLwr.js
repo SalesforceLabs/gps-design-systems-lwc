@@ -1,43 +1,35 @@
 import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
-import mdEngine from "c/sfGpsDsMarkdown";
-
 const LINKS_DEFAULT = [];
-
 /**
  * @slot Intro
  * @slot Content
  */
-export default class extends SfGpsDsLwc {
-  @api title;
-  @api description;
-
-  /* api: links */
-
-  _linksOriginal;
-  _links = LINKS_DEFAULT;
-
-  @api
-  get links() {
-    return this._linksOriginal;
-  }
-
-  set links(markdown) {
-    try {
-      this._linksOriginal = markdown;
-      this._links = mdEngine.extractLinks(markdown);
-      // eslint-disable-next-line no-unused-vars
-    } catch (e) {
-      this.addError("LI-MD", "Issue when parsing Links markdown");
-      this._links = LINKS_DEFAULT;
+export default class SfGpsDsAuVic2DocsPageLwr extends SfGpsDsLwc {
+    // @ts-ignore
+    @api
+    title = "";
+    // @ts-ignore
+    @api
+    description;
+    // @ts-ignore
+    @api
+    links;
+    _links = this.defineMarkdownLinksProperty("links", {
+        errorCode: "LI-MD",
+        errorText: "Issue when parsing Links markdown",
+        defaultValue: LINKS_DEFAULT
+    });
+    /* computed */
+    get computedShowLinks() {
+        return !!this._links.value?.length;
     }
-  }
-
-  /* lifecycle */
-
-  connectedCallback() {
-    super._isLwrOnly = true;
-    super.connectedCallback();
-    this.classList.add("vic2-scope");
-  }
+    /* lifecycle */
+    constructor() {
+        super(true); // isLwrOnly;
+    }
+    connectedCallback() {
+        super.connectedCallback?.();
+        this.classList.add("vic2-scope");
+    }
 }

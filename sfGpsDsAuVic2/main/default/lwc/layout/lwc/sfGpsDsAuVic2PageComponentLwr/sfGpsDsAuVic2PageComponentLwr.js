@@ -1,55 +1,65 @@
 import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
-import { normaliseBoolean } from "c/sfGpsDsHelpers";
-
 const FULLWIDTH_DEFAULT = false;
-
+const DEBUG = false;
+const CLASS_NAME = "sfGpsDsAuVic2PageComponentLwr";
 /**
  * @slot Component
  */
-export default class extends SfGpsDsLwc {
-  static renderMode = "light";
-
-  @api cid;
-  @api title;
-  @api className;
-
-  /* api: fullWidth */
-
-  _fullWidth = FULLWIDTH_DEFAULT;
-  _fullWidthOriginal = FULLWIDTH_DEFAULT;
-
-  @api
-  get fullWidth() {
-    return this._fullWidthOriginal;
-  }
-
-  set fullWidth(value) {
-    this._fullWidthOriginal = value;
-    this._fullWidth = normaliseBoolean(value, {
-      acceptString: true,
-      fallbackValue: FULLWIDTH_DEFAULT
-    });
-
-    if (this._fullWidth) {
-      this.classList.add("rpl-page-component--full-width");
-    } else {
-      this.classList.remove("rpl-page-component--full-width");
+export default class SfGpsDsAuVic2PageComponentLwr extends SfGpsDsLwc {
+    static renderMode = "light";
+    // @ts-ignore
+    @api
+    title = "";
+    /* api: cid */
+    _cid;
+    // @ts-ignore
+    @api
+    get cid() {
+        return this._cid;
     }
-  }
-
-  /* getters */
-
-  get computedClassName() {
-    return {
-      [this.className]: this.className
-    };
-  }
-  /* lifecycle */
-
-  connectedCallback() {
-    this._isLwrOnly = true;
-    super.connectedCallback();
-    this.classList.add("vic2-scope", "rpl-page-component");
-  }
+    set cid(value) {
+        this._cid = value;
+        if (value)
+            this.id = value;
+    }
+    // @ts-ignore
+    @api
+    fullWidth;
+    _fullWidth = this.defineBooleanProperty("fullWidth", {
+        defaultValue: FULLWIDTH_DEFAULT,
+        watcher: () => {
+            if (this._fullWidth.value) {
+                this.classList.add("rpl-page-component--full-width");
+            }
+            else {
+                this.classList.remove("rpl-page-component--full-width");
+            }
+        }
+    });
+    /* api: className */
+    // @ts-ignore
+    @api
+    className;
+    _className = this.defineStringProperty("className", {
+        // eslint-disable-next-line no-unused-vars
+        watcher: (_propertyName, newValue, oldValue) => {
+            if (DEBUG)
+                console.debug(CLASS_NAME, "> set className", newValue, oldValue);
+            if (oldValue)
+                this.classList.remove(...oldValue.split(" "));
+            if (newValue)
+                this.classList.add(...newValue.split(" "));
+            if (DEBUG)
+                console.debug(CLASS_NAME, "< set className", this._className.value);
+        }
+    });
+    /* lifecycle */
+    constructor() {
+        super(true); // isLwrOnly;
+    }
+    connectedCallback() {
+        super.connectedCallback?.();
+        this.classList.add("rpl-page-component");
+    }
 }

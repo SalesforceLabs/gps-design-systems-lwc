@@ -1,20 +1,17 @@
 import { api } from "lwc";
-import { normaliseString } from "c/sfGpsDsHelpers";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
-
 const TABPADDINGSTYLE_DEFAULT = "full";
 const TABPADDINGSTYLE_VALUES = {
-  full: "",
-  flush: "nsw-tabs__content--flush",
-  "side-flush": "nsw-tabs__content--side-flush"
+    full: "",
+    flush: "nsw-tabs__content--flush",
+    "side-flush": "nsw-tabs__content--side-flush"
 };
-
 const TABBORDERSTYLE_DEFAULT = "border";
 const TABBORDERSTYLE_VALUES = {
-  border: "",
-  "no-border": "nsw-tabs__content--no-border"
+    border: "",
+    "no-border": "nsw-tabs__content--no-border"
 };
-
+const FIRSTCHILD_DEFAULT = false;
 /**
  * @slot Tab1
  * @slot Tab2
@@ -27,73 +24,72 @@ const TABBORDERSTYLE_VALUES = {
  * @slot Tab9
  * @slot Tab10
  */
-export default class extends SfGpsDsLwc {
-  @api title;
-  @api tab1Label;
-  @api tab2Label;
-  @api tab3Label;
-  @api tab4Label;
-  @api tab5Label;
-  @api tab6Label;
-  @api tab7Label;
-  @api tab8Label;
-  @api tab9Label;
-  @api tab10Label;
-  @api firstChild;
-
-  /* api: tabPaddingStyle, Picklist */
-
-  _tabPaddingStyle = TABPADDINGSTYLE_DEFAULT;
-  _tabPaddingStyleOriginal = TABPADDINGSTYLE_DEFAULT;
-
-  @api
-  get tabPaddingStyle() {
-    return this._tabPaddingStyleOriginal;
-  }
-
-  set tabPaddingStyle(value) {
-    this._tabPaddingStyleOriginal = value;
-    this._tabPaddingStyle = normaliseString(value, {
-      validValues: TABPADDINGSTYLE_VALUES,
-      fallbackValue: TABPADDINGSTYLE_DEFAULT,
-      returnObjectValue: true
+export default class SfGpsDsAuNswTabContainerLwr extends SfGpsDsLwc {
+    // @ts-ignore
+    @api
+    title = "";
+    // @ts-ignore
+    @api
+    tab1Label;
+    // @ts-ignore
+    @api
+    tab2Label;
+    // @ts-ignore
+    @api
+    tab3Label;
+    // @ts-ignore
+    @api
+    tab4Label;
+    // @ts-ignore
+    @api
+    tab5Label;
+    // @ts-ignore
+    @api
+    tab6Label;
+    // @ts-ignore
+    @api
+    tab7Label;
+    // @ts-ignore
+    @api
+    tab8Label;
+    // @ts-ignore
+    @api
+    tab9Label;
+    // @ts-ignore
+    @api
+    tab10Label;
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    firstChild = FIRSTCHILD_DEFAULT;
+    // @ts-ignore
+    @api
+    tabPaddingStyle;
+    _tabPaddingStyle = this.defineEnumObjectProperty("tabPaddingStyle", {
+        validValues: TABPADDINGSTYLE_VALUES,
+        defaultValue: TABPADDINGSTYLE_DEFAULT
     });
-  }
-
-  /* api: tabBorderStyle, Picklist */
-
-  _tabBorderStyle = TABBORDERSTYLE_DEFAULT;
-  _tabBorderStyleOriginal = TABBORDERSTYLE_DEFAULT;
-
-  @api
-  get tabBorderStyle() {
-    return this._tabBorderStyleOriginal;
-  }
-
-  set tabBorderStyle(value) {
-    this._tabBorderStyleOriginal = value;
-    this._tabBorderStyle = normaliseString(value, {
-      validValues: TABBORDERSTYLE_VALUES,
-      fallbackValue: TABBORDERSTYLE_DEFAULT,
-      returnObjectValue: true
+    // @ts-ignore
+    @api
+    tabBorderStyle;
+    _tabBorderStyle = this.defineEnumObjectProperty("tabBorderStyle", {
+        validValues: TABBORDERSTYLE_VALUES,
+        defaultValue: TABBORDERSTYLE_DEFAULT
     });
-  }
-
-  /* computed */
-
-  get computedTabClassName() {
-    return {
-      "nsw-tabs__content": true,
-      [this._tabPaddingStyle]: this._tabPaddingStyle,
-      [this._tabBorderStyle]: this._tabBorderStyle
-    };
-  }
-
-  /* lifecycle */
-
-  connectedCallback() {
-    this._isLwrOnly = true;
-    super.connectedCallback();
-    this.classList.add("nsw-scope");
-  }
+    /* computed */
+    get computedTabClassName() {
+        return {
+            "nsw-tabs__content": true,
+            [this._tabPaddingStyle.value]: !!this._tabPaddingStyle.value,
+            [this._tabBorderStyle.value]: !!this._tabBorderStyle.value
+        };
+    }
+    /* lifecycle */
+    constructor() {
+        super(true);
+    }
+    connectedCallback() {
+        super.connectedCallback?.();
+        this.classList.add("nsw-scope");
+    }
 }

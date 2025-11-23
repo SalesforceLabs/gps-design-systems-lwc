@@ -1,19 +1,33 @@
 import { LightningElement, api } from "lwc";
-
 /**
  * @slot header
  * @slot sidebar
  * @slot footer
  */
-export default class extends LightningElement {
-  static renderMode = "light";
-
-  @api themeClassName = "";
-  @api headerClassName = "";
-  @api contentClassName = "";
-  @api containerClassName = "";
-  @api gridClassName = "";
-  @api sidebarClassName = "";
-  @api mainClassName = "";
-  @api footerClassName = "";
+export default class SfGpsDsAuVic2SidebarThemeLayoutLwr extends LightningElement {
+    static renderMode = "light";
+    // @ts-ignore
+    @api
+    themeClassName = "";
+    // @ts-ignore
+    @api
+    headerClassName = "";
+    // @ts-ignore
+    @api
+    contentClassName = "";
+    // @ts-ignore
+    @api
+    containerClassName = "";
+    // @ts-ignore
+    @api
+    gridClassName = "";
+    // @ts-ignore
+    @api
+    sidebarClassName = "";
+    // @ts-ignore
+    @api
+    mainClassName = "";
+    // @ts-ignore
+    @api
+    footerClassName = "";
 }

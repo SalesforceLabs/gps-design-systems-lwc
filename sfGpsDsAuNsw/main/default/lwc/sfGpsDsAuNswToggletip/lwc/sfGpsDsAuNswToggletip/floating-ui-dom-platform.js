@@ -8,16 +8,15 @@ import { getOffsetParent } from "./floating-ui-dom-platform-getOffsetParent";
 import { getScale } from "./floating-ui-dom-platform-getScale";
 import { isElement } from "./floating-ui-dom-platform-isElement";
 import { isRTL } from "./floating-ui-dom-platform-isRTL";
-
 export const platform = {
-  convertOffsetParentRelativeRectToViewportRelativeRect,
-  getDocumentElement,
-  getClippingRect,
-  getOffsetParent,
-  getElementRects,
-  getClientRects,
-  getDimensions,
-  getScale,
-  isElement,
-  isRTL
+    convertOffsetParentRelativeRectToViewportRelativeRect,
+    getDocumentElement,
+    getClippingRect,
+    getOffsetParent,
+    getElementRects,
+    getClientRects,
+    getDimensions,
+    getScale,
+    isElement,
+    isRTL
 };
