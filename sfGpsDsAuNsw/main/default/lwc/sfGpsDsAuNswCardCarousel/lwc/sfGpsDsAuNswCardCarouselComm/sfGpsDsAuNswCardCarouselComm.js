@@ -10,6 +10,9 @@ import { htmlDecode, isArray } from "c/sfGpsDsHelpers";
 export default class SfGpsDsAuNswCardCarouselComm extends SfGpsDsIpLwc {
     // @ts-ignore
     @api
+    title = "";
+    // @ts-ignore
+    @api
     accessibilityLabel;
     // @ts-ignore
     @api

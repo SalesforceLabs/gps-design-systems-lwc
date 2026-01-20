@@ -13,15 +13,23 @@ export default class SfGpsDsAuNswMarkupElementV2Comm extends SfGpsDsElement {
     markup;
     // @ts-ignore
     @api
+    mode;
+    // @ts-ignore
+    @api
     className;
     /* lifecycle */
     renderedCallback() {
         super.renderedCallback?.();
         const elt = this.refs.markup;
         if (this.markup && elt) {
-            let tmpl = document.createElement("template");
-            replaceInnerHtml(tmpl, this.markup);
-            elt.parentNode?.replaceChild(tmpl.content, elt);
+            if (this.mode === "reparent") {
+                let tmpl = document.createElement("template");
+                replaceInnerHtml(tmpl, this.markup);
+                elt.parentNode?.replaceChild(tmpl.content, elt);
+            }
+            else {
+                replaceInnerHtml(elt, this.markup);
+            }
         }
     }
     connectedCallback() {

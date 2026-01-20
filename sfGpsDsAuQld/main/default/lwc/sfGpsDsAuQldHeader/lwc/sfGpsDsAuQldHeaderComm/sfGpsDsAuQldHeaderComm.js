@@ -1,14 +1,17 @@
 import { api } from "lwc";
 import SfGpsDsLwc from "c/sfGpsDsLwc";
 import mdEngine from "c/sfGpsDsMarkdown";
+import { NavigationMixin } from "lightning/navigation";
 
 const DEBUG = false;
 const CLASS_NAME = "sfGpsDsAuQldHeaderComm";
 
-export default class extends SfGpsDsLwc {
+export default class extends NavigationMixin(SfGpsDsLwc) {
   @api preHeaderStyle;
   @api ctaOneIcon;
   @api ctaTwoIcon;
+  @api authMode;
+  @api profileIcon;
 
   @api searchLabel;
   @api searchFieldLabel;
@@ -108,6 +111,26 @@ export default class extends SfGpsDsLwc {
     }
   }
 
+  /* api: profileLink */
+
+  _profileLink;
+  _profileLinkOriginal;
+
+  @api
+  get profileLink() {
+    return this._profileLinkOriginal;
+  }
+
+  set profileLink(markdown) {
+    try {
+      this._profileLinkOriginal = markdown;
+      this._profileLink = markdown ? mdEngine.extractFirstLink(markdown) : null;
+    } catch (e) {
+      this.addError("HL-CO", "Issue when parsing Profile Link markdown");
+      if (DEBUG) console.debug(CLASS_NAME, "set profileLink", e);
+    }
+  }
+
   /* api: siteLogo */
 
   _siteLogo;
@@ -144,6 +167,23 @@ export default class extends SfGpsDsLwc {
 
   get computedSiteLogoText() {
     return this._siteLogo?.text;
+  }
+
+  /* event management */
+  handleSearch(event) {
+    const queryTerm = event.detail;
+    if (DEBUG)
+      console.debug(CLASS_NAME, "handleSearch", queryTerm, event.target.tag);
+
+    // Navigate to search page using lightning/navigation API:
+    // https://developer.salesforce.com/docs/component-library/bundle/lightning:navigation/documentation
+    // @ts-ignore
+    this[NavigationMixin.Navigate]({
+      type: "standard__search",
+      state: {
+        term: queryTerm
+      }
+    });
   }
 
   /* lifecycle */

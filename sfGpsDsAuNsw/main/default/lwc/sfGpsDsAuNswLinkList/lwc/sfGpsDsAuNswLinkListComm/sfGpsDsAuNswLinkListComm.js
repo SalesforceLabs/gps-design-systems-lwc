@@ -16,7 +16,9 @@ export default class SfGpsDsAuNswLinkListComm extends SfGpsDsLwc {
     title = "";
     // @ts-ignore
     @api
+    highlightExternal;
     // @ts-ignore
+    @api
     firstChild;
     // @ts-ignore
     @api

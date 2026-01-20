@@ -30,19 +30,26 @@
         <!-- Government link and logo used for mobile display -->
         <a href={preHeaderUrl} target="_self">
           <span class="qld__header__pre-header-url">{preHeaderText}</span>
-          <img lwc:if={preHeaderLogo}
+          <img
+            lwc:if={preHeaderLogo}
             class="qld__header__pre-header-brand-image"
             alt={preHeaderLogoAlt}
             src={preHeaderLogo}
           />
-          <span lwc:else class="qld__header__pre-header-url--mobile">{preHeaderText}</span>
+          <span lwc:else class="qld__header__pre-header-url--mobile"
+            >{preHeaderText}</span
+          >
         </a>
 
         <!-- CTA wrapper for right aligned links in the preHeader -->
         <div class="qld__header__cta-wrapper">
           <a lwc:if={ctaOneLink} class="qld__header__cta-link" href={ctaOneUrl}>
             <span lwc:if={ctaOneIcon} class="qld__header__cta-link-icon">
-              <svg class="qld__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                class="qld__icon"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <use href={computedCtaOneIconUrl}></use>
               </svg>
             </span>
@@ -50,12 +57,48 @@
           </a>
           <a lwc:if={ctaTwoLink} class="qld__header__cta-link" href={ctaTwoUrl}>
             <span lwc:if={ctaTwoIcon} class="qld__header__cta-link-icon">
-              <svg class="qld__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                class="qld__icon"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <use href={computedCtaTwoIconUrl}></use>
               </svg>
             </span>
             <span class="qld__header__cta-link-text">{ctaTwoText}</span>
           </a>
+
+          <a
+            lwc:if={computedAuthShowProfile}
+            href={profileUrl}
+            class="qld__header__cta-link"
+          >
+            <span lwc:if={profileIcon} class="qld__header__cta-link-icon">
+              <svg
+                class="qld__icon"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <use href={computedProfileIconUrl}></use>
+              </svg>
+            </span>
+            <span class="qld__header__cta-link-text">{profileText}</span>
+          </a>
+
+          <template lwc:if={computedAuthShowLogin}>
+            <a href={computedAuthUrl} class="qld__header__cta-link">
+              <span class="qld__header__cta-link-icon">
+                <svg
+                  class="qld__icon"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <use href={computedAuthIconUrl}></use>
+                </svg>
+              </span>
+              <span class="qld__header__cta-link-text">{computedAuthText}</span>
+            </a>
+          </template>
         </div>
 
         <!-- Main navigation controls (Search and Menu buttons on mobile and tablet screens) -->
@@ -92,6 +135,7 @@
 
           <!-- Menu button -->
           <button
+            lwc:if={menuLabel}
             aria-controls={mainNavId}
             class="qld__header__toggle-main-nav qld__main-nav__toggle--open"
             aria-expanded={_menuIsOpen}
@@ -174,49 +218,67 @@
           id={computedHeaderSearchId}
         >
           <div class="qld__main-nav__focus-trap-top"></div>
-            <div class="qld__search-form--wrapper">
-              <form
-                role="search"
-                aria-label={i18n.searchFormAriaLabel}
-                class="qld__search-form"
-                action="#"
+          <div class="qld__search-form--wrapper">
+            <form
+              role="search"
+              aria-label={i18n.searchFormAriaLabel}
+              class="qld__search-form"
+              action={computedGlobalSearchActionUrl}
+            >
+              <label
+                for={computedHeaderSearchInputId}
+                class="qld__label qld__display-lg qld__search-form__label"
               >
-                <label
-                  for={computedHeaderSearchInputId}
-                  class="qld__label qld__display-lg qld__search-form__label"
+                {searchFieldLabel}
+              </label>
+
+              <div class="qld__search-form__inner">
+                <svg
+                  class="qld__icon qld__icon--sm qld__search-form__inner-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
                 >
-                  {searchFieldLabel}
-                </label>
+                  <use href={computedIconSearchUrl}></use>
+                </svg>
+                <!-- text vs search to avoid event -->
+                <input
+                  lwc:ref="query"
+                  type="text"
+                  id={computedHeaderSearchInputId}
+                  name="query"
+                  class="qld__text-input"
+                  autocomplete="off"
+                />
+                <input
+                  type="text"
+                  name="name"
+                  autocomplete="off"
+                  tabindex="-1"
+                  class="qld__text-input--validation"
+                />
 
-                <div class="qld__search-form__inner">
-                  <input
-                    type="search"
-                    id={computedHeaderSearchInputId}
-                    name="query"
-                    class="qld__text-input"
-                    autocomplete="off"
-                  />
-                  <input
-                    type="text"
-                    name="name"
-                    autocomplete="off"
-                    tabindex="-1"
-                    class="qld__text-input--validation"
-                  />
-
-                  <div class="qld__search-form__btn">
-                    <button
-                      class="qld__btn qld__btn--search"
-                      type="submit"
-                      aria-label={i18n.searchButtonAriaLabel}
-                    >
-                      <span class="qld__btn__icon"></span>
-                      <span class="qld__btn__text">{searchLabel}</span>
-                    </button>
-                  </div>
+                <div class="qld__search-form__btn">
+                  <button
+                    class="qld__btn qld__btn--search"
+                    type="submit"
+                    aria-label={i18n.searchButtonAriaLabel}
+                    onclick={handleSearch}
+                  >
+                    <span class="qld__btn__icon">
+                      <svg
+                        class="qld__icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <use href={computedIconSearchUrl}></use>
+                      </svg>
+                    </span>
+                    <span class="qld__btn__text">{searchLabel}</span>
+                  </button>
                 </div>
-              </form>
-            </div>
+              </div>
+            </form>
+          </div>
           <div class="qld__main-nav__focus-trap-bottom"></div>
         </div>
       </div>

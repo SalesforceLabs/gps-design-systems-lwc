@@ -1,11 +1,16 @@
 <!-- sldsValidatorIgnore -->
 <template>
   <div class="nsw-grid">
-    <div class={visualClassName} onclick={handleCheckbox} onkeydown={handleKeyboardCheckbox}>
+    <div
+      class={visualClassName}
+      role={computedRole}
+      aria-checked={computedAriaChecked}
+      tabindex={compuetedTabindex}
+      onclick={handleCheckbox}
+      onkeydown={handleKeyboardCheckbox}
+    >
       <!-- Display Text -->
-      <div
-        class="nsw-card"
-      >
+      <div class="nsw-card">
         <div class="nsw-card__content">
           <ul class="sf-gps-ds-omniscript-edit-block--card--values">
             <template
@@ -13,22 +18,31 @@
               for:item="dvItem"
               for:index="dvIndex"
             >
-              <li
-                key={dvItem.lwcId}
-                class="nsw-text__truncate"
-              >
+              <li key={dvItem.lwcId} class="nsw-text__truncate">
                 {dvItem.value}
               </li>
             </template>
           </ul>
 
-          <span class="material-icons nsw-material-icons" aria-hidden="true">{svgMapIcon}</span>
+          <span class="material-icons nsw-material-icons" aria-hidden="true"
+            >{svgMapIcon}</span
+          >
           <template lwc:if={_showCheckbox}>
-            <span class="material-icons nsw-material-icons checkbox" aria-hidden="true">check_box</span>
-            <span class="sr-only">{allCustomLabelsUtil.OmniEditBlockIconTextApproval}</span>
+            <span
+              class="material-icons nsw-material-icons checkbox"
+              aria-hidden="true"
+              >check_box</span
+            >
+            <span class="sr-only"
+              >{allCustomLabelsUtil.OmniEditBlockIconTextApproval}</span
+            >
           </template>
           <template lwc:elseif={_propSetMap.selectCheckBox}>
-            <span class="material-icons nsw-material-icons checkbox" aria-hidden="true">check_box_outline_blank</span>
+            <span
+              class="material-icons nsw-material-icons checkbox"
+              aria-hidden="true"
+              >check_box_outline_blank</span
+            >
           </template>
 
           <!-- Menu Action Icon -->
@@ -64,26 +78,24 @@
       <slot class="nsw-grid nsw-p-left-sm"> </slot>
     </c-sf-gps-ds-au-nsw-dialog>
 
-    <div
-      lwc:if={showAdd}
-      class="nsw-col nsw-display-flex nsw-justify-content-end nsw-m-top-sm"
-    >
-      <button
-        type="button"
-        class="nsw-button nsw-button--dark-outline editblock-new"
-        onclick={handleAdd}
-      >
-        {_newLabel}
-      </button>
-    </div>
+    <template lwc:if={_isLongCards}>
+      <div lwc:if={showAdd} class="nsw-col">
+        <button
+          type="button"
+          class="nsw-button nsw-button--dark-outline editblock-new"
+          onclick={handleAdd}
+        >
+          {_newLabel}
+        </button>
+      </div>
+    </template>
   </div>
 
   <!-- Spinner -->
-  <template lwc:if={isPageLoading}>
-    <c-sf-gps-ds-au-nsw-loader
-      label={allCustomLabelsUtil.OmniSpinnerTextLoading}
-      size="md"
-    >
-    </c-sf-gps-ds-au-nsw-loader>
-  </template>
+  <c-sf-gps-ds-au-nsw-loader
+    lwc:if={isPageLoading}
+    label={allCustomLabelsUtil.OmniSpinnerTextLoading}
+    size="md"
+  >
+  </c-sf-gps-ds-au-nsw-loader>
 </template>

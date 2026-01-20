@@ -43,7 +43,7 @@ export default class SfGpsDsAuVic2PageComponentLwr extends SfGpsDsLwc {
     className;
     _className = this.defineStringProperty("className", {
         // eslint-disable-next-line no-unused-vars
-        watcher: (_propertyName, newValue, oldValue) => {
+        watcher: (_propertyName, oldValue, newValue) => {
             if (DEBUG)
                 console.debug(CLASS_NAME, "> set className", newValue, oldValue);
             if (oldValue)

@@ -57,10 +57,31 @@
         name="ctaTwoIcon"
         type="String"
         label="Icon name for Call to Action link two"
-        description="Font Awesome css classes to be applied."
+        description="Icon name be applied."
         default=""
       />
-
+      <property
+        name="authMode"
+        type="String"
+        label="Authentication mode"
+        description="Indicates how you want the authentication info to show. Select hide for unauthenticated experiences."
+        default="hide"
+        datasource="hide,login-logout,all"
+      />
+      <property
+        name="profileLink"
+        type="String"
+        label="Profile link"
+        description="Label and URL for profile in Markdown link format. Leave blank if not showing auth."
+        default="[{!User.Record.CommunityNickname}]({!Site.basePath}/profile)"
+      />
+      <property
+        name="profileIcon"
+        type="String"
+        label="Icon name for profile "
+        description="Icon name to be applied."
+        default="profile"
+      />
       <property
         name="searchLabel"
         type="String"
@@ -79,7 +100,7 @@
         name="menuLabel"
         type="String"
         label="Menu label"
-        description="Label used for the menu button."
+        description="Label used for the menu button. Leave blank to disable menu button on mobile."
         default="Menu"
       />
       <property
@@ -99,8 +120,8 @@
       <property
         name="headerStyle"
         type="String"
-        label="header style"
-        description="Colour theme style used for rendering the pre-header."
+        label="Header style"
+        description="Colour theme style used for rendering the header."
         required="true"
         default="light"
         datasource="light,dark,dark-alternate"

@@ -8,9 +8,7 @@
  */
 
 import { LightningElement, api, track } from "lwc";
-import {
-  normaliseString
-} from "c/sfGpsDsHelpers";
+import { normaliseString } from "c/sfGpsDsHelpers";
 import sfGpsDsAuQldStaticResource from "@salesforce/resourceUrl/sfGpsDsAuQld";
 
 const LAYOUT_STACK = "stack";
@@ -27,16 +25,13 @@ const LAYOUT_DEFAULT = LAYOUT_STACK;
 
 const SIZE_DEFAULT = "default";
 const SIZE_75 = "75%";
-const SIZE_VALUES = [
-  SIZE_DEFAULT,
-  SIZE_75
-];
+const SIZE_VALUES = [SIZE_DEFAULT, SIZE_75];
 
 const VIDEOTYPE_VIMEO = "vimeo";
 const VIDEOTYPE_YOUTUBE = "youtube";
 const VIDEOTYPE_VALUES = {
   [VIDEOTYPE_VIMEO]: "https://player.vimeo.com/video/",
-  [VIDEOTYPE_YOUTUBE]: "https://www.youtube.com/embed/" 
+  [VIDEOTYPE_YOUTUBE]: "https://www.youtube.com/embed/"
 };
 const VIDEOTYPE_DEFAULT = VIDEOTYPE_YOUTUBE;
 
@@ -157,7 +152,8 @@ export default class extends LightningElement {
       row: true,
       "qld__row-gap-component": true,
       "qld__video__player--align-top": this._layout === LAYOUT_TWOCOLUMNTOP,
-      "qld__video__player--align-centered_vertically": this._layout === LAYOUT_TWOCOLUMNCENTERED
+      "qld__video__player--align-centered_vertically":
+        this._layout === LAYOUT_TWOCOLUMNCENTERED
     };
   }
 
@@ -191,24 +187,15 @@ export default class extends LightningElement {
   }
 
   get computedClockIconHref() {
-    return (
-        sfGpsDsAuQldStaticResource +
-        "/assets/img/QLD-icons.svg#clock"
-      );
+    return sfGpsDsAuQldStaticResource + "/assets/img/QLD-icons.svg#clock";
   }
 
   get computedArrowRightIconHref() {
-    return (
-        sfGpsDsAuQldStaticResource +
-        "/assets/img/QLD-icons.svg#arrow-right"
-      );
+    return sfGpsDsAuQldStaticResource + "/assets/img/QLD-icons.svg#arrow-right";
   }
 
   get computedTranscriptIconHref() {
-    return (
-        sfGpsDsAuQldStaticResource +
-        "/assets/img/QLD-icons.svg#transcript"
-      );
+    return sfGpsDsAuQldStaticResource + "/assets/img/QLD-icons.svg#transcript";
   }
 
   /* event management */

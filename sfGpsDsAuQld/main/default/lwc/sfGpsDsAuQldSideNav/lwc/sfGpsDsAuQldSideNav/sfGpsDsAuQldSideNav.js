@@ -52,14 +52,6 @@ export default class extends LightningElement {
     };
   }
 
-
-  get computedChevronUpIconHref() {
-    return (
-        sfGpsDsAuQldStaticResource +
-        "/assets/img/QLD-icons.svg#chevron-up"
-      );
-  }
-
   /* methods */
 
   mapItems(parentIndex, parentLevel, map, items) {

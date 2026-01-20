@@ -1,2 +1,24 @@
-@import "c/sfGpsDsAuNswCore";
-@import "c/sfGpsDsAuNswForm";
+@import "c/sfGpsDsAuNswCoreOs";
+@import "c/sfGpsDsAuNswFormOs";
+@import "./table_gen.css";
+
+/* the goal here is to bring the next rows closer */
+
+.sfgpsds-nsw-edit-block__nextindex.nsw-col {
+  margin-top: -1rem;
+}
+
+@media (min-width: 48rem) {
+  .sfgpsds-nsw-edit-block__nextindex.nsw-col {
+    margin-top: -2rem;
+  }
+}
+
+/* allow button menu to span over next elements */
+.sfgpsds-nsw-edit-block__nextindex {
+  overflow: visible;
+}
+
+table td {
+  vertical-align: middle;
+}

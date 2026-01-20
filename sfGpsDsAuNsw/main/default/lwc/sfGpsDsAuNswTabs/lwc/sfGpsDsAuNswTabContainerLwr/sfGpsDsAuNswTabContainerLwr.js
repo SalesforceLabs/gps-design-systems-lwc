@@ -60,7 +60,6 @@ export default class SfGpsDsAuNswTabContainerLwr extends SfGpsDsLwc {
     tab10Label;
     // @ts-ignore
     @api
-    // @ts-ignore
     firstChild = FIRSTCHILD_DEFAULT;
     // @ts-ignore
     @api

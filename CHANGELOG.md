@@ -1,5 +1,133 @@
 ## Change log
 
+### 6 January 2026
+
+#### NSW DS: Cookie Consent element
+
+Added the Cookie Consent element to let customers confirm their cookie preferences. It comes with a banner that should be placed in a sticky container at the bottom of the main content section and will be automatically show if any cookie content is past it's shelf life. It also has a modal dialog to manager cookie preferences.
+
+Refer to [`sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswCookieConsent/lwc/sfGpsDsAuNswCookieConsent`](sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswCookieConsent/lwc/sfGpsDsAuNswCookieConsent) and [`sfGpsDs/main/default/lwc/sfGpsDsCookieConsent`](sfGpsDs/main/default/lwc/sfGpsDsCookieConsent).
+
+### 5 January 2026
+
+#### VIC2 DS: Timeline
+
+Added the Timeline element to let display a visual journey of short blocks of content in a linear order. Each block can be actionable for users to navigate through to related content.
+
+Refer to [`sfGpsDsAuVic2/main/default/lwc/sfGpsDsAuVic2Timeline/lwc/sfGpsDsAuVic2Timeline`](sfGpsDsAuVic2/main/default/lwc/sfGpsDsAuVic2Timeline/lwc/sfGpsDsAuVic2Timeline).
+
+### 29 December 2025
+
+#### NSW DS: QuickExit
+
+Added the QuickExit element to let users leave a site immediately without drawing attention.
+
+Refer to [`sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswQuickExit/lwc/sfGpsDsAuNswQuickExit`](sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswQuickExit/lwc/sfGpsDsAuNswQuickExit).
+
+#### NSW DS: Sticky Container
+
+Added the Sticky Container element which allows to pack a component like the QuickExit into a fixed-position container at the bottom of the screen. The page bottom margin is adjusted accordingly so that all the content can still be seen.
+
+Refer to [`sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswStickyContainer/lwc/sfGpsDsAuNswQuickExit`](sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswStickyContainer/lwc/sfGpsDsAuNswStickyContainer).
+
+### 24 December 2025
+
+#### NSW DS: SideNav mobile button
+
+We implemented the changes in mobile SideNav as per NSW Design System v2.24, essentially adding a collapsible button.
+
+Refer to [`sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswSideNav/lwc/sfGpsDsAuNswSideNav`](sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswSideNav/lwc/sfGpsDsAuNswSideNav).
+
+#### NSW DS: Card v2 border attribute
+
+We added the border attribute, which adds a border around images, as per the NSW Design System v2.24.
+
+#### NSW DS: Card Carrousel update
+
+We carried over the changes in the NSW DS v2.24 Card Carrousel, aimed at having a more consistent card sizing.
+
+#### NSW DS: Support for external links in Link lists and link collections
+
+We added the external link highlight feature from NSW DS v2.24 for link lists. This adds a distinctive icon flagging the link as external, and the link is opened in a new window.
+
+Refer to [`sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswLinkList/lwc/sfGpsDsAuNswLinkList`](sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswLinkList/lwc/sfGpsDsAuNswLinkList).
+
+### 22 December 2025
+
+#### NSW, QLD and VIC2 DS: Tabs refactor
+
+We refactored the tabs functionality based on new headless tabs code in sfGpsDs, reducing code duplication across DSes.
+
+### 10 December 2025
+
+#### NSW DS: Adjusting Edit Block for accessibility
+
+The label of edit blocks had poor accessibility. Replaced the heading by a h3 or div with a heading role and aria-level, both in standard and managed package runtime.
+
+Refer to [`sfGpsDsAuNsw/main/default/lwc/omnistudio-managed-package-runtime-forms/lwc/sfGpsDsAuNswFormEditBlock`](sfGpsDsAuNsw/main/default/lwc/omnistudio-managed-package-runtime-forms/lwc/sfGpsDsAuNswFormEditBlock) and [`sfGpsDsAuNsw/main/default/lwc/omnistudio-standard-runtime-forms/lwc/sfGpsDsAuNswFormEditBlock`](sfGpsDsAuNsw/main/default/lwc/omnistudio-standard-runtime-forms/lwc/sfGpsDsAuNswFormEditBlock).
+
+### 8 December 2025
+
+#### NSW DS: Support for login, self-registration, forgot password and check email pages
+
+We added components to support login, self-registration, forgot password and check email pages for authentication.
+
+Refer to [`sfGpsDsAuNsw/main/default/lwc/auth/lwc`](sfGpsDAuNsw/main/default/lwc/auth/lwc).
+
+#### NSW DS: Deprecation of sfGpsDsAuNswHeaderComm in favour of sfGpsDsAuNswHeaderV2Comm
+
+We fixed the Experience Cloud metadata to revert the `mobile` property to boolean when an earlier typo in `sfGpsDsAuNswHeaderComm` defined it as string. You may need to upgrade the package in Deprecate Only coming from earlier version if you used this component and should consider moving to `sfGpsDsAuNswHeaderV2Comm`.
+
+Refer to [`sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswHeaderMainNav/lwc/sfGpsDsAuNswHeaderV2Comm`](sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswHeaderMainNav/lwc/sfGpsDsAuNswHeaderV2Comm).
+
+### 6 December 2025
+
+#### NSW DS: Support of Experience Cloud navigations to display the profile menu in Header
+
+We now allow to directly reference an Experience Cloud navigation in the Header to display the profile menu in addition to Integration Procedures. The mode can be toggled using the `navigationMode` attribute and one can also switch profile information display off using option `None`.
+
+Refer to [`sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswHeaderMainNav/lwc/sfGpsDsAuNswHeader`](sfGpsDsAuNsw/main/default/lwc/sfGpsDsAuNswHeaderMainNav/lwc/sfGpsDsAuNswHeader).
+
+### 4 December 2025
+
+#### All DSes: Base headless components for login, self-registration, forgot password and check email pages
+
+We added the headless logic and back-end code for DSes to support login, self-registration, forgot password and check email pages for authentication.
+
+Refer to [`sfGpsDs/main/default/lwc/auth/lwc`](sfGpsDs/main/default/lwc/auth/lwc) and [`sfGpsDs/main/default/lwc/auth/classes/SfGpsDsCommunitiesController.cls`](sfGpsDs/main/default/lwc/auth/classes/SfGpsDsCommunitiesController.cls).
+
+#### QLD DS: Support for login, self-registration, forgot password and check email pages
+
+We added components to support login, self-registration, forgot password and check email pages for authentication.
+
+Refer to [`sfGpsDsAuQld/main/default/lwc/auth/lwc`](sfGpsDAuQld/main/default/lwc/auth/lwc).
+
+#### QLD DS: Support for authentication and profile display in Header and Main Nav.
+
+We modified the header and main nav components to allow the display of current user details and well as login out, or login in when unauthenticated. These details are configured as part of the pre-header in the header component on desktop, and in the main nav on mobile and tablet.
+
+The main nav component has been adjusted to allow the display of the two call to action links you would find as part of the pre-header in the desktop header on mobile and tablet.
+
+Refer to [`sfGpsDsAuQld/main/default/lwc/sfGpsDsAuQldHeader/lwc`](sfGpsDsAuQld/main/default/lwc/sfGpsDsAuQldHeader/lwc) and [`sfGpsDsAuQld/main/default/lwc/sfGpsDsAuQldMainNav/lwc`](sfGpsDsAuQld/main/default/lwc/sfGpsDsAuQldMainNav/lwc).
+
+### 3 December 2025
+
+#### QLD DS: Move to Design System v1.18.4
+
+Note that there are some side effects as the default colour scheme which is now on the blue-ish side, and on icon name on a number of components where FontAwesome classes were accepted and QLD Icons names are now required.
+
+#### QLD DS: Support for Tabs
+
+We added support for Tabs in LWR.
+
+Refer to [`sfGpsDsAuQld/main/default/lwc/sfGpsDsAuQldTabs`](sfGpsDsAuQld/main/default/lwc/sfGpsDsAuQldTabs).
+
+#### QLD DS: Support for Video Player
+
+We added support for the Video Player.
+
+Refer to [`sfGpsDsAuQld/main/default/lwc/sfGpsDsAuQldVideoPlayer`](sfGpsDsAuQld/main/default/lwc/sfGpsDsAuQldVideoPlayer).
+
 ### 1 September 2025
 
 #### QLD DS and VIC2 DS: Support for OmniScript Standard Runtime

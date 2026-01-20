@@ -15,7 +15,6 @@ import { replaceInnerHtml } from "c/sfGpsDsHelpers";
 const DEBUG = false;
 const CLASS_NAME = "sfGpsDsAuQldVideoPlayerComm";
 
-
 /**
  * @slot description
  */
@@ -44,7 +43,9 @@ export default class extends SfGpsDsLwc {
   set description(markdown) {
     this._descriptionOriginal = markdown;
     try {
-      this._descriptionHtml = markdown ? mdEngine.renderEscaped(markdown) : null;
+      this._descriptionHtml = markdown
+        ? mdEngine.renderEscaped(markdown)
+        : null;
     } catch (e) {
       this.addError("CO-MD", "Issue when parsing Copy markdown");
       if (DEBUG) console.debug(CLASS_NAME, "set copy", e);

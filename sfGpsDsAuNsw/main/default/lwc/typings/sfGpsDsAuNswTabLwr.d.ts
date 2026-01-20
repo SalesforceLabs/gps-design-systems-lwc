@@ -1,40 +1,18 @@
 declare module "c/sfGpsDsAuNswTabLwr" { 
-  import type SfGpsDsElement from "c/sfGpsDsElement"; 
+  import type SfGpsDsTabLwr from "c/sfGpsDsTabLwr"; 
   import type { PropertyAccessor } from "c/sfGpsDsElement";
 
   export default 
   class SfGpsDsAuNswTabLwr 
-  extends SfGpsDsElement {
-    className?: string;
-    vid?: string;
-    variaLabelledBy?: string;
-    vhidden?: boolean;
-
-    get value(): string | undefined;
-    set value(value: string);
-
-    get label(): string;
-    set label(value: string);
-
-    showErrorIndicator: boolean;
-
-    loadContent(): boolean;
+  extends SfGpsDsTabLwr {
+    disableLazyLoading?: boolean;
 
     // private
 
-    _value?: string;
-    _valueOriginal?: string;
-    _label: string;
-    _title: string;
+    _disableLazyLoading: PropertyAccessor<boolean>;
 
-    _showErrorIndicator: PropertyAccessor<boolean>;
-    _loadContent?: boolean;
-
+    static renderMode: "light" | "shadow"
     get computedClassName(): any;
-
-    _dispatchDataChangeEventIfConnected(): void;
-
-    _deregistrationCallback?: Function;
-
+    get computedLoadContent(): any;
   }
 }

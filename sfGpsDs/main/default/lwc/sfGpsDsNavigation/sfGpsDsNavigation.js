@@ -124,8 +124,11 @@ export default class SfGpsDsNavigation extends NavigationMixin(SfGpsDsIpLwc) {
             return [];
         }
         return data.reduce((m, item, index) => {
+            let itemCopy = { ...item };
+            delete itemCopy.subMenu;
             let itemKey = `${key}-${index + 1}`;
             let amik = {
+                item: itemCopy,
                 text: item.label ? mdEngine.decodeEntities(item.label) : undefined,
                 url: item.actionValue,
                 index: itemKey,

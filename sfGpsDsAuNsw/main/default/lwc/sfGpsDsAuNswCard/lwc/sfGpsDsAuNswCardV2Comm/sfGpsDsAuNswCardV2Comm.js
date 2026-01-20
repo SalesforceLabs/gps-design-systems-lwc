@@ -28,6 +28,9 @@ export default class SfGpsDsAuNswCardV2Comm extends SfGpsDsLwc {
     headline;
     // @ts-ignore
     @api
+    border;
+    // @ts-ignore
+    @api
     tag;
     // @ts-ignore
     @api

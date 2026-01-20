@@ -79,6 +79,12 @@ export default class SfGpsDsAuNswHeaderMainNavComm extends SfGpsDsIpLwc {
     search = false;
     // @ts-ignore
     @api
+    profileMode;
+    // @ts-ignore
+    @api
+    profileNavigationDevName;
+    // @ts-ignore
+    @api
     profileIpName;
     // @ts-ignore
     @api

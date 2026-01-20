@@ -1,3 +1,30 @@
+/* button */
+
+.nsw-scope {
+  .nsw-button,
+  .nsw-button:hover,
+  &.nsw-button,
+  &.nsw-button:hover {
+    text-decoration: none;
+  }
+
+  .nsw-button:focus {
+    &.nsw-button--dark,
+    &.nsw-button--danger,
+    &.nsw-button--info {
+      color: var(--nsw-text-light);
+    }
+    &.nsw-button--dark-outline:not(:hover),
+    &.nsw-button--dark-outline-solid:not(:hover),
+    &.nsw-button--light,
+    &.nsw-button--white {
+      color: var(--nsw-text-dark);
+    }
+  }
+}
+
+/* grid */
+
 .nsw-scope .nsw-grid--flush {
   margin-top: -0.5rem;
   margin-bottom: -0.5rem;

@@ -95,7 +95,7 @@ export default class SfGpsDsNswHeader extends SfGpsDsElement {
     get computedClassName() {
         return {
             "nsw-header": true,
-            "nsw-header__has-profile": !!this._profile.value,
+            "nsw-header__has-profile": this._profile.value,
             [this.className || ""]: !!this.className
         };
     }

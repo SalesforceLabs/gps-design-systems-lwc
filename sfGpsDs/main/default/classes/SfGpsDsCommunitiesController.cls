@@ -1,6 +1,25 @@
 public with sharing class SfGpsDsCommunitiesController {
+  public class RegistrationException extends Exception {
+  }
+
+  private static final String[] WHITELISTED_FIELDNAMES = new List<String>{
+    'Email',
+    'FirstName',
+    'LastName',
+    'AboutMe',
+    'Title',
+    'Street',
+    'City',
+    'PostalCode',
+    'State',
+    'Country',
+    'Fax',
+    'Phone',
+    'MobilePhone'
+  };
+
   @AuraEnabled(cacheable=false)
-  public static Map<String, String> getAuthConfig() {
+  public static Map<String, Object> getAuthConfig() {
     return SfGpsDsCommunitiesUtilities.getAuthConfig();
   }
 
@@ -26,50 +45,4 @@ public with sharing class SfGpsDsCommunitiesController {
       throw new AuraHandledException(e.getMessage());
     }
   }
-
-  @AuraEnabled(cacheable=true)
-  public static Map<String, String> getFieldset(String fieldsetName) {
-    DescribeSObjectResult[] describes = Schema.describeSObjects(new String[] { 'User' });
-    Map<String, String> rv = new Map<String, String>();
-
-    if (describes != null && describes.size() > 0) {
-      // There should only be the one match for the one object type name
-      Schema.FieldSet fs = describes[0].fieldSets.getMap().get(fieldSetName);
-
-      for (Schema.FieldSetMember f : fs.fields) {
-        rv.put(f.getFieldPath(), f.getType() + ':' + f.getLabel());
-      }
-    }
-
-    return rv;
-  }  
-
-  @AuraEnabled(cacheable=false)
-  public static Boolean registerUser(
-    String username, 
-    String password, 
-    Map<String, String> fields
-  ) {
-    if (!Site.isRegistrationEnabled()) {
-      return false;
-    }
-
-    Id userId;
-    Id accountId;
-
-    /*
-    try {
-      userId = Site.createExternalUser(username, accountId, password);
-
-    } catch (Site.ExternalUserCreateException e) {
-      if (e.getMessage().containsIgnoreCase('user already exists')) {
-        throw new AuraHandledException('portalRegistrationUserExists');
-      }
-      throw new AuraHandledException('portalRegistrationError');
-    }
-    */
-
-    return userId != null;
-  }
-
 }

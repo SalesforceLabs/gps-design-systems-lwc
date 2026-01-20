@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025, Emmanuel Schweitzer and salesforce.com, inc.
+ * Copyright (c) 2025-2026, Emmanuel Schweitzer and salesforce.com, inc.
  * All rights reserved.
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
@@ -38,9 +38,32 @@ export default class extends OmniscriptEditBlock {
     return this._actionMenuList.map((item, index) => ({
       key: item.lwcId,
       index,
-      text: item.label,
-      checkboxId: `sfgpsds-au-nsw-form-edit-block-checkbox-${index + 1}`
+      text: item.label
     }));
+  }
+
+  get computedIsH3Heading() {
+    return (this._propSetMap.headingLevel || 3) === 3;
+  }
+
+  get computedErrorTextId() {
+    return this.isInvalid ? "inline-text-error" : null;
+  }
+
+  get computedAriaRole() {
+    return this._propSetMap.selectCheckBox ? "checkbox" : null;
+  }
+
+  get computedAriaChecked() {
+    if (this._propSetMap.selectCheckBox) {
+      return this._showCheckbox ? "true" : "false";
+    }
+
+    return null;
+  }
+
+  get computedTabindex() {
+    return this._propSetMap.selectCheckBox ? "0" : null;
   }
 
   /* event management */
@@ -48,15 +71,23 @@ export default class extends OmniscriptEditBlock {
   // eslint-disable-next-line no-unused-vars
   handleCheckbox(event) {
     if (DEBUG) {
-      console.debug(CLASS_NAME, "handleCheckbox", 
-        "detail=", JSON.stringify(event?.detail),
-        "target=", event.target,
-        "from actionmenu=", this.refs.actionmenu, this.refs.actionmenu?.contains(event.target)
+      console.debug(
+        CLASS_NAME,
+        "handleCheckbox",
+        "detail=",
+        JSON.stringify(event?.detail),
+        "target=",
+        event.target,
+        "from actionmenu=",
+        this.refs.actionmenu,
+        this.refs.actionmenu?.contains(event.target)
       );
     }
 
     // this will make sure the click event is propagated up
-    const rv = this.refs.actionmenu?.contains(event.target) ? true : super.handleCheckbox(null);
+    const rv = this.refs.actionmenu?.contains(event.target)
+      ? true
+      : super.handleCheckbox(null);
     return rv;
   }
 
@@ -87,14 +118,22 @@ export default class extends OmniscriptEditBlock {
         CLASS_NAME,
         "> render",
         this._propSetMap.label,
-        "isFs=", this._isFS,
-        "isLongCards=", this._isLongCards,
-        "isCards=", this._isCards,
-        "isTable=", this._isTable,
-        "isInline=", this._isInline,
-        "isEditing=", this._isEditing,
-        "hasChildren=", this._hasChildren,
-        "isFirstIndex=", this._isFirstIndex
+        "isFs=",
+        this._isFS,
+        "isLongCards=",
+        this._isLongCards,
+        "isCards=",
+        this._isCards,
+        "isTable=",
+        this._isTable,
+        "isInline=",
+        this._isInline,
+        "isEditing=",
+        this._isEditing,
+        "hasChildren=",
+        this._hasChildren,
+        "isFirstIndex=",
+        this._isFirstIndex
       );
     }
 
@@ -112,9 +151,11 @@ export default class extends OmniscriptEditBlock {
 
     if (DEBUG) {
       console.debug(
-        CLASS_NAME, "< render",         
-        this._propSetMap.label, 
-        "template=", template
+        CLASS_NAME,
+        "< render",
+        this._propSetMap.label,
+        "template=",
+        template
       );
     }
 
@@ -135,12 +176,21 @@ export default class extends OmniscriptEditBlock {
         this._propSetMap.elementName
       ) {
         const svgMap = this._propSetMap.valueSvgMap;
+        const val = this.jsonDef.response[this._propSetMap.elementName];
         for (let i = 0; i < svgMap.length; i++) {
+          console.debug(
+            "try",
+            JSON.stringify(svgMap[i].value),
+            JSON.stringify(val)
+          );
           if (
-            svgMap[i].value ===
-            this.jsonDef.response[this._propSetMap.elementName]
+            svgMap[i].value === val ||
+            (typeof val === "boolean" && svgMap[i].value === "true" && val) ||
+            (svgMap[i].value === "false" && !val)
           ) {
             svgIcon = svgMap[i].svgIcon;
+            console.debug("icon", svgIcon);
+            break;
           }
         }
       }
@@ -156,13 +206,39 @@ export default class extends OmniscriptEditBlock {
       "nsw-col": true,
       "nsw-hide": this._isEditing || !this._hasChildren,
       "nsw-col-sm-12": this._isLongCards || this._isCards
-    }
+    };
   }
 
   get editClassName() {
     return {
       "nsw-col": true,
       "nsw-hide": !this._isEditing
+    };
+  }
+
+  applyCtrlWidth() {
+    super.applyCtrlWidth();
+
+    if (this.jsonDef && this._propSetMap) {
+      if (this._propSetMap.controlWidth != null && this.jsonDef.level !== 0) {
+        this.classList.remove(this._theme + "-p-right_small");
+        this.classList.remove(this._theme + "-m-bottom_xx-small");
+        this.classList.remove(this._theme + "-size_12-of-12");
+
+        this.classList.add("nsw-p-right-sm", "nsw-p-bottom-sm");
+      }
+      // This is the UI hide, not show/hide hide
+      if (this._propSetMap.hide === true) {
+        this.classList.add("nsw-hidden");
+      }
+    }
+
+    if (this._isCards) {
+      this.classList.remove(this._theme + "-large-size_3-of-12");
+      this.classList.remove(this._theme + "-medium-size_6-of-12");
+      this.classList.add("nsw-col-lg-3", "nsw-col-md-6");
+    } else {
+      this.classList.add("nsw-col-sm-12");
     }
   }
 
@@ -206,9 +282,9 @@ export default class extends OmniscriptEditBlock {
 
           // cls += ` nsw-col nsw-col-sm-${width}`;
 
-          if (eleArray.type === "Checkbox") {
+          /* if (eleArray.type === "Checkbox") {
             cls += " nsw-text-center";
-          } else if (
+          } else */ if (
             eleArray.type === "Currency" ||
             eleArray.type === "Number"
           ) {
@@ -220,6 +296,9 @@ export default class extends OmniscriptEditBlock {
           eleArray.propSetMap.label && this._multiLang
             ? this.allCustomLabelsUtil[eleArray.propSetMap.label]
             : eleArray.propSetMap.label;
+
+        if (eleArray.type === "Checkbox")
+          tableLabel = eleArray.propSetMap.checkLabel;
 
         this._tableLabels.push({
           lwcId: "lwc" + i,
@@ -286,9 +365,9 @@ export default class extends OmniscriptEditBlock {
 
           //cls += ` nsw-col nsw-col-sm-${width}`;
 
-          if (eleArray.type === "Checkbox") {
+          /* if (eleArray.type === "Checkbox") {
             cls += " nsw-text-center";
-          } else if (
+          } else */ if (
             eleArray.type === "Currency" ||
             eleArray.type === "Number"
           ) {
@@ -302,6 +381,7 @@ export default class extends OmniscriptEditBlock {
           label: eleArray.propSetMap.label,
           cls: cls,
           isCheckbox: eleArray.type === "Checkbox",
+          checkboxId: `sfgpsds-au-nsw-form-edit-block-checkbox-${i + 1}`,
           tableWidth: [
             "7%",
             "14%",
@@ -319,5 +399,10 @@ export default class extends OmniscriptEditBlock {
         });
       }
     }
+  }
+
+  save(evt) {
+    this.reportValidity(); // prevent a glitch with validation
+    super.save(evt);
   }
 }

@@ -13,6 +13,7 @@ const BSTYLE_VALUES = {
     danger: "nsw-button--danger"
 };
 const ISDISMISSIBLE_DEFAULT = false;
+const HASCUSTOMFOOTER_DEFAULT = false;
 export default class SfGpsDsAuNswDialog extends SfGpsDsElement {
     static renderMode = "light";
     // @ts-ignore
@@ -29,9 +30,6 @@ export default class SfGpsDsAuNswDialog extends SfGpsDsElement {
     isOpen = false;
     // @ts-ignore
     @api
-    className;
-    // @ts-ignore
-    @api
     bstyle;
     _bstyle = this.defineEnumObjectProperty("bstyle", {
         validValues: BSTYLE_VALUES,
@@ -43,6 +41,15 @@ export default class SfGpsDsAuNswDialog extends SfGpsDsElement {
     _isDismissible = this.defineBooleanProperty("isDismissible", {
         defaultValue: ISDISMISSIBLE_DEFAULT
     });
+    // @ts-ignore
+    @api
+    hasCustomFooter;
+    _hasCustomFooter = this.defineBooleanProperty("hasCustomFooter", {
+        defaultValue: HASCUSTOMFOOTER_DEFAULT
+    });
+    // @ts-ignore
+    @api
+    className;
     /* computed */
     get computedClassName() {
         return {

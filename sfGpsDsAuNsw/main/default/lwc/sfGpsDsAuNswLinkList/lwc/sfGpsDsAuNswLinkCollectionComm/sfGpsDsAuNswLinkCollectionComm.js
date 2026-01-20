@@ -10,6 +10,12 @@ import demoCollection from "./demoCollection";
 export default class SfGpsDsAuNswLinkCollectionComm extends SfGpsDsNavigation {
     // @ts-ignore
     @api
+    highlightExternal;
+    // @ts-ignore
+    @api
+    firstChild;
+    // @ts-ignore
+    @api
     className;
     /* api: mode, Array of Object */ ;
     // @ts-ignore

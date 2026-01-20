@@ -6,7 +6,6 @@
       <h2
         lwc:if={showLabel}
         class="fr-h2 slds-m-top_medium os-step-label"
-        aria-live="polite"
         tabindex="-1"
       >
         {mergedLabel}
@@ -19,7 +18,10 @@
 
     <div>
       <div class="slds-grid slds-wrap omniscript-step__body">
-        <slot class="slds-grid slds-wrap slds-size_1-of-1"></slot>
+        <slot
+          class="slds-grid slds-wrap slds-size_1-of-1"
+          aria-live="polite"
+        ></slot>
       </div>
 
       <!-- <hr class="sepbutton" /> -->
@@ -27,25 +29,28 @@
       <div class="form-actions">
         <div class="fr-btns-group">
           <button
-            if:true={showPrev}
+            lwc:if={showPrev}
             class="fr-btn fr-btn--secondary"
             value={mergedPreviousLabel}
+            disabled={disabledButtons}
             onclick={handleBack}
           >
             {mergedPreviousLabel}
           </button>
           <button
-            if:true={showNext}
+            lwc:if={showNext}
             class="fr-btn"
             value={mergedNextLabel}
+            disabled={disabledButtons}
             onclick={handleNext}
           >
             {mergedNextLabel}
           </button>
           <button
-            if:true={showSave}
+            lwc:if={showSave}
             class="fr-btn fr-btn--secondary"
             value={mergedSaveLabel}
+            disabled={disabledButtons}
             onclick={handleSave}
           >
             {mergedSaveLabel}

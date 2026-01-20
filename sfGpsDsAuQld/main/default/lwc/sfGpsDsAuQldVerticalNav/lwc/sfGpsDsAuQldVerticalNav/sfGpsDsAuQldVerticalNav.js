@@ -1,12 +1,16 @@
 import { LightningElement, api, track, wire } from "lwc";
 import { CurrentPageReference } from "lightning/navigation";
 import cBasePath from "@salesforce/community/basePath";
+import sfGpsDsAuQldStaticResource from "@salesforce/resourceUrl/sfGpsDsAuQld";
 
 const I18N = {
   ariaLabel: "Left navigation",
   home: "Home",
   toggleNavigation: "Toggle navigation"
 };
+
+const STATIC_RESOURCE_ICONS_PATH =
+  sfGpsDsAuQldStaticResource + "/assets/img/QLD-icons.svg";
 
 export default class extends LightningElement {
   @api className;
@@ -52,10 +56,14 @@ export default class extends LightningElement {
 
   get computedClassName() {
     return {
-      "qld__left-nav__content": true,
+      "qld__left-nav": true,
       js: true,
       [this.className]: this.className
     };
+  }
+
+  get computedChevronUpIconUrl() {
+    return STATIC_RESOURCE_ICONS_PATH + "#chevron-up";
   }
 
   /* methods */

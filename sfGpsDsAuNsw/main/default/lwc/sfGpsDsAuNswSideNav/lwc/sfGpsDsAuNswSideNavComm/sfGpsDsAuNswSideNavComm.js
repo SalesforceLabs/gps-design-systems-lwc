@@ -13,6 +13,9 @@ const CLASS_NAME = "sfGpsDsAuNswSideNavComm";
 export default class sfGpsDsAuNswSideNavComm extends SfGpsDsNavigation {
     // @ts-ignore
     @api
+    parentText;
+    // @ts-ignore
+    @api
     className;
     /* api: mode, String */
     // @ts-ignore

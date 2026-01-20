@@ -4,11 +4,14 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { api } from "lwc";
+import { api, track } from "lwc";
 import SfGpsDsElement from "c/sfGpsDsElement";
 import { uniqueId } from "c/sfGpsDsHelpers";
 export default class SfGpsDsAuNswSideNav extends SfGpsDsElement {
     static renderMode = "light";
+    // @ts-ignore
+    @api
+    parentText;
     // @ts-ignore
     @api
     title = "";
@@ -30,19 +33,31 @@ export default class SfGpsDsAuNswSideNav extends SfGpsDsElement {
         this._navItemsOriginal = items;
         this.navItemsMapping();
     }
+    /* track: isOpen */
+    // @ts-ignore
+    @track
+    _isOpen = false;
     /* computed */
     get computedClassName() {
         return {
             "nsw-side-nav": true,
+            "open": this._isOpen,
             [this.className || ""]: !!this.className
         };
     }
     _labelledById;
     get computedAriaLabelledById() {
         if (!this._labelledById) {
-            this._labelledById = uniqueId("sf-gps-ds-au-nsw-side-nav");
+            this._labelledById = uniqueId("nsw-side-nav__header");
         }
         return this._labelledById;
+    }
+    _controlsId;
+    get computedAriaControlsId() {
+        if (!this._controlsId) {
+            this._controlsId = uniqueId("nsw-side-nav__content");
+        }
+        return this._controlsId;
     }
     /* methods */
     _mapItems;
@@ -87,6 +102,14 @@ export default class SfGpsDsAuNswSideNav extends SfGpsDsElement {
         this._mapItems = map;
     }
     /* event management */
+    handleExpandToggle(event) {
+        event.preventDefault();
+        const isDesktop = window.innerWidth > 992;
+        if (isDesktop)
+            return;
+        this._isOpen = !this._isOpen;
+    }
+    ;
     handleClickNavigate(event) {
         event.preventDefault();
         const index = event.currentTarget.dataset.ndx;

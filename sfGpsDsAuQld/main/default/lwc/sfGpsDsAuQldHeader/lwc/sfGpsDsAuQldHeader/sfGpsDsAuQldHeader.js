@@ -10,16 +10,23 @@
 import { LightningElement, api, track, wire } from "lwc";
 import { normaliseString, uniqueId } from "c/sfGpsDsHelpers";
 import { publish, MessageContext } from "lightning/messageService";
+import { NavigationMixin } from "lightning/navigation";
 import mainNavToggleChannel from "@salesforce/messageChannel/sfGpsDsAuQldMainNavToggle__c";
 import sfGpsDsAuQldStaticResource from "@salesforce/resourceUrl/sfGpsDsAuQld";
 import cBasePath from "@salesforce/community/basePath";
+import isGuest from "@salesforce/user/isGuest";
+
+import sfGpsDsAuthLoginButtonLabel from "@salesforce/label/c.sfGpsDsAuthLoginButtonLabel";
+import sfGpsDsAuthLogoutButtonLabel from "@salesforce/label/c.sfGpsDsAuthLogoutButtonLabel";
 
 const I18N = {
   skipLinksAriaLabel: "Skip links",
   skipToMainContent: "Skip to main content",
   skipToMainNav: "Skip to main navigation",
   searchButtonAriaLabel: "Search",
-  searchFormAriaLabel: "Sitewide search"
+  searchFormAriaLabel: "Sitewide search",
+  loginButtonLabel: sfGpsDsAuthLoginButtonLabel,
+  logoutButtonLabel: sfGpsDsAuthLogoutButtonLabel
 };
 
 const PREHEADER_STYLE_DEFAULT = "dark";
@@ -36,10 +43,19 @@ const HEADER_STYLE_VALUES = {
   "dark-alternate": "qld__header__main--dark-alt"
 };
 
+const AUTH_MODE_HIDE = "hide";
+const AUTH_MODE_LILO = "login-logout";
+const AUTH_MODE_ALL = "all";
+const AUTH_MODE_VALUES = [AUTH_MODE_HIDE, AUTH_MODE_LILO, AUTH_MODE_ALL];
+const AUTH_MODE_DEFAULT = AUTH_MODE_HIDE;
+
 const STATIC_RESOURCE_ICONS_PATH =
   sfGpsDsAuQldStaticResource + "/assets/img/QLD-icons.svg";
 
-export default class extends LightningElement {
+const DEBUG = false;
+const CLASS_NAME = "SfGpsDsAuQldHeader";
+
+export default class extends NavigationMixin(LightningElement) {
   static renderMode = "light";
 
   /* general */
@@ -73,6 +89,8 @@ export default class extends LightningElement {
   @api ctaOneIcon = "fa-phone";
   @api ctaTwoLink;
   @api ctaTwoIcon;
+  @api profileLink;
+  @api profileIcon;
 
   /* api: preHeaderStyle */
 
@@ -93,45 +111,32 @@ export default class extends LightningElement {
     });
   }
 
+  /* api: authMode */
+
+  _authMode;
+  _authModeOriginal;
+
+  @api
+  get authMode() {
+    return this._authModeOriginal;
+  }
+
+  set authMode(value) {
+    this._authModeOriginal = value;
+    this._authMode = normaliseString(value, {
+      validValues: AUTH_MODE_VALUES,
+      fallbackValue: AUTH_MODE_DEFAULT
+    });
+  }
+
   /* getters */
 
-  get computedPreHeaderClassName() {
-    return {
-      "qld__header__pre-header": true,
-      [this._preHeaderStyle]: this._preHeaderStyle
-    };
+  get computedAuthShowProfile() {
+    return this.authMode === AUTH_MODE_ALL && !isGuest;
   }
 
-  get preHeaderText() {
-    return this.preHeaderLink?.text;
-  }
-
-  get preHeaderUrl() {
-    return this.preHeaderLink?.url || "#";
-  }
-
-  get computedContentIdRef() {
-    return `#${this.contentId}`;
-  }
-
-  get computedMainNavIdRef() {
-    return `#${this.mainNavId}`;
-  }
-
-  get ctaOneText() {
-    return this.ctaOneLink?.text;
-  }
-
-  get ctaOneUrl() {
-    return this.ctaOneLink?.url || "#";
-  }
-
-  get ctaTwoText() {
-    return this.ctaTwoLink?.text;
-  }
-
-  get ctaTwoUrl() {
-    return this.ctaTwoLink?.url || "#";
+  get computedAuthShowLogin() {
+    return this._authMode !== AUTH_MODE_HIDE;
   }
 
   /* header */
@@ -176,7 +181,69 @@ export default class extends LightningElement {
     });
   }
 
+  /* tracked */
+
+  loginUrl;
+  logoutUrl;
+
   /* getters */
+
+  get computedPreHeaderClassName() {
+    return {
+      "qld__header__pre-header": true,
+      [this._preHeaderStyle]: this._preHeaderStyle
+    };
+  }
+
+  get preHeaderText() {
+    return this.preHeaderLink?.text;
+  }
+
+  get preHeaderUrl() {
+    return this.preHeaderLink?.url || "#";
+  }
+
+  get computedContentIdRef() {
+    return `#${this.contentId}`;
+  }
+
+  get computedMainNavIdRef() {
+    return `#${this.mainNavId}`;
+  }
+
+  get ctaOneText() {
+    return this.ctaOneLink?.text;
+  }
+
+  get ctaOneUrl() {
+    return this.ctaOneLink?.url || "#";
+  }
+
+  get ctaTwoText() {
+    return this.ctaTwoLink?.text;
+  }
+
+  get ctaTwoUrl() {
+    return this.ctaTwoLink?.url || "#";
+  }
+
+  get profileText() {
+    return this.profileLink?.text;
+  }
+
+  get profileUrl() {
+    return this.profileLink?.url;
+  }
+
+  get computedAuthUrl() {
+    return isGuest ? this.loginUrl : this.logoutUrl;
+  }
+
+  get computedAuthText() {
+    return isGuest
+      ? I18N.loginButtonLabel || "Log in"
+      : I18N.logoutButtonLabel || "Log out";
+  }
 
   get showSiteLogo() {
     return !!this.siteLogoAlt;
@@ -194,7 +261,7 @@ export default class extends LightningElement {
   }
 
   get computedDefaultLogoUrl() {
-    return sfGpsDsAuQldStaticResource + "/assets/img/qgov-coa.svg#logo"
+    return sfGpsDsAuQldStaticResource + "/assets/img/qgov-coa.svg#logo";
   }
 
   get computedIconSearchUrl() {
@@ -215,6 +282,18 @@ export default class extends LightningElement {
 
   get computedCtaTwoIconUrl() {
     return STATIC_RESOURCE_ICONS_PATH + "#" + this.ctaTwoIcon;
+  }
+
+  get computedProfileIconUrl() {
+    return STATIC_RESOURCE_ICONS_PATH + "#" + this.profileIcon;
+  }
+
+  get computedAuthIconUrl() {
+    return STATIC_RESOURCE_ICONS_PATH + "#" + (isGuest ? "log-in" : "log-out");
+  }
+
+  get computedGlobalSearchActionUrl() {
+    return cBasePath + "/global-search";
   }
 
   get computedSearchButtonClassName() {
@@ -248,7 +327,7 @@ export default class extends LightningElement {
   get computedHeaderSearchInputId() {
     if (this._headerSearchInputId == null) {
       this._headerSearchInputId = uniqueId(
-        "sf-gps-ds-au-nsw-header-search-input"
+        "sf-gps-ds-au-qld-header-search-input"
       );
     }
 
@@ -281,10 +360,58 @@ export default class extends LightningElement {
     this._searchIsOpen = !this._searchIsOpen;
   }
 
+  handleSearch(event) {
+    if (DEBUG) console.debug(CLASS_NAME, "> handleSearch");
+
+    event.preventDefault();
+    this._searchIsOpen = false;
+
+    const queryTerm = this.refs.query.value;
+    this.dispatchEvent(
+      new CustomEvent("search", {
+        detail: queryTerm
+      })
+    );
+
+    if (DEBUG) console.debug(CLASS_NAME, "< handleSearch", queryTerm);
+  }
+
   handleMainNavButtonClick() {
+    if (DEBUG) {
+      console.debug(CLASS_NAME, "> handleMainNavButtonClick");
+    }
+
     publish(this._messageContext, mainNavToggleChannel, {
       type: "toggle",
       detail: null
     });
+
+    if (DEBUG) {
+      console.debug(CLASS_NAME, "< handleMainNavButtonClick");
+    }
+  }
+
+  /* lifecycle */
+
+  connectedCallback() {
+    if (super.connectedCallback) super.connectedCallback();
+
+    this[NavigationMixin.GenerateUrl]({
+      type: "comm__loginPage",
+      attributes: {
+        actionName: isGuest ? "login" : "logout"
+      }
+    })
+      .then((url) => {
+        if (isGuest) {
+          this.loginUrl = url;
+        } else {
+          this.logoutUrl = url;
+        }
+      })
+      .catch((error) => {
+        if (DEBUG)
+          console.error(CLASS_NAME, "connectedCallback.generateUrl", error);
+      });
   }
 }

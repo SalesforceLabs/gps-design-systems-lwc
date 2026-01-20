@@ -10,6 +10,18 @@ export default class SfGpsDsAuNswHeaderProfileIp extends SfGpsDsNavigation {
     // @ts-ignore
     @api
     className;
+    /* api: mode, String */
+    // @ts-ignore
+    @api
+    // @ts-ignore
+    get mode() {
+        // @ts-ignore
+        return super.mode;
+    }
+    set mode(value) {
+        // @ts-ignore
+        super.mode = value;
+    }
     /* api: ipName */
     // @ts-ignore
     @api

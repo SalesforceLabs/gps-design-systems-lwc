@@ -6,7 +6,7 @@
  */
 export { styleToString } from "./cssutil";
 export { ISO8601_PATTERN, isDate, isValidDate, parseIso8601, formatDate, formatDateRange, getMonthNames, getUserLocale, getUserLocales } from "./datetimeutil";
-export { htmlDecode, replaceInnerHtml, getFirstChild, computeClass, isRTL, getCssPropertyValue, HtmlSanitizer } from "./domutil";
+export { htmlDecode, replaceInnerHtml, getFirstChild, computeClass, uniqueClassesFromString, isRTL, getCssPropertyValue, HtmlSanitizer } from "./domutil";
 export { deepCopy, arraysEqual, debounce, once, invokeArrayFns, hasChanged } from "./jsutil";
 export { nextTick } from "./nextTick";
 export { normaliseBoolean, normaliseArray, normaliseAriaAttribute, normaliseString, normaliseInteger } from "./normalise";

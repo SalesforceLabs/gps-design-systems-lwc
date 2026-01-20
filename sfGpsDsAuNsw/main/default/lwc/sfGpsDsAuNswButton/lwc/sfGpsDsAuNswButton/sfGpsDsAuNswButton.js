@@ -38,6 +38,9 @@ export default class SfGpsDsAuNswbutton extends SfGpsDsElement {
     link;
     // @ts-ignore
     @api
+    target;
+    // @ts-ignore
+    @api
     type;
     // @ts-ignore
     @api

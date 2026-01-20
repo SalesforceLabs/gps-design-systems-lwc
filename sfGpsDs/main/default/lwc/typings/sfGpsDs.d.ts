@@ -6,6 +6,7 @@ import "./SfGpsDsIntegrationProcController.runIntegrationProcedure";
 import "./sfGpsDsApex";
 import "./sfGpsDsCheckboxGroup";
 import "./sfGpsDsConfigurationError";
+import "./sfGpsDsCookieConsent";
 import "./sfGpsDsDivLwr";
 import "./sfGpsDsElement";
 import "./sfGpsDsElementOs";
@@ -30,4 +31,7 @@ import "./sfGpsDsRecordDetailController.getObjectSummary";
 import "./sfGpsDsRecordDetailController.getRecordSummary"
 import "./sfGpsDsSocialSharing";
 import "./sfGpsDsSpinner";
+import "./sfGpsDsTabLwr";
+import "./sfGpsDsTabSetLwr";
+import "./sfGpsDsTabBarLwr";
 import "./sfGpsDsTransition";
